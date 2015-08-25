@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Microsoft.Build.Evaluation;
 
@@ -23,6 +24,8 @@ namespace Lx.Tools.Projects.SourceDump
             var options = ManageOptions(args);
             foreach (var file in args)
             {
+                if (file == null)
+                    continue;
                 Project project;
                 if (IsNotCsproj(file, out project))
                 {
@@ -33,9 +36,14 @@ namespace Lx.Tools.Projects.SourceDump
                 var sourceDumper = new SourceDumper(directory, options);
                 var projectItems = project.GetItems("Compile").Select(x => x.EvaluatedInclude);
                 var items = sourceDumper.Dump(projectItems);
-                foreach (var item in items)
+                var fileName = Path.GetFileNameWithoutExtension(file);
+                var newFile = fileName + ".dll.sources";
+                using (var writer = (options.Contains(Options.OutputFile)) ? (IWriter)new FileWriter(Path.Combine(directory, newFile)) : new ConsoleWriter())
                 {
-                    Console.WriteLine(item);
+                    foreach (var item in items)
+                    {
+                        writer.WriteLine(item);                       
+                    }
                 }
             }
             Exit(0);
@@ -122,99 +130,6 @@ namespace Lx.Tools.Projects.SourceDump
             var version = Assembly.GetExecutingAssembly().GetName().Version;
             Console.WriteLine("src-dump " + version);
             Console.WriteLine("Copyright (C) 2015 Leoxia Ltd");
-        }
-    }
-
-    public class Option : IEquatable<Option>
-    {
-        public string Name { get; set; }
-        public string Explanation { get; set; }
-
-        public bool Equals(Option other)
-        {
-            return Name == other.Name;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Option) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
-
-        public static bool operator ==(Option left, Option right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(Option left, Option right)
-        {
-            return !Equals(left, right);
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
-
-    /// <summary>
-    ///     Repository for all available options.
-    /// </summary>
-    public class Options
-    {
-        static Options()
-        {
-            Help = new Option {Name = "--help", Explanation = "Display this text"};
-            UnixPaths = new Option {Name = "--unix-paths", Explanation = "Convert source path to unix paths"};
-            WindowsPaths = new Option {Name = "--windows-paths", Explanation = "Convert source path to windows paths"};
-            RelativePaths = new Option
-            {
-                Name = "--relative-paths",
-                Explanation = "Convert absolute path to relative ones"
-            };
-            AbsolutePaths = new Option
-            {
-                Name = "--absolute-paths",
-                Explanation = "Convert relative paths to absolute ones"
-            };
-            AvailableOptions = new List<Option>
-            {
-                Help,
-                UnixPaths,
-                WindowsPaths,
-                RelativePaths,
-                AbsolutePaths
-            };
-        }
-
-        public static Option UnixPaths { get; private set; }
-        public static Option WindowsPaths { get; private set; }
-        public static Option RelativePaths { get; private set; }
-        public static Option AbsolutePaths { get; private set; }
-        public static Option Help { get; private set; }
-        public static List<Option> AvailableOptions { get; private set; }
-
-        public static HashSet<Option> GetOptions(string[] arguments)
-        {
-            var list = new HashSet<Option>();
-            foreach (var arg in arguments)
-            {
-                foreach (var option in AvailableOptions)
-                {
-                    if (arg == option.Name)
-                    {
-                        list.Add(option);
-                    }
-                }
-            }
-            return list;
         }
     }
 }
