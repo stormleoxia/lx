@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Lx.Tools.Projects.SourceDump
+namespace Lx.Tools.Common
 {
     public class UPathComponents
     {

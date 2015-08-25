@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using Lx.Tools.Projects.SourceDump;
 using NUnit.Framework;
 
-namespace Lx.Tools.Projects.Tests
+namespace Lx.Tools.Common.Tests
 {
     [TestFixture]
     public class UPathTest
@@ -121,7 +120,7 @@ namespace Lx.Tools.Projects.Tests
         {
             var path1 = new UPath("FileNotExists.cs");
             var path2 = new UPath("../NotExisting");
-            Assert.AreEqual("", path2.MakeRelativeUPath(path1).ToString());
+            var res = path2.MakeRelativeUPath(path1).ToString();
         }
 
         /// <summary>
@@ -132,14 +131,14 @@ namespace Lx.Tools.Projects.Tests
         {
             var path1 = new UPath(@"D:\FileNotExists.cs");
             var path2 = new UPath(@"C:\NotExisting");
-            Assert.AreEqual("", path2.MakeRelativeUPath(path1).ToString());
+            var res = path2.MakeRelativeUPath(path1).ToString();
         }
 
         [Test]
         public void TestWinVsUnixRoots()
         {
-            var path1 = new UPath(_unixRooted);
-            var path2 = new UPath(_winCurDir);
+            var path1 = new UPath(_winCurDir.Replace('\\', '/') + "/root.cs");
+            var path2 = new UPath(_winCurDir.Replace('/', '\\'));
             Assert.AreEqual("root.cs", path2.MakeRelativeUPath(path1).ToString());
         }
     }

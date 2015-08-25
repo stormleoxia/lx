@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lx.Tools.Projects.SourceDump;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Lx.Tools.Projects.Tests
+namespace Lx.Tools.Common.Tests
 {
     [TestFixture]
     public class OptionsTest

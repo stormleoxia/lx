@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using Lx.Tools.Common;
 using Microsoft.Build.Evaluation;
 
 namespace Lx.Tools.Projects.SourceDump

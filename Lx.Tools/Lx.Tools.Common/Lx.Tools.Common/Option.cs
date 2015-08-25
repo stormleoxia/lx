@@ -1,6 +1,6 @@
 using System;
 
-namespace Lx.Tools.Projects.SourceDump
+namespace Lx.Tools.Common
 {
     public class Option : IEquatable<Option>
     {

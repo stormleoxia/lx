@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Lx.Tools.Projects.SourceDump
+namespace Lx.Tools.Common
 {
     /// <summary>
     ///     Repository for all available options.
@@ -49,7 +49,7 @@ namespace Lx.Tools.Projects.SourceDump
         public static HashSet<Option> GetOptions(string[] arguments)
         {
             var list = new HashSet<Option>();
-            for (int index = 0; index < arguments.Length; index++)
+            for (var index = 0; index < arguments.Length; index++)
             {
                 var arg = arguments[index];
                 foreach (var option in AvailableOptions)

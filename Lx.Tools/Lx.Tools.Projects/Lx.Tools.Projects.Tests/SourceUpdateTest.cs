@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Lx.Tools.Common;
 using Lx.Tools.Projects.SourceDump;
 using NUnit.Framework;
 
@@ -77,14 +79,29 @@ namespace Lx.Tools.Projects.Tests
         public void TestRelativePaths()
         {
             var dumper = new SourceDumper(_curDir, new HashSet<Option> {Options.RelativePaths});
-            var result =
-                dumper.Dump(new List<string> {@"..\winfile.cs", "../unixfile.cs", _windowsRooted, _unixRooted}).ToList();
+            string firstFoundFile = null;
+            var higherDirectory = _curDir;
+            var relativePath = string.Empty;
+            while (firstFoundFile == null)
+            {                
+                relativePath = (string.IsNullOrEmpty(relativePath)) ? ".." : Path.Combine(relativePath, "..");
+                higherDirectory = Path.Combine(higherDirectory, "..");
+                firstFoundFile = Directory.GetFiles(higherDirectory).FirstOrDefault();
+            }
+            var fileName = Path.GetFileName(firstFoundFile);
+            var unixRelative = Path.Combine(relativePath, fileName).Replace("\\", "/");
+            var winRelative = Path.Combine(relativePath, fileName).Replace('/', '\\');
+            var winRooted = firstFoundFile.Replace('/', '\\');
+            var unixRooted = firstFoundFile.Replace("\\", "/");
+            var result = dumper.Dump(new List<string> {unixRelative, winRelative, winRooted, unixRooted}).ToList();
+
+
             Assert.IsNotNull(result);
             Assert.IsNotEmpty(result);
-            Assert.AreEqual(@"..\winfile.cs", result[0]);
-            Assert.AreEqual("../unixfile.cs", result[1]);
-            Assert.AreEqual(@"mywin_file.cs", result[2]);
-            Assert.AreEqual(@"root.cs", result[3]);
+            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[0]);
+            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1]);
+            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[2]);
+            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[3]);
         }
 
         [Test]
@@ -98,7 +115,7 @@ namespace Lx.Tools.Projects.Tests
             Assert.AreEqual(@"..\winfile.cs", result[0]);
             Assert.AreEqual(@"../unixfile.cs", result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
-            Assert.AreEqual(_unixRooted.Replace('/', '\\'), result[3]);
+            Assert.AreEqual(_unixRooted, result[3]);
         }
     }
 }

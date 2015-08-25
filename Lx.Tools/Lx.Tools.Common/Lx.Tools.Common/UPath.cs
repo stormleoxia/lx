@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
-namespace Lx.Tools.Projects.SourceDump
+namespace Lx.Tools.Common
 {
     public class UPath
     {
@@ -84,10 +85,18 @@ namespace Lx.Tools.Projects.SourceDump
 
         private UPath MakeRelativeUPath(UPathComponents referal, UPathComponents referee)
         {
+            if (referal.Drive != referee.Drive)
+            {
+                throw new InvalidOperationException("Making relative path between path on two differents drives " + referal + " <> " + referee);
+            }
             var fileComponents = new Queue<string>(referee.Components.Take(referee.Components.Length - 1));
             var components = new Queue<string>(referal.Components);
             var newComponents = new List<string>();
             var differencefound = false;
+            if (CheckDoubleDots(components, fileComponents))
+            {
+                throw new InvalidOperationException("Cannot infer the name of a directory for relative path from " + referal + " to " + referee);
+            }
             while (components.Count > 0 && fileComponents.Count > 0)
             {
                 var fileComponent = fileComponents.Peek();
@@ -115,6 +124,18 @@ namespace Lx.Tools.Projects.SourceDump
             }
             newComponents.Add(referee.Components.Last());
             return new UPath(new UPathComponents(referal.Drive, newComponents.ToArray(), false));
+        }
+
+        private bool CheckDoubleDots(Queue<string> components, Queue<string> fileComponents)
+        {
+            var fileDoubledots = CountDoubleDots(fileComponents);
+            var doubleDots = CountDoubleDots(components);
+            return (components.Count > 0 && doubleDots != fileDoubledots);
+        }
+
+        private int CountDoubleDots(Queue<string> components)
+        {
+            return components.Count(x => x == "..");
         }
 
         public override string ToString()

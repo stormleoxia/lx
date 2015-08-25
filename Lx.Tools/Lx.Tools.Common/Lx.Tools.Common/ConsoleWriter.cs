@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Lx.Tools.Projects.SourceDump
+namespace Lx.Tools.Common
 {
-    internal sealed class ConsoleWriter : IWriter
+    public sealed class ConsoleWriter : IWriter
     {
         public void WriteLine(string text)
         {
@@ -11,7 +11,6 @@ namespace Lx.Tools.Projects.SourceDump
 
         public void Dispose()
         {
-            
         }
     }
 }

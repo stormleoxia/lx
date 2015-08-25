@@ -1,8 +1,8 @@
 using System.IO;
 
-namespace Lx.Tools.Projects.SourceDump
+namespace Lx.Tools.Common
 {
-    internal sealed class FileWriter : IWriter
+    public sealed class FileWriter : IWriter
     {
         private readonly StreamWriter _writer;
 
