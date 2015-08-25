@@ -78,6 +78,7 @@ namespace Lx.Tools.Projects.Tests
         [Test]
         public void TestRelativePaths()
         {
+            Console.WriteLine("Current Directory: " + _curDir);
             var dumper = new SourceDumper(_curDir, new HashSet<Option> {Options.RelativePaths});
             string firstFoundFile = null;
             var higherDirectory = _curDir;
@@ -98,10 +99,10 @@ namespace Lx.Tools.Projects.Tests
 
             Assert.IsNotNull(result);
             Assert.IsNotEmpty(result);
-            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[0]);
-            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1]);
-            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[2]);
-            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[3]);
+            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[0], "1: For " + unixRelative);
+            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1], "2: For " + winRelative);
+            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[2], "3: For " + winRooted);
+            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[3], "4: For " + unixRooted);
         }
 
         [Test]
