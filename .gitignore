@@ -2,3 +2,14 @@
 /Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.SourceDump/obj
 /Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Tests/obj
 /Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Tests/bin
+/Lx.Tools/Lx.Tools.Assemblies/Lx.Tools.Assemblies.Compare/bin
+/Lx.Tools/Lx.Tools.Assemblies/Lx.Tools.Assemblies.Compare/obj
+/Lx.Tools/Lx.Tools.Common/Lx.Tools.Common/bin
+/Lx.Tools/Lx.Tools.Common/Lx.Tools.Common/obj
+/Lx.Tools/Lx.Tools.Common/Lx.Tools.Common.Tests/obj
+/Lx.Tools/Lx.Tools.Common/Lx.Tools.Common.Tests/bin
+/Lx.Tools/Lx.Tools.Projects/*.suo
+/Lx.Tools/Lx.Tools.Assemblies/packages
+/Lx.Tools/Lx.Tools.Projects/packages
+/Lx.Tools/Lx.Tools.Assemblies/*.suo
+/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.SourceDump/*.user
