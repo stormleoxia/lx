@@ -44,7 +44,7 @@ namespace Lx.Tools.Projects.SourceDump
                             }
                         }
                     }
-                    var file = new UPath(res);
+                    var file = new UPath(_referenceDirectory, res);
                     res = _directoryPath.MakeRelativeUPath(file).ToString();
                 }
                 if (_options.Contains(Options.WindowsPaths))

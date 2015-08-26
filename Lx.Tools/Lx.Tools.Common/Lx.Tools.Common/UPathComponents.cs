@@ -78,6 +78,10 @@ namespace Lx.Tools.Common
                 {
                     return y;
                 }
+                if (string.IsNullOrEmpty(y))
+                {
+                    return x;
+                }
                 return x + Path.DirectorySeparatorChar + y;
             });
         }

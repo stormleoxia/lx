@@ -47,6 +47,15 @@ namespace Lx.Tools.Common.Tests
             Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
         }
 
+
+        [Test]
+        public void TestRelativePathInCurrentDir()
+        {
+            var path1 = new UPath("mydir\\dir2\\file.cs");
+            var path2 = new UPath("mydir");
+            Assert.AreEqual("dir2/file.cs".Replace('/', Path.DirectorySeparatorChar), path2.MakeRelativeUPath(path1).ToString());
+        }
+
         [Test]
         public void TestRelativePath3()
         {
@@ -71,12 +80,12 @@ namespace Lx.Tools.Common.Tests
             Assert.AreEqual("dir3" + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
         }
 
-        [Test, ExpectedException(typeof (InvalidOperationException))]
+        [Test]
         public void TestRelativeToAbsolutePath()
         {
             var path1 = new UPath("../file.cs");
             var path2 = new UPath(_winCurDir);
-            Assert.AreEqual(Directory.GetParent(_curDir) + "file.cs", path2.MakeRelativeUPath(path1).ToString());
+            Assert.AreEqual("../file.cs".Replace('/', Path.DirectorySeparatorChar), path2.MakeRelativeUPath(path1).ToString());
         }
 
         [Test]
@@ -140,6 +149,14 @@ namespace Lx.Tools.Common.Tests
             var path1 = new UPath(_winCurDir.Replace('\\', '/') + "/root.cs");
             var path2 = new UPath(_winCurDir.Replace('/', '\\'));
             Assert.AreEqual("root.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void CheckReferenceDirectoryConstructorProvideAbsolutePath()
+        {
+            var path = new UPath(_curDir, "..\\..");
+            var info = new DirectoryInfo(_curDir);
+            Assert.AreEqual(info.Parent.Parent.FullName, path.ToString());
         }
     }
 }

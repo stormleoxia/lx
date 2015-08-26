@@ -48,6 +48,11 @@ namespace Lx.Tools.Common
             }
         }
 
+        public UPath(string referenceDirectory, string file) : this(Path.Combine(referenceDirectory, file))
+        {
+            
+        }
+
         public bool HasAbsolute
         {
             get { return _absolute != null; }
@@ -78,8 +83,12 @@ namespace Lx.Tools.Common
             {
                 return MakeRelativeUPath(_relative, file._relative);
             }
+            if (file.HasRelative && HasAbsolute)
+            {
+                return file;
+            }
             throw new InvalidOperationException(
-                "We cannot make relative path between two not found absolute and relative paths:" + this + " and " +
+                "We cannot make relative path between two not found relative and absolute paths:" + this + " and " +
                 file);
         }
 
@@ -140,29 +149,11 @@ namespace Lx.Tools.Common
 
         public override string ToString()
         {
-            var first = string.Empty;
-            string[] components;
             if (_relative != null)
             {
-                components = _relative.Components;
+                return _relative.ToString();
             }
-            else
-            {
-                components = _absolute.Components;
-                first = _absolute.Drive;
-                if (!string.IsNullOrEmpty(first))
-                {
-                    first += ":";
-                }
-            }
-            return components.Aggregate(first, (x, y) =>
-            {
-                if (string.IsNullOrEmpty(x))
-                {
-                    return y;
-                }
-                return x + Path.DirectorySeparatorChar + y;
-            });
+            return _absolute.ToString();
         }
     }
 }

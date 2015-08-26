@@ -40,8 +40,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly\ApiExtractor.cs" />
+    <Compile Include="Assembly\AssemblyApi.cs" />
+    <Compile Include="Assembly\TypeDefinition.cs" />
+    <Compile Include="Assembly\MemberSignature.cs" />
+    <Compile Include="Assembly\NamespaceDefinition.cs" />
     <Compile Include="ConsoleWriter.cs" />
     <Compile Include="FileWriter.cs" />
+    <Compile Include="Assembly\IApiExtractor.cs" />
     <Compile Include="IWriter.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Options.cs" />
