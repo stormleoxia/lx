@@ -164,7 +164,7 @@ namespace Lx.Tools.Common.Tests
         {
             var path = new UPath(_unixCurDir, "..\\..");
             var info = new DirectoryInfo(_curDir);
-            var expected = Unixify(info.Parent.Parent.FullName).Replace('/', '\\');
+            var expected = Unixify(info.Parent.Parent.FullName).Replace('/', Path.DirectorySeparatorChar);
             Assert.AreEqual(expected, path.ToString());
         }
 
