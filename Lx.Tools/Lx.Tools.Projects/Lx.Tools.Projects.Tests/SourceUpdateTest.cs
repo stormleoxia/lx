@@ -84,7 +84,7 @@ namespace Lx.Tools.Projects.Tests
             var higherDirectory = _curDir;
             var relativePath = string.Empty;
             while (firstFoundFile == null)
-            {                
+            {
                 relativePath = (string.IsNullOrEmpty(relativePath)) ? ".." : Path.Combine(relativePath, "..");
                 higherDirectory = Path.Combine(higherDirectory, "..");
                 firstFoundFile = Directory.GetFiles(higherDirectory).FirstOrDefault();
@@ -92,7 +92,7 @@ namespace Lx.Tools.Projects.Tests
             var fileName = Path.GetFileName(firstFoundFile);
             var unixRelative = Path.Combine(relativePath, fileName).Replace("\\", "/");
             var winRelative = Path.Combine(relativePath, fileName).Replace('/', '\\');
-            var winRooted = firstFoundFile.Replace('/', '\\');
+            var winRooted = firstFoundFile.WindowsifyPath();
             var unixRooted = firstFoundFile.Replace("\\", "/");
             var result = dumper.Dump(new List<string> {unixRelative, winRelative, winRooted, unixRooted}).ToList();
 
@@ -117,6 +117,21 @@ namespace Lx.Tools.Projects.Tests
             Assert.AreEqual(@"../unixfile.cs", result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
             Assert.AreEqual(_unixRooted, result[3]);
+        }
+
+
+    }
+
+    public static class PathEx
+    {
+        public static string WindowsifyPath(this string path)
+        {
+            var res = path.Replace('/', '\\');
+            if (!path.Contains(":"))
+            {
+                return "C:" + res;
+            }
+            return res;
         }
     }
 }
