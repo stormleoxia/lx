@@ -71,6 +71,10 @@ namespace Lx.Tools.Common
                 {
                     first += ":";
                 }
+                else
+                {
+                    first = Path.DirectorySeparatorChar.ToString();
+                }
             }
             return Components.Aggregate(first, (x, y) =>
             {
@@ -81,6 +85,10 @@ namespace Lx.Tools.Common
                 if (string.IsNullOrEmpty(y))
                 {
                     return x;
+                }
+                if (x == Path.DirectorySeparatorChar.ToString())
+                {
+                    return x + y;
                 }
                 return x + Path.DirectorySeparatorChar + y;
             });

@@ -25,7 +25,7 @@ namespace Lx.Tools.Projects.Tests
             if (!_winCurDir.Contains(":"))
             {
                 _unixCurDir = _winCurDir;
-                _winCurDir = "C:" + _winCurDir;
+                _winCurDir = "C:" + _winCurDir.Replace('/', '\\');
             }
             else
             {

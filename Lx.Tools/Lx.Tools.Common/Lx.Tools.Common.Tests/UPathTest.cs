@@ -158,5 +158,23 @@ namespace Lx.Tools.Common.Tests
             var info = new DirectoryInfo(_curDir);
             Assert.AreEqual(info.Parent.Parent.FullName, path.ToString());
         }
+
+        [Test]
+        public void CheckReferenceDirectoryConstructorProvideAbsolutePathWithUnixPaths()
+        {
+            var path = new UPath(_unixCurDir, "..\\..");
+            var info = new DirectoryInfo(_curDir);
+            var expected = Unixify(info.Parent.Parent.FullName).Replace('/', '\\');
+            Assert.AreEqual(expected, path.ToString());
+        }
+
+        private string Unixify(string path)
+        {
+            if (!path.Contains(":"))
+            {
+                return path.Replace('\\', '/');
+            }
+            return path.Split(':')[1].Replace('\\', '/');
+        }
     }
 }
