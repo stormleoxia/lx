@@ -5,6 +5,7 @@ using System.Linq;
 using Lx.Tools.Common;
 using Lx.Tools.Projects.SourceDump;
 using NUnit.Framework;
+using SourceDumperOptions = Lx.Tools.Common.SourceDumperOptions;
 
 namespace Lx.Tools.Projects.Tests
 {
@@ -50,7 +51,7 @@ namespace Lx.Tools.Projects.Tests
         [Test]
         public void TestUnixPaths()
         {
-            var dumper = new SourceDumper(_curDir, new HashSet<Option> {Options.UnixPaths});
+            var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.UnixPaths});
             var result =
                 dumper.Dump(new List<string> {@"..\winfile.cs", "../unixfile.cs", _windowsRooted, _unixRooted}).ToList();
             Assert.IsNotNull(result);
@@ -64,7 +65,7 @@ namespace Lx.Tools.Projects.Tests
         [Test]
         public void TestWinPaths()
         {
-            var dumper = new SourceDumper(_curDir, new HashSet<Option> {Options.WindowsPaths});
+            var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.WindowsPaths});
             var result =
                 dumper.Dump(new List<string> {@"..\winfile.cs", "../unixfile.cs", _windowsRooted, _unixRooted}).ToList();
             Assert.IsNotNull(result);
@@ -79,7 +80,7 @@ namespace Lx.Tools.Projects.Tests
         public void TestRelativePaths()
         {
             Console.WriteLine("Current Directory: " + _curDir);
-            var dumper = new SourceDumper(_curDir, new HashSet<Option> {Options.RelativePaths});
+            var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.RelativePaths});
             string firstFoundFile = null;
             var higherDirectory = _curDir;
             var relativePath = string.Empty;
@@ -108,7 +109,7 @@ namespace Lx.Tools.Projects.Tests
         [Test]
         public void TestAbsolutePaths()
         {
-            var dumper = new SourceDumper(_curDir, new HashSet<Option> {Options.AbsolutePaths});
+            var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.AbsolutePaths});
             var result =
                 dumper.Dump(new List<string> {@"..\winfile.cs", "../unixfile.cs", _windowsRooted, _unixRooted}).ToList();
             Assert.IsNotNull(result);

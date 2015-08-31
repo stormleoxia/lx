@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Lx.Tools.Common
+namespace Lx.Tools.Common.Wrappers
 {
     public sealed class FileWriter : IWriter
     {

@@ -5,15 +5,23 @@ namespace Lx.Tools.Common.Tests
     [TestFixture]
     public class OptionsTest
     {
+        private SourceDumperOptions _options;
+
+        [SetUp]
+        public void Setup()
+        {
+            _options = new SourceDumperOptions();
+        }
+
 
         [Test]
         public void GetOptionsShouldDetectUnixPath()
         {
             var arguments = new[] {"--unix-paths", "--myfile"};
-            var options = Options.GetOptions(arguments);
+            var options = _options.ParseOptions(arguments);
             Assert.IsNotNull(options);
             Assert.AreEqual(1, options.Count);
-            Assert.IsTrue(options.Contains(Options.UnixPaths));
+            Assert.IsTrue(options.Contains(SourceDumperOptions.UnixPaths));
             Assert.IsNull(arguments[0]);
             Assert.IsNotNull(arguments[1]);
         }
@@ -23,10 +31,10 @@ namespace Lx.Tools.Common.Tests
         public void GetOptionsShouldDetectWinPath()
         {
             var arguments = new[] { "-unix-paths", "--windows-paths" };
-            var options = Options.GetOptions(arguments);
+            var options = _options.ParseOptions(arguments);
             Assert.IsNotNull(options);
             Assert.AreEqual(1, options.Count);
-            Assert.IsTrue(options.Contains(Options.WindowsPaths));
+            Assert.IsTrue(options.Contains(SourceDumperOptions.WindowsPaths));
             Assert.IsNotNull(arguments[0]);
             Assert.IsNull(arguments[1]);
         }
@@ -36,10 +44,10 @@ namespace Lx.Tools.Common.Tests
         public void GetOptionsShouldDetectRelativePath()
         {
             var arguments = new[] { "-unix-paths", "--relative-paths" };
-            var options = Options.GetOptions(arguments);
+            var options = _options.ParseOptions(arguments);
             Assert.IsNotNull(options);
             Assert.AreEqual(1, options.Count);
-            Assert.IsTrue(options.Contains(Options.RelativePaths));
+            Assert.IsTrue(options.Contains(SourceDumperOptions.RelativePaths));
             Assert.IsNotNull(arguments[0]);
             Assert.IsNull(arguments[1]);
         }
@@ -48,10 +56,10 @@ namespace Lx.Tools.Common.Tests
         public void GetOptionsShouldDetectAbsolutePath()
         {
             var arguments = new[] { "-unix-paths", "--absolute-paths" };
-            var options = Options.GetOptions(arguments);
+            var options = _options.ParseOptions(arguments);
             Assert.IsNotNull(options);
             Assert.AreEqual(1, options.Count);
-            Assert.IsTrue(options.Contains(Options.AbsolutePaths));
+            Assert.IsTrue(options.Contains(SourceDumperOptions.AbsolutePaths));
             Assert.IsNotNull(arguments[0]);
             Assert.IsNull(arguments[1]);
         }
@@ -60,10 +68,10 @@ namespace Lx.Tools.Common.Tests
         public void GetOptionsShouldDetectOutputFile()
         {
             var arguments = new[] { "myfiles", "--output-file" };
-            var options = Options.GetOptions(arguments);
+            var options = _options.ParseOptions(arguments);
             Assert.IsNotNull(options);
             Assert.AreEqual(1, options.Count);
-            Assert.IsTrue(options.Contains(Options.OutputFile));
+            Assert.IsTrue(options.Contains(SourceDumperOptions.OutputFile));
             Assert.IsNotNull(arguments[0]);
             Assert.IsNull(arguments[1]);
         }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Lx.Tools.Common
+namespace Lx.Tools.Common.Program
 {
     public class Option : IEquatable<Option>
     {

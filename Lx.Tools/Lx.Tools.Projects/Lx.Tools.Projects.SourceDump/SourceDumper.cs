@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lx.Tools.Common;
+using Lx.Tools.Common.Program;
 
 namespace Lx.Tools.Projects.SourceDump
 {
@@ -25,11 +26,11 @@ namespace Lx.Tools.Projects.SourceDump
             foreach (var source in sources)
             {
                 var res = source;
-                if (_options.Contains(Options.UnixPaths))
+                if (_options.Contains(SourceDumperOptions.UnixPaths))
                 {
                     res = res.Replace('\\', '/');
                 }
-                if (_options.Contains(Options.RelativePaths))
+                if (_options.Contains(SourceDumperOptions.RelativePaths))
                 {
                     if (IsPathRooted(res))
                     {
@@ -37,21 +38,19 @@ namespace Lx.Tools.Projects.SourceDump
                         {
                             if (_referenceDirectory[0] != res[0])
                             {
-                                Console.Error.WriteLine("csproj in " + _referenceDirectory +
+                                throw new InvalidOperationException("csproj in " + _referenceDirectory +
                                                         " is not on the same drive that " + res);
-                                Console.Error.WriteLine("Abort.");
-                                Program.Exit(0);
                             }
                         }
                     }
                     var file = new UPath(_referenceDirectory, res);
                     res = _directoryPath.MakeRelativeUPath(file).ToString();
                 }
-                if (_options.Contains(Options.WindowsPaths))
+                if (_options.Contains(SourceDumperOptions.WindowsPaths))
                 {
                     res = res.Replace('/', '\\');
                 }
-                if (_options.Contains(Options.AbsolutePaths))
+                if (_options.Contains(SourceDumperOptions.AbsolutePaths))
                 {
                     if (!IsPathRooted(res)) // if path is rooted
                     {

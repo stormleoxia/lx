@@ -1,15 +1,17 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Lx.Tools.Common.Program;
+using Lx.Tools.Common.Wrappers;
 
-namespace Lx.Tools.Common
+namespace Lx.Tools.Projects.SourceDump
 {
     /// <summary>
     ///     Repository for all available options.
     /// </summary>
-    public class Options
+    public class SourceDumperOptions : Options
     {
-        static Options()
+        static SourceDumperOptions()
         {
-            Help = new Option {Name = "--help", Explanation = "Display this text"};
+            Help = Options.Help;
             UnixPaths = new Option {Name = "--unix-paths", Explanation = "Convert source path to unix paths"};
             WindowsPaths = new Option {Name = "--windows-paths", Explanation = "Convert source path to windows paths"};
             RelativePaths = new Option
@@ -27,15 +29,19 @@ namespace Lx.Tools.Common
                 Name = "--output-file",
                 Explanation = "Writes output in a file <csproj>.dll.sources in the same directory of the project file"
             };
-            AvailableOptions = new List<Option>
+        }
+
+        public SourceDumperOptions(IEnvironment environment, IConsole console)
+            : base(environment, console)
+        {
+            AvailableOptions.AddRange(new List<Option>
             {
-                Help,
                 UnixPaths,
                 WindowsPaths,
                 RelativePaths,
                 AbsolutePaths,
                 OutputFile
-            };
+            });
         }
 
         public static Option UnixPaths { get; private set; }
@@ -43,25 +49,8 @@ namespace Lx.Tools.Common
         public static Option RelativePaths { get; private set; }
         public static Option AbsolutePaths { get; private set; }
         public static Option Help { get; private set; }
-        public static List<Option> AvailableOptions { get; private set; }
         public static Option OutputFile { get; private set; }
 
-        public static HashSet<Option> GetOptions(string[] arguments)
-        {
-            var list = new HashSet<Option>();
-            for (var index = 0; index < arguments.Length; index++)
-            {
-                var arg = arguments[index];
-                foreach (var option in AvailableOptions)
-                {
-                    if (arg == option.Name)
-                    {
-                        list.Add(option);
-                        arguments[index] = null;
-                    }
-                }
-            }
-            return list;
-        }
+
     }
 }

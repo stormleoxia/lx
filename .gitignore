@@ -13,3 +13,9 @@
 /Lx.Tools/Lx.Tools.Projects/packages
 /Lx.Tools/Lx.Tools.Assemblies/*.suo
 /Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.SourceDump/*.user
+/Lx.Tools/Lx.Tools.Assemblies/Lx.Tools.Assemblies.Tests/bin
+/Lx.Tools/Lx.Tools.Assemblies/Lx.Tools.Assemblies.Tests/obj
+/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Sync/Lx.Tools.Projects.Sync.csproj.user
+/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Sync/bin
+/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Sync/obj
+/Lx.Tools/Lx.Tools.Projects/OpenCover
