@@ -54,15 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program\Arguments.cs" />
-    <Compile Include="Assembly\ApiExtractor.cs" />
-    <Compile Include="Assembly\AssemblyApi.cs" />
-    <Compile Include="Assembly\TypeDefinition.cs" />
-    <Compile Include="Assembly\MemberSignature.cs" />
-    <Compile Include="Assembly\NamespaceDefinition.cs" />
+    <Compile Include="Assemblies\ApiExtractor.cs" />
+    <Compile Include="Assemblies\AssemblyApi.cs" />
+    <Compile Include="Assemblies\TypeDefinition.cs" />
+    <Compile Include="Assemblies\MemberSignature.cs" />
+    <Compile Include="Assemblies\NamespaceDefinition.cs" />
     <Compile Include="UnityContainerEx.cs" />
     <Compile Include="Wrappers\ConsoleWriter.cs" />
     <Compile Include="Wrappers\FileWriter.cs" />
-    <Compile Include="Assembly\IApiExtractor.cs" />
+    <Compile Include="Assemblies\IApiExtractor.cs" />
     <Compile Include="HashSetEx.cs" />
     <Compile Include="Wrappers\FileSystem.cs" />
     <Compile Include="Wrappers\IConsole.cs" />

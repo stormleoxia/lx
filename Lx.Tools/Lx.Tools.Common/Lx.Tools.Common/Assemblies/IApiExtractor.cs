@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lx.Tools.Common.Assembly
+namespace Lx.Tools.Common.Assemblies
 {
     public interface IApiExtractor : IDisposable
     {

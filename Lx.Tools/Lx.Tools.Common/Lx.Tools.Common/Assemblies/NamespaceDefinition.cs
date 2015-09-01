@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lx.Tools.Common.Assembly
+namespace Lx.Tools.Common.Assemblies
 {
     [Serializable]
     public class NamespaceDefinition

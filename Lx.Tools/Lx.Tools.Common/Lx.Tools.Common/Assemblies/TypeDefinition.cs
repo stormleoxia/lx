@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Lx.Tools.Common.Assembly
+namespace Lx.Tools.Common.Assemblies
 {
     [Serializable]
     public class TypeDefinition
     {
-        private Dictionary<string, MemberSignature> _signatures = new Dictionary<string, MemberSignature>(); 
+        private readonly Dictionary<string, MemberSignature> _signatures = new Dictionary<string, MemberSignature>(); 
         public List<MemberSignature> Members { get; set; }
 
         public TypeDefinition()
@@ -22,7 +22,6 @@ namespace Lx.Tools.Common.Assembly
             Name = type.Name;
             AddMembers(type.GetMembers(BindingFlags.Public | BindingFlags.Instance));
             AddMembers(type.GetMembers(BindingFlags.Public | BindingFlags.Static));
-            AddMembers(type.GetMembers(BindingFlags.Public | BindingFlags.GetProperty));
             AddMembers(type.GetMembers(BindingFlags.Public | BindingFlags.CreateInstance));
         }
 
@@ -30,6 +29,11 @@ namespace Lx.Tools.Common.Assembly
         {
             foreach (var member in members)
             {
+                if (member.MemberType == MemberTypes.Method &&
+                    (member.Name.StartsWith("get_") || member.Name.StartsWith("set_")))
+                {
+                    continue;
+                }
                 var signature = new MemberSignature(member);
                 MemberSignature sign;
                 if (!_signatures.TryGetValue(signature.Signature, out sign))

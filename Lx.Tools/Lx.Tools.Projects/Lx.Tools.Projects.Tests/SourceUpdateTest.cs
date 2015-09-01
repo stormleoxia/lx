@@ -120,7 +120,6 @@ namespace Lx.Tools.Projects.Tests
             Assert.AreEqual(_unixRooted, result[3]);
         }
 
-
     }
 
     public static class PathEx

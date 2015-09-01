@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Common
 {
@@ -10,6 +11,13 @@ namespace Lx.Tools.Common
     {
         private readonly UPathComponents _absolute;
         private readonly UPathComponents _relative;
+
+        static UPath()
+        {
+            FSystem = new FileSystem();
+        }
+
+        internal static IFileSystem FSystem { get; set; }
 
         public UPath(string path)
         {
@@ -23,12 +31,12 @@ namespace Lx.Tools.Common
             }
             if (_absolute == null)
             {
-                if (File.Exists(path))
+                if (FSystem.FileExists(path))
                 {
                     var fileInfo = new FileInfo(path);
                     _absolute = new UPathComponents(fileInfo.FullName, true);
                 }
-                else if (Directory.Exists(path))
+                else if (FSystem.DirectoryExists(path))
                 {
                     var directoryInfo = new DirectoryInfo(path);
                     _absolute = new UPathComponents(directoryInfo.FullName, true);

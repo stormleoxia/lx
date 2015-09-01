@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lx.Tools.Common.Assembly
+namespace Lx.Tools.Common.Assemblies
 {
     [Serializable]
     public class AssemblyApi

@@ -13,7 +13,7 @@ namespace Lx.Tools.Projects.SourceDump
     {
         private readonly IWriterFactory _factory;
 
-        public SourceDump(Options options, UsageDefinition definition, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter, 
+        public SourceDump(SourceDumperOptions options, UsageDefinition definition, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter, 
             IWriterFactory factory) :
             base(options, definition, environment, debugger, console, versionGetter)
         {

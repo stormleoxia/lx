@@ -1,16 +1,19 @@
 using System.IO;
 using System.Linq;
 using Lx.Tools.Common;
+using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
     public class ProjectUpdater
     {
         private readonly IProject _project;
+        private readonly IFileSystem _fileSystem;
 
-        public ProjectUpdater(IProject project)
+        public ProjectUpdater(IProject project, IFileSystem fileSystem)
         {
             _project = project;
+            _fileSystem = fileSystem;
         }
 
         public void Update(SourceComparison comparison)
@@ -20,7 +23,7 @@ namespace Lx.Tools.Projects.Sync
             foreach (var item in comparison.MissingFilesInProject)
             {
                 var fileName = Path.Combine(directory, item.Path);
-                if (File.Exists(fileName))
+                if (_fileSystem.FileExists(fileName))
                 {
                     var fileInfo = new FileInfo(fileName);
                     var path = new UPath(directory);

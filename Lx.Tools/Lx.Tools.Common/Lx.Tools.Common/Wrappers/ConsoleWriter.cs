@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Lx.Tools.Common.Wrappers
 {
-    public class ConsoleWriter : IWriter
+    public sealed class ConsoleWriter : IWriter
     {
         private readonly TextWriter _textWriter;
 
