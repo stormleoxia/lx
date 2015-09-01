@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+//using System.IO;
 using System.Linq;
-using System.Threading;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Common
@@ -31,15 +31,10 @@ namespace Lx.Tools.Common
             }
             if (_absolute == null)
             {
-                if (FSystem.FileExists(path))
+                var resolved = FSystem.ResolvePath(path);
+                if (resolved != null)
                 {
-                    var fileInfo = new FileInfo(path);
-                    _absolute = new UPathComponents(fileInfo.FullName, true);
-                }
-                else if (FSystem.DirectoryExists(path))
-                {
-                    var directoryInfo = new DirectoryInfo(path);
-                    _absolute = new UPathComponents(directoryInfo.FullName, true);
+                    _absolute = new UPathComponents(resolved, true);
                 }
             }
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Lx.Tools.Common.Wrappers;
 using Moq;
@@ -11,14 +13,12 @@ namespace Lx.Tools.Common.Tests
     {
         private Mock<IFileSystem> _fileSystem;
 
-
         [SetUp]
         public void Setup()
         {
             _fileSystem = new Mock<IFileSystem>();
             UPath.FSystem = _fileSystem.Object;
         }
-
 
         [TearDown]
         public void Teardown()

@@ -69,6 +69,7 @@
     <Compile Include="UPathTest.cs" />
     <Compile Include="UPathUnitTest.cs" />
     <Compile Include="UsageDefinition.cs" />
+    <Compile Include="Wrappers\FileSystemTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lx.Tools.Common\Lx.Tools.Common.csproj">

@@ -8,5 +8,6 @@ namespace Lx.Tools.Common.Wrappers
         bool FileExists(string path);
         string[] GetFiles(string path, string filter, SearchOption searchOption);
         TextReader OpenText(string filePath);
+        string ResolvePath(string path);
     }
 }

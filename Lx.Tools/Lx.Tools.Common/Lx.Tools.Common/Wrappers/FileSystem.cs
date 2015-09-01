@@ -24,5 +24,17 @@ namespace Lx.Tools.Common.Wrappers
             return File.OpenText(filePath);
         }
 
+        public string ResolvePath(string path)
+        {
+            if (DirectoryExists(path))
+            {
+                return new DirectoryInfo(path).FullName;
+            }
+            else if (FileExists(path))
+            {
+                return new FileInfo(path).FullName;
+            }
+            return null;
+        }
     }
 }
