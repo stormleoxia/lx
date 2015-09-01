@@ -1,40 +1,70 @@
-﻿using Lx.Tools.Common.Wrappers;
-using Microsoft.Practices.Unity;
+﻿using System.Collections.Generic;
+using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
     public class ProjectFactory : IProjectFactory
     {
-        private readonly IUnityContainer _container;
+        private readonly IConsole _console;
         private readonly IFileSystem _fileSystem;
+        private readonly IDictionary<string, IProject> _projects = new Dictionary<string, IProject>(); 
 
-        public ProjectFactory(IUnityContainer container, IFileSystem fileSystem)
+        public ProjectFactory(IConsole console, IFileSystem fileSystem)
         {
-            _container = container;
+            _console = console;
             _fileSystem = fileSystem;
         }
 
-        public IProject CreateProject(string projectPath)
+        internal IProject CreateProject(string projectPath)
         {
-            return new ProjectWrapper(projectPath);
+            IProject project;
+            if (!_projects.TryGetValue(projectPath, out project))
+            {
+                project = new ProjectWrapper(projectPath);
+                _projects[projectPath] = project;
+            }
+            return project;
         }
 
-        public ProjectUpdater CreateProjectUpdater(IProject project)
+        public IProjectItemsProvider CreateProjectItemsProvider(string projectPath, Targets target)
         {
-            return new ProjectUpdater(project, _fileSystem);
+            return new ProjectItemsProvider(CreateProject(projectPath));
         }
 
-        public ISourceFinder CreateSourceFileFinder(string projectPath, Targets target)
+        public ProjectUpdater CreateProjectUpdater(string projectPath)
         {
-            var sourceFinder = _container.Resolve<ISourceFinder>(
-                new ParameterOverride("projectFilePath", projectPath),
-                new ParameterOverride("target", target));
-            return sourceFinder;
+            return new ProjectUpdater(CreateProject(projectPath), _fileSystem);
+        }
+
+        public ISourcesProvider CreateSourcesProvider(string projectPath, Targets target)
+        {
+            return new SourcesProvider(projectPath, target, _fileSystem, _console);
         }
 
         public ISourceComparer CreateSourceComparer()
         {
             return new SourceComparer();
+        }
+    }
+
+    public class ProjectItemsProvider : IProjectItemsProvider
+    {
+        private readonly IProject _project;
+
+        public ProjectItemsProvider(IProject project)
+        {
+            _project = project;
+        }
+
+        public HashSet<string> GetItems()
+        {
+            var hashSet = new HashSet<string>();
+            var items = _project.GetItems("Compile");
+            foreach (var item in items)
+            {
+                hashSet.Add(item.EvaluatedInclude.Replace('\\', '/'));
+            }
+            return hashSet;
         }
     }
 }

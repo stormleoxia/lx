@@ -1,16 +1,24 @@
-﻿using NUnit.Framework;
+﻿using System.Runtime.InteropServices;
+using Lx.Tools.Common.Wrappers;
+using Lx.Tools.Projects.SourceDump;
+using Moq;
+using NUnit.Framework;
 
-namespace Lx.Tools.Common.Tests
+namespace Lx.Tools.Projects.Tests.SourceDump
 {
     [TestFixture]
-    public class OptionsTest
+    public class SourceDumperOptionsTest
     {
         private SourceDumperOptions _options;
+        private Mock<IEnvironment> _environment;
+        private Mock<IConsole> _console;
 
         [SetUp]
         public void Setup()
         {
-            _options = new SourceDumperOptions();
+            _environment = new Mock<IEnvironment>();
+            _console = new Mock<IConsole>();
+            _options = new SourceDumperOptions(_environment.Object, _console.Object);
         }
 
 

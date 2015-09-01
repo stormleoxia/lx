@@ -4,7 +4,7 @@ using Lx.Tools.Common;
 
 namespace Lx.Tools.Projects.Sync
 {
-    internal class SourceComparer : ISourceComparer
+    public class SourceComparer : ISourceComparer
     {
         public SourceComparison Compare(HashSet<string> itemsInCsProj, HashSet<string> sourcesInSourceFile)
         {

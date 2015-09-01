@@ -59,7 +59,7 @@
     <Compile Include="IProject.cs" />
     <Compile Include="IProjectFactory.cs" />
     <Compile Include="ISourceComparer.cs" />
-    <Compile Include="ISourceFinder.cs" />
+    <Compile Include="ISourcesProvider.cs" />
     <Compile Include="ISyncFactory.cs" />
     <Compile Include="MissingFileInProject.cs" />
     <Compile Include="MissingFileInSource.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="SourceComparer.cs" />
     <Compile Include="SourceComparison.cs" />
     <Compile Include="SourceFileFinder.cs" />
+    <Compile Include="SourcesProvider.cs" />
     <Compile Include="ProgramSync.cs" />
     <Compile Include="ProgramOptions.cs" />
     <Compile Include="Targets.cs" />

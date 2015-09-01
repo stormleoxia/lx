@@ -10,7 +10,7 @@ namespace Lx.Tools.Projects.Tests.Sync
     [TestFixture]
     public class ProgramTest
     {
-        private Mock<ISourceFinder> _sourceFinder;
+        private Mock<ISourcesProvider> _sourceFinder;
         private Mock<IProjectFactory> _projectFactory;
         private Mock<ISourceComparer> _sourceComparer;
         private Mock<ISyncFactory> _syncFactory;
@@ -37,7 +37,7 @@ namespace Lx.Tools.Projects.Tests.Sync
 
         private void ConfigureContainer(UnityContainer container)
         {
-            _sourceFinder = container.RegisterMoqInstance<ISourceFinder>();
+            _sourceFinder = container.RegisterMoqInstance<ISourcesProvider>();
             _projectFactory = container.RegisterMoqInstance<IProjectFactory>();
             _sourceComparer = container.RegisterMoqInstance<ISourceComparer>();
             _syncFactory = container.RegisterMoqInstance<ISyncFactory>();

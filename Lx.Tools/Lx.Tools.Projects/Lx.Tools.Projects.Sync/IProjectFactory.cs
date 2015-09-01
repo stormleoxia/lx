@@ -1,10 +1,17 @@
+using System.Collections.Generic;
+
 namespace Lx.Tools.Projects.Sync
 {
     public interface IProjectFactory
     {
-        IProject CreateProject(string projectPath);
-        ProjectUpdater CreateProjectUpdater(IProject project);
-        ISourceFinder CreateSourceFileFinder(string projectPath, Targets target);
+        IProjectItemsProvider CreateProjectItemsProvider(string projectPath, Targets target);
+        ProjectUpdater CreateProjectUpdater(string projectPath);
+        ISourcesProvider CreateSourcesProvider(string projectPath, Targets target);
         ISourceComparer CreateSourceComparer();
+    }
+
+    public interface IProjectItemsProvider
+    {
+        HashSet<string> GetItems();
     }
 }

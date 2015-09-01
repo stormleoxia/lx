@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Lx.Tools.Common;
+using Lx.Tools.Common.Program;
 using Lx.Tools.Projects.SourceDump;
 using NUnit.Framework;
-using SourceDumperOptions = Lx.Tools.Common.SourceDumperOptions;
 
 namespace Lx.Tools.Projects.Tests
 {

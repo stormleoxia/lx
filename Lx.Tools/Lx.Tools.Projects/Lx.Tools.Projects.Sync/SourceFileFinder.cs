@@ -1,96 +1,40 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
-    internal class SourceFileFinder : ISourceFinder
+    internal class SourceFileFinder
     {
-        private readonly IConsole _console;
-        private readonly string _directory;
-        private readonly IFileSystem _fileSystem;
         private readonly string _projectFilePath;
         private readonly Targets _target;
-        private readonly Targets[] NotSupportedTargets;
-        private string sourceFile;
+        private readonly IConsole _console;
+        private readonly IFileSystem _fileSystem;
+        private readonly Targets[] _notSupportedTargets;
+        private readonly string _directory;
 
-        public SourceFileFinder(string projectFilePath, Targets target, IFileSystem fileSystem, IConsole console)
+        public SourceFileFinder(string projectFilePath, Targets target, IConsole console, IFileSystem fileSystem)
         {
+            _notSupportedTargets = TargetsEx.GetValuesButAll().Where(x => x != target).ToArray();
             _projectFilePath = projectFilePath;
-            _target = target;
-            _fileSystem = fileSystem;
-            _console = console;
             _directory = Path.GetDirectoryName(_projectFilePath);
-
-            NotSupportedTargets = TargetsEx.GetValuesButAll().Where(x => x != _target).ToArray();
+            _target = target;
+            _console = console;
+            _fileSystem = fileSystem;
         }
 
-        public HashSet<string> GetFiles()
-        {
-            var res = new HashSet<string>();
-            ReadSourceFile(res, sourceFile);
-            return res;
-        }
-
-        public void FindSourcesFile()
+        public string FindSourcesFile()
         {
             try
             {
-                sourceFile = InnerFindSourcesFile();
+                return InnerFindSourcesFile();
             }
             catch (Exception e)
             {
                 _console.WriteLine("ERROR: " + e.Message);
             }
-        }
-
-        private void ReadSourceFile(HashSet<string> res, string file)
-        {
-            var result = string.Empty;
-            if (!string.IsNullOrEmpty(file))
-            {
-                var filePath = Path.Combine(_directory, file);
-                using (var reader = _fileSystem.OpenText(filePath))
-                {
-                    result = reader.ReadToEnd();
-                }
-            }
-            var results = result.Split('\n');
-            var includes = new List<string>();
-            foreach (var line in results)
-            {
-                if (!string.IsNullOrEmpty(line))
-                {
-                    if (IsInclude(line))
-                    {
-                        includes.Add(GetInclude(line));
-                    }
-                    else
-                    {
-                        res.Add(line);
-                    }
-                }
-            }
-            foreach (var include in includes)
-            {
-                ReadSourceFile(res, include);
-            }
-        }
-
-        private string GetInclude(string line)
-        {
-            return line.Replace("#include", string.Empty).Trim();
-        }
-
-        public static bool IsInclude(string line)
-        {
-            if (line.StartsWith(" "))
-            {
-                return true;
-            }
-            return line.TrimStart(' ', '\t').StartsWith("#include");
+            return null;
         }
 
         private string InnerFindSourcesFile()
@@ -125,7 +69,7 @@ namespace Lx.Tools.Projects.Sync
             var filtered = files.Where(x =>
             {
                 var xName = Path.GetFileName(x);
-                return !NotSupportedTargets.Any(y => xName.Contains(y.Convert()));
+                return !_notSupportedTargets.Any(y => xName.Contains(y.Convert()));
             }).ToArray();
             if (filtered.Length != 1)
             {

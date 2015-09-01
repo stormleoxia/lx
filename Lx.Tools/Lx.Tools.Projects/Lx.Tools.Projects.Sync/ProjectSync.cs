@@ -23,15 +23,14 @@ namespace Lx.Tools.Projects.Sync
         {
             try
             {
-                var project = _factory.CreateProject(_projectPath);
-                var items = GetItems(project);
-                var finder = _factory.CreateSourceFileFinder(_projectPath, _target);
-                finder.FindSourcesFile();
+                var project = _factory.CreateProjectItemsProvider(_projectPath, _target);
+                var items = project.GetItems();
+                var finder = _factory.CreateSourcesProvider(_projectPath, _target);
                 var sources = finder.GetFiles();
                 var comparer = _factory.CreateSourceComparer();
                 var comparison = comparer.Compare(items, sources);
                 _console.WriteLine(comparison.ToString());
-                var updater = _factory.CreateProjectUpdater(project);
+                var updater = _factory.CreateProjectUpdater(_projectPath);
                 updater.Update(comparison);
             }
             catch (Exception e)
@@ -40,15 +39,6 @@ namespace Lx.Tools.Projects.Sync
             }
         }
 
-        private HashSet<string> GetItems(IProject project)
-        {
-            var hashSet = new HashSet<string>();
-            var items = project.GetItems("Compile");
-            foreach (var item in items)
-            {
-                hashSet.Add(item.EvaluatedInclude.Replace('\\', '/'));
-            }
-            return hashSet;
-        }
+
     }
 }

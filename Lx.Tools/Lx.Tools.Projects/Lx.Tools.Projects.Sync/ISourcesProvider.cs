@@ -2,9 +2,8 @@ using System.Collections.Generic;
 
 namespace Lx.Tools.Projects.Sync
 {
-    public interface ISourceFinder
+    public interface ISourcesProvider
     {
-        void FindSourcesFile();
         HashSet<string> GetFiles();
     }
 }

@@ -30,14 +30,14 @@ namespace Lx.Tools.Projects.Sync
 
         public static void ContainerConfigure(IUnityContainer container)
         {
-            container.RegisterType<ISourceFinder, SourceFileFinder>();
-            container.RegisterType<IProjectFactory, ProjectFactory>();
-            container.RegisterType<ISourceComparer, SourceComparer>();
-            container.RegisterType<ISyncFactory, SyncFactory>();
-            container.RegisterType<IProject, ProjectWrapper>();
-            container.RegisterType<IWriterFactory, WriterFactory>();
-            container.RegisterType<IVersion, VersionGetter>();
-            container.RegisterType<IEnvironment, SystemEnvironment>();
+            container.RegisterType<ISourcesProvider, SourcesProvider>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IProjectFactory, ProjectFactory>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ISourceComparer, SourceComparer>(new ExternallyControlledLifetimeManager());
+            container.RegisterType<ISyncFactory, SyncFactory>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IProject, ProjectWrapper>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IWriterFactory, WriterFactory>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IVersion, VersionGetter>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEnvironment, SystemEnvironment>(new ContainerControlledLifetimeManager());
             container.RegisterType<IDebugger, SystemDebugger>();
             container.RegisterType<IConsole, SystemConsole>();
             container.RegisterType<IFileSystem, FileSystem>();
