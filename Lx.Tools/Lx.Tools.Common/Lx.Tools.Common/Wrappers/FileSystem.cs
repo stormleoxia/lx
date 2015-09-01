@@ -19,7 +19,7 @@ namespace Lx.Tools.Common.Wrappers
             return Directory.GetFiles(path, filter, searchOption);
         }
 
-        public StreamReader OpenText(string filePath)
+        public TextReader OpenText(string filePath)
         {
             return File.OpenText(filePath);
         }

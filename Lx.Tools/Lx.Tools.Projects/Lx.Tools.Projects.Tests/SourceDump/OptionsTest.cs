@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using Lx.Tools.Common.Wrappers;
+﻿using Lx.Tools.Common.Wrappers;
 using Lx.Tools.Projects.SourceDump;
 using Moq;
 using NUnit.Framework;

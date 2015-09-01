@@ -4,9 +4,9 @@ using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
-    public class DirectorySync
+    public class DirectorySync : ISynchronizer
     {
-        private readonly List<ProjectSync> _projects = new List<ProjectSync>();
+        private readonly List<ISynchronizer> _projects = new List<ISynchronizer>();
 
         public DirectorySync(string directoryPath, ISyncFactory factory, IFileSystem fileSystem)
         {

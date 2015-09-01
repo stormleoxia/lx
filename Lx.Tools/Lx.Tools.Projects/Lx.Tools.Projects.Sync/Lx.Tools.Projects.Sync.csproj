@@ -58,13 +58,17 @@
     <Compile Include="DirectorySync.cs" />
     <Compile Include="IProject.cs" />
     <Compile Include="IProjectFactory.cs" />
+    <Compile Include="IProjectItemsProvider.cs" />
+    <Compile Include="IProjectUpdater.cs" />
     <Compile Include="ISourceComparer.cs" />
     <Compile Include="ISourcesProvider.cs" />
     <Compile Include="ISyncFactory.cs" />
+    <Compile Include="ISynchronizer.cs" />
     <Compile Include="MissingFileInProject.cs" />
     <Compile Include="MissingFileInSource.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectFactory.cs" />
+    <Compile Include="ProjectItemsProvider.cs" />
     <Compile Include="ProjectSync.cs" />
     <Compile Include="ProjectUpdater.cs" />
     <Compile Include="ProjectWrapper.cs" />

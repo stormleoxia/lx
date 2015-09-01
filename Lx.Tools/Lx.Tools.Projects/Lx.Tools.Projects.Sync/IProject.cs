@@ -7,8 +7,14 @@ namespace Lx.Tools.Projects.Sync
     {
         string FullPath { get; }
         void AddItem(string itemType, string itemInclude);
-        ICollection<ProjectItem> GetItems(string itemType);
-        void RemoveItem(ProjectItem item);
+        ICollection<ISyncProjectItem> GetItems(string itemType);
+        void RemoveItem(ISyncProjectItem item);
         void Save();
+    }
+
+    public interface ISyncProjectItem
+    {
+        ProjectItem InnerItem { get; }
+        string EvaluatedInclude { get; }
     }
 }

@@ -5,7 +5,7 @@ using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
-    public class ProjectUpdater
+    public class ProjectUpdater : IProjectUpdater
     {
         private readonly IProject _project;
         private readonly IFileSystem _fileSystem;

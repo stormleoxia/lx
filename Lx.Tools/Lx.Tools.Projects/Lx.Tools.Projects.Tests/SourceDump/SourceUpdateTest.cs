@@ -6,7 +6,7 @@ using Lx.Tools.Common.Program;
 using Lx.Tools.Projects.SourceDump;
 using NUnit.Framework;
 
-namespace Lx.Tools.Projects.Tests
+namespace Lx.Tools.Projects.Tests.SourceDump
 {
     [TestFixture]
     public class SourceUpdateTest
@@ -79,7 +79,7 @@ namespace Lx.Tools.Projects.Tests
         public void TestRelativePaths()
         {
             Console.WriteLine("Current Directory: " + _curDir);
-            var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.RelativePaths});
+            
             string firstFoundFile = null;
             var higherDirectory = _curDir;
             var relativePath = string.Empty;
@@ -94,6 +94,8 @@ namespace Lx.Tools.Projects.Tests
             var winRelative = Path.Combine(relativePath, fileName).Replace('/', '\\');
             var winRooted = firstFoundFile.WindowsifyPath();
             var unixRooted = firstFoundFile.Replace("\\", "/");
+
+            var dumper = new SourceDumper(_curDir, new HashSet<Option> { SourceDumperOptions.RelativePaths });
             var result = dumper.Dump(new List<string> {unixRelative, winRelative, winRooted, unixRooted}).ToList();
 
 
@@ -123,13 +125,16 @@ namespace Lx.Tools.Projects.Tests
 
     public static class PathEx
     {
+        /// <summary>
+        /// Make the path use windows separator (backslash) instead of slashes.
+        /// Beware to not add Drive: at the beginning as it will make tests fail
+        /// since code check drive coherence.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public static string WindowsifyPath(this string path)
         {
             var res = path.Replace('/', '\\');
-            if (!path.Contains(":"))
-            {
-                return "C:" + res;
-            }
             return res;
         }
     }

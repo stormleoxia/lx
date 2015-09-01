@@ -36,7 +36,7 @@ namespace Lx.Tools.Projects.Sync
                     result = reader.ReadToEnd();
                 }
             }
-            var results = result.Split('\n');
+            var results = result.Split('\n', '\r');
             var includes = new List<string>();
             foreach (var line in results)
             {

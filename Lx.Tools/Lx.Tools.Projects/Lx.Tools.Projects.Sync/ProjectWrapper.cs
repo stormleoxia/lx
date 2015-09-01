@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Build.Evaluation;
 
 namespace Lx.Tools.Projects.Sync
@@ -17,14 +18,15 @@ namespace Lx.Tools.Projects.Sync
             _project.AddItem(itemType, itemInclude);
         }
 
-        public ICollection<ProjectItem> GetItems(string itemType)
+        public ICollection<ISyncProjectItem> GetItems(string itemType)
         {
-            return _project.GetItems(itemType);
+            return _project.GetItems(itemType).Select(x => new SyncProjectItem(x)).ToArray();
         }
 
-        public void RemoveItem(ProjectItem item)
+        public void RemoveItem(ISyncProjectItem item)
         {
-            _project.RemoveItem(item);
+            
+            _project.RemoveItem(item.InnerItem);
         }
 
         public string FullPath
@@ -36,5 +38,16 @@ namespace Lx.Tools.Projects.Sync
         {
             _project.Save();
         }
+    }
+
+    public class SyncProjectItem : ISyncProjectItem
+    {
+        public SyncProjectItem(ProjectItem projectItem)
+        {
+            InnerItem = projectItem;
+        }
+
+        public ProjectItem InnerItem { get; private set; }
+        public string EvaluatedInclude { get { return InnerItem.EvaluatedInclude; } }
     }
 }

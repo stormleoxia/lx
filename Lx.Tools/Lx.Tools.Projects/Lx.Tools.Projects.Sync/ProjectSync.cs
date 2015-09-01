@@ -4,7 +4,7 @@ using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
-    public class ProjectSync
+    public class ProjectSync : ISynchronizer
     {
         private readonly IConsole _console;
         private readonly IProjectFactory _factory;

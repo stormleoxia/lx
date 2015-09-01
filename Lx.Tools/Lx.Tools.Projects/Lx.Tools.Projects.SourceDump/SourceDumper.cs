@@ -34,7 +34,7 @@ namespace Lx.Tools.Projects.SourceDump
                 {
                     if (IsPathRooted(res))
                     {
-                        if (res.Contains(':'))
+                        if (res.Contains(':') && _referenceDirectory.Contains(':'))
                         {
                             if (_referenceDirectory[0] != res[0])
                             {

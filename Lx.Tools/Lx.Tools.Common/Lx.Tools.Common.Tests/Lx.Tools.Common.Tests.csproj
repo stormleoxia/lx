@@ -67,6 +67,7 @@
     <Compile Include="Program\ProgramTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UPathTest.cs" />
+    <Compile Include="UPathUnitTest.cs" />
     <Compile Include="UsageDefinition.cs" />
   </ItemGroup>
   <ItemGroup>

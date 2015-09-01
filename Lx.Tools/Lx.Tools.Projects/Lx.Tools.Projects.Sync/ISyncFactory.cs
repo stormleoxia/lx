@@ -4,8 +4,8 @@ namespace Lx.Tools.Projects.Sync
 {
     public interface ISyncFactory
     {
-        ProjectSync CreateProjectSynchronizer(string s, Targets target);
-        DirectorySync CreateDirectorySynchronizer(string s);
+        ISynchronizer CreateProjectSynchronizer(string s, Targets target);
+        ISynchronizer CreateDirectorySynchronizer(string s);
     }
 
     public class SyncFactory : ISyncFactory
@@ -21,12 +21,12 @@ namespace Lx.Tools.Projects.Sync
             _fileSystem = fileSystem;
         }
 
-        public ProjectSync CreateProjectSynchronizer(string projectFilePath, Targets target)
+        public ISynchronizer CreateProjectSynchronizer(string projectFilePath, Targets target)
         {
             return new ProjectSync(projectFilePath, target, _console, _factory);
         }
 
-        public DirectorySync CreateDirectorySynchronizer(string directoryPath)
+        public ISynchronizer CreateDirectorySynchronizer(string directoryPath)
         {
             return new DirectorySync(directoryPath, this, _fileSystem);
         }

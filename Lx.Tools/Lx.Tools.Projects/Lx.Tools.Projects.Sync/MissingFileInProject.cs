@@ -8,7 +8,7 @@ namespace Lx.Tools.Projects.Sync
 
         public override string ToString()
         {
-            return "Project File missing: " + Path;
+            return "Project File Missing: " + Path;
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Lx.Tools.Common.Wrappers
         bool DirectoryExists(string path);
         bool FileExists(string path);
         string[] GetFiles(string path, string filter, SearchOption searchOption);
-        StreamReader OpenText(string filePath);
+        TextReader OpenText(string filePath);
     }
 }

@@ -2,7 +2,7 @@
 using System.Threading;
 using NUnit.Framework;
 
-namespace Lx.Tools.Projects.Tests
+namespace Lx.Tools.Projects.Tests.Sync
 {
     [TestFixture]
     public class SourceSyncTest
