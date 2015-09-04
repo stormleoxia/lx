@@ -1,0 +1,43 @@
+<Project DefaultTargets="SnkCopy;SnkDelete" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+
+  <!-- Delete snk file in current directory -->
+  <Target Name="SnkDelete" AfterTargets="CopyFilesToOutputDirectory">
+    <Delete Files="leoxia.public.snk"/>
+  </Target>
+
+  <!-- Copy snk file to current directory -->
+
+  <UsingTask TaskName="SnkCopy" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+    <ParameterGroup>
+      <Source ParameterType="System.String" Required="true" />
+      <Destination ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+        
+            var projectDirectory = Directory.GetCurrentDirectory();
+            var directoryInfo = new DirectoryInfo(projectDirectory);
+            var filePath = Path.Combine(projectDirectory, this.Source);
+            var originPath = Path.Combine(projectDirectory, this.Destination);
+            while (!File.Exists(filePath) && directoryInfo.Exists)
+            {
+                directoryInfo = directoryInfo.Parent;
+                filePath = Path.Combine(directoryInfo.FullName, this.Source);
+            }
+            if (File.Exists(filePath))
+            {
+                Log.LogMessage(MessageImportance.High, "File was found in " + filePath + ". Copy it.");
+                File.Copy(filePath, originPath, true);
+            }
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name='Demo' BeforeTargets="CoreCompile" >
+    <SnkCopy Source="SolutionItems\leoxia.public.snk" Destination="leoxia.public.snk"/>
+  </Target>
+
+</Project>

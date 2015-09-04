@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lx.Samples.Db.MySql.EF", "Lx.Samples.Db.MySql.EF\Lx.Samples.Db.MySql.EF.csproj", "{4D62008C-4FC9-4E4E-828C-91C6AF8D4DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lx.Samples.Db.MySql.NH", "Lx.Samples.Db.MySql.NH\Lx.Samples.Db.MySql.NH.csproj", "{615C199C-19F1-4498-963D-053E626B633B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D62008C-4FC9-4E4E-828C-91C6AF8D4DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D62008C-4FC9-4E4E-828C-91C6AF8D4DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D62008C-4FC9-4E4E-828C-91C6AF8D4DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D62008C-4FC9-4E4E-828C-91C6AF8D4DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{615C199C-19F1-4498-963D-053E626B633B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{615C199C-19F1-4498-963D-053E626B633B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{615C199C-19F1-4498-963D-053E626B633B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{615C199C-19F1-4498-963D-053E626B633B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
