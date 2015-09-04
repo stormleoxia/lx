@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
@@ -38,7 +37,5 @@ namespace Lx.Tools.Projects.Sync
                 _console.WriteLine(e);
             }
         }
-
-
     }
 }

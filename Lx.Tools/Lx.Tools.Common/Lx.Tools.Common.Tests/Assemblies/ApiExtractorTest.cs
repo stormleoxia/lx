@@ -12,7 +12,7 @@ namespace Lx.Tools.Common.Tests.Assemblies
         [Test]
         public void ApiExtractionShouldExtractSomethingTest()
         {
-            Mock<IAssemblyLoader> loader = new Mock<IAssemblyLoader>();
+            var loader = new Mock<IAssemblyLoader>();
             loader.Setup(x => x.LoadFrom(It.IsAny<string>())).Returns(Assembly.GetExecutingAssembly());
             var extractor = new ApiExtractor();
             extractor.Loader = loader.Object;

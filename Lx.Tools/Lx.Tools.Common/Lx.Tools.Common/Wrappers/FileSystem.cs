@@ -30,7 +30,7 @@ namespace Lx.Tools.Common.Wrappers
             {
                 return new DirectoryInfo(path).FullName;
             }
-            else if (FileExists(path))
+            if (FileExists(path))
             {
                 return new FileInfo(path).FullName;
             }

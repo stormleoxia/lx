@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Lx.Tools.Common.Assemblies;
-using Microsoft.Practices.Unity.Configuration;
 using NUnit.Framework;
 
 namespace Lx.Tools.Common.Tests.Assemblies
@@ -11,7 +10,7 @@ namespace Lx.Tools.Common.Tests.Assemblies
         [Test]
         public void NamespaceUsageTest()
         {
-            var type = this.GetType();
+            var type = GetType();
             var namespaceDefinition = new NamespaceDefinition();
             namespaceDefinition.Name = "MyName";
             Assert.AreEqual("MyName", namespaceDefinition.Name);

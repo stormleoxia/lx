@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -9,8 +7,6 @@ namespace Lx.Tools.Common.Assemblies
     [Serializable]
     public class MemberSignature
     {
-        public string Signature { get; set; }
-
         public MemberSignature()
         {
         }
@@ -32,17 +28,19 @@ namespace Lx.Tools.Common.Assemblies
                     Signature = "Field " + GetGenericSignature(fieldInfo.FieldType) + " " + fieldInfo.Name;
                     break;
                 case MemberTypes.Property:
-                    var property = (PropertyInfo)member;
+                    var property = (PropertyInfo) member;
                     var getMethod = property.GetGetMethod(false);
                     var setMethod = property.GetSetMethod(false);
                     var getter = (getMethod != null) ? "get;" : string.Empty;
-                    var setter = (setMethod != null) ? "set;" : String.Empty;
-                    Signature = "Property " + GetGenericSignature(property.PropertyType) + " " + property.Name + "{" + getter + " " + setter + "}";
+                    var setter = (setMethod != null) ? "set;" : string.Empty;
+                    Signature = "Property " + GetGenericSignature(property.PropertyType) + " " + property.Name + "{" +
+                                getter + " " + setter + "}";
                     break;
                 case MemberTypes.Method:
-                    var method = (MethodInfo) member;                    
+                    var method = (MethodInfo) member;
                     var genericParameters = GetGenericSignatures(method.GetGenericArguments());
-                    Signature = "Method " + GetGenericSignature(method.ReturnType) + " " + method.Name + genericParameters + "(" + SerializeParameters(method.GetParameters()) + ")";
+                    Signature = "Method " + GetGenericSignature(method.ReturnType) + " " + method.Name +
+                                genericParameters + "(" + SerializeParameters(method.GetParameters()) + ")";
                     break;
                 case MemberTypes.TypeInfo:
                     Signature = "Type " + member.Name + "{}";
@@ -60,15 +58,17 @@ namespace Lx.Tools.Common.Assemblies
             }
         }
 
+        public string Signature { get; set; }
+
         private string GetGenericSignatures(Type[] types)
         {
             if (types.Length > 0)
             {
-                StringBuilder builder = new StringBuilder();
+                var builder = new StringBuilder();
                 builder.Append("<");
                 builder.Append(GetGenericSignature(types[0]));
                 var separator = ",";
-                for (int index = 1; index < types.Length; ++index)
+                for (var index = 1; index < types.Length; ++index)
                 {
                     builder.AppendFormat("{0}{1}", separator, GetGenericSignature(types[index]));
                 }
@@ -98,15 +98,14 @@ namespace Lx.Tools.Common.Assemblies
         {
             if (parameters.Length > 0)
             {
-                StringBuilder builder = new StringBuilder();
+                var builder = new StringBuilder();
                 builder.AppendFormat("{0} {1}", GetGenericSignature(parameters[0].ParameterType), parameters[0].Name);
-                string separator = ", ";
-                for (int index = 1; index < parameters.Length; index++)
+                var separator = ", ";
+                for (var index = 1; index < parameters.Length; index++)
                 {
                     var parameter = parameters[index];
                     builder.AppendFormat("{1}{0} {2}", GetGenericSignature(parameter.ParameterType), separator,
                         parameter.Name);
-                    
                 }
                 return builder.ToString();
             }

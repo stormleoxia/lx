@@ -18,7 +18,6 @@ namespace Lx.Tools.Common.Wrappers
 
         public void Dispose()
         {
-            
         }
 
         public void WriteLine(string text)

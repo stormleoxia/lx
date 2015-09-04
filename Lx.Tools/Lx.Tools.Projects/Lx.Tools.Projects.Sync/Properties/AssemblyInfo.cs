@@ -8,35 +8,23 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Lx.Tools.Projects.Sync")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lx.Tools.Projects.Sync")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-
-[assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("501f54c0-d642-4ed7-a0b5-7b48a223f57e")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: InternalsVisibleTo("Lx.Tools.Projects.Tests")]
+[assembly:
+    InternalsVisibleTo(
+        @"Lx.Tools.Projects.Tests, PublicKey=002400000e800000140200000602000000240000525341310010000001000100c72c6c92e2872a" +
+        "ee1fb46b7d3d898123f91fd5e47abb6b1ea4dd03ffa86deeeaa341fec8ffd07a09bf14c2620350" +
+        "89a52c37953faa35d2a2e1b77fada918b9a30c645de0c48d0cae795ca9d6791a42acd663ede054" +
+        "4f7f756668f7fbfe3f235df04eda1135be561e23775f36aa52a6e02fcb022c3bb93b1444bc956c" +
+        "83acfc51912d6c9f7fd98742c034c154cc2b887a5db3724080d7ebd76066346b695d4a890b7329" +
+        "7f7678a7f76ea39d56f2ada3e5ef4a287a0f6c0e76ebb5a357fe094e88432b17906135dc3ccbb7" +
+        "525d03fb92fcf82b6cbd2c06858c247395d689c74097650547dde014248a4baf4c4d4935c1c942" +
+        "66910da945f7a92a9e21febe22061bca47ed66a607d56edc7ea773290dc79aa438b7c82313638e" +
+        "7364459fb90f24bf0257c01b15e20860d58c84ee6e6f6b4301237fa1f7fff370db8963c8c58181" +
+        "06a6e7aeabb0dd4ea0aa2185598818e5cbb6718f96ea3efc7b21a7674a8ab258b0a1f9287c7d34" +
+        "7a31ae130201612bf03e42b9417d9c737f11e3e2d7026776e692744982eb748d8890eccade86c1" +
+        "f8c42cc8bad2e40677281d4ba13d6d0e852d51e8b449a6fc82f3e021c97b6c821cfa73366f23e5" +
+        "dccd812acb50a84f33f056b170c1701e7e7ef5af651f5fac29f7142d796b75ff86310a7d287d29" +
+        "05e36d0328afd094b0abf9500c6b8a601526570a0cdfc638568eaccf55142a84a97f083cc7")]

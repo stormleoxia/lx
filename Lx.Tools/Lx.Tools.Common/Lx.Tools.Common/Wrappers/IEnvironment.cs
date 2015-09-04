@@ -2,7 +2,7 @@
 {
     public interface IEnvironment
     {
-        void Exit(int exitCode);
         string NewLine { get; }
+        void Exit(int exitCode);
     }
 }

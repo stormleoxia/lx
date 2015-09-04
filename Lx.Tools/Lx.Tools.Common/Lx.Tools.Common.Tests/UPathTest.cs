@@ -31,69 +31,30 @@ namespace Lx.Tools.Common.Tests
             _unixRooted = _unixCurDir + "/root.cs";
         }
 
-        [Test]
-        public void TestRelativePath()
+        private string Unixify(string path)
         {
-            var path1 = new UPath("../file.cs");
-            var path2 = new UPath("..\\");
-            Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
+            if (!path.Contains(":"))
+            {
+                return path.Replace('\\', '/');
+            }
+            return path.Split(':')[1].Replace('\\', '/');
         }
 
         [Test]
-        public void TestRelativePath2()
+        public void CheckReferenceDirectoryConstructorProvideAbsolutePath()
         {
-            var path1 = new UPath("..\\mydir\\file.cs");
-            var path2 = new UPath("../mydir/");
-            Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
-        }
-
-
-        [Test]
-        public void TestRelativePathInCurrentDir()
-        {
-            var path1 = new UPath("mydir\\dir2\\file.cs");
-            var path2 = new UPath("mydir");
-            Assert.AreEqual("dir2/file.cs".Replace('/', Path.DirectorySeparatorChar), path2.MakeRelativeUPath(path1).ToString());
+            var path = new UPath(_curDir, "..\\..");
+            var info = new DirectoryInfo(_curDir);
+            Assert.AreEqual(info.Parent.Parent.FullName, path.ToString());
         }
 
         [Test]
-        public void TestRelativePath3()
+        public void CheckReferenceDirectoryConstructorProvideAbsolutePathWithUnixPaths()
         {
-            var path1 = new UPath("..\\dir1\\dir2\\file.cs");
-            var path2 = new UPath("../dir1/dir2/dir3");
-            Assert.AreEqual(".." + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
-        }
-
-        [Test]
-        public void TestRelativePath4()
-        {
-            var path1 = new UPath("..\\dir1\\dir2\\dir3\\file.cs");
-            var path2 = new UPath("../dir1/dir2/dir3");
-            Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
-        }
-
-        [Test]
-        public void TestRelativePath5()
-        {
-            var path1 = new UPath("..\\dir1\\dir2\\dir3\\file.cs");
-            var path2 = new UPath("../dir1/dir2");
-            Assert.AreEqual("dir3" + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
-        }
-
-        [Test]
-        public void TestRelativeToAbsolutePath()
-        {
-            var path1 = new UPath("../file.cs");
-            var path2 = new UPath(_winCurDir);
-            Assert.AreEqual("../file.cs".Replace('/', Path.DirectorySeparatorChar), path2.MakeRelativeUPath(path1).ToString());
-        }
-
-        [Test]
-        public void TestRelativeToCurrentPath()
-        {
-            var path1 = new UPath("../file.cs");
-            var path2 = new UPath(".");
-            Assert.AreEqual(".." + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
+            var path = new UPath(_unixCurDir, "..\\..");
+            var info = new DirectoryInfo(_curDir);
+            var expected = Unixify(info.Parent.Parent.FullName).Replace('/', Path.DirectorySeparatorChar);
+            Assert.AreEqual(expected, path.ToString());
         }
 
         [Test]
@@ -122,17 +83,6 @@ namespace Lx.Tools.Common.Tests
         }
 
         /// <summary>
-        ///     Implicit reference to current directory is not resolvable
-        /// </summary>
-        [Test, ExpectedException(typeof (InvalidOperationException))]
-        public void TestRelativeToRelativePathNotResolvable()
-        {
-            var path1 = new UPath("FileNotExists.cs");
-            var path2 = new UPath("../NotExisting");
-            var res = path2.MakeRelativeUPath(path1).ToString();
-        }
-
-        /// <summary>
         ///     No relative path exists between to different drives
         /// </summary>
         [Test, ExpectedException(typeof (InvalidOperationException))]
@@ -144,37 +94,88 @@ namespace Lx.Tools.Common.Tests
         }
 
         [Test]
+        public void TestRelativePath()
+        {
+            var path1 = new UPath("../file.cs");
+            var path2 = new UPath("..\\");
+            Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativePath2()
+        {
+            var path1 = new UPath("..\\mydir\\file.cs");
+            var path2 = new UPath("../mydir/");
+            Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativePath3()
+        {
+            var path1 = new UPath("..\\dir1\\dir2\\file.cs");
+            var path2 = new UPath("../dir1/dir2/dir3");
+            Assert.AreEqual(".." + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativePath4()
+        {
+            var path1 = new UPath("..\\dir1\\dir2\\dir3\\file.cs");
+            var path2 = new UPath("../dir1/dir2/dir3");
+            Assert.AreEqual("file.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativePath5()
+        {
+            var path1 = new UPath("..\\dir1\\dir2\\dir3\\file.cs");
+            var path2 = new UPath("../dir1/dir2");
+            Assert.AreEqual("dir3" + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativePathInCurrentDir()
+        {
+            var path1 = new UPath("mydir\\dir2\\file.cs");
+            var path2 = new UPath("mydir");
+            Assert.AreEqual("dir2/file.cs".Replace('/', Path.DirectorySeparatorChar),
+                path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativeToAbsolutePath()
+        {
+            var path1 = new UPath("../file.cs");
+            var path2 = new UPath(_winCurDir);
+            Assert.AreEqual("../file.cs".Replace('/', Path.DirectorySeparatorChar),
+                path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        [Test]
+        public void TestRelativeToCurrentPath()
+        {
+            var path1 = new UPath("../file.cs");
+            var path2 = new UPath(".");
+            Assert.AreEqual(".." + Path.DirectorySeparatorChar + "file.cs", path2.MakeRelativeUPath(path1).ToString());
+        }
+
+        /// <summary>
+        ///     Implicit reference to current directory is not resolvable
+        /// </summary>
+        [Test, ExpectedException(typeof (InvalidOperationException))]
+        public void TestRelativeToRelativePathNotResolvable()
+        {
+            var path1 = new UPath("FileNotExists.cs");
+            var path2 = new UPath("../NotExisting");
+            var res = path2.MakeRelativeUPath(path1).ToString();
+        }
+
+        [Test]
         public void TestWinVsUnixRoots()
         {
             var path1 = new UPath(_winCurDir.Replace('\\', '/') + "/root.cs");
             var path2 = new UPath(_winCurDir.Replace('/', '\\'));
             Assert.AreEqual("root.cs", path2.MakeRelativeUPath(path1).ToString());
-        }
-
-        [Test]
-        public void CheckReferenceDirectoryConstructorProvideAbsolutePath()
-        {
-            var path = new UPath(_curDir, "..\\..");
-            var info = new DirectoryInfo(_curDir);
-            Assert.AreEqual(info.Parent.Parent.FullName, path.ToString());
-        }
-
-        [Test]
-        public void CheckReferenceDirectoryConstructorProvideAbsolutePathWithUnixPaths()
-        {
-            var path = new UPath(_unixCurDir, "..\\..");
-            var info = new DirectoryInfo(_curDir);
-            var expected = Unixify(info.Parent.Parent.FullName).Replace('/', Path.DirectorySeparatorChar);
-            Assert.AreEqual(expected, path.ToString());
-        }
-
-        private string Unixify(string path)
-        {
-            if (!path.Contains(":"))
-            {
-                return path.Replace('\\', '/');
-            }
-            return path.Split(':')[1].Replace('\\', '/');
         }
     }
 }

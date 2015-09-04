@@ -8,8 +8,7 @@ namespace Lx.Tools.Common.Assemblies
     [Serializable]
     public class TypeDefinition
     {
-        private readonly Dictionary<string, MemberSignature> _signatures = new Dictionary<string, MemberSignature>(); 
-        public List<MemberSignature> Members { get; set; }
+        private readonly Dictionary<string, MemberSignature> _signatures = new Dictionary<string, MemberSignature>();
 
         public TypeDefinition()
         {
@@ -24,6 +23,10 @@ namespace Lx.Tools.Common.Assemblies
             AddMembers(type.GetMembers(BindingFlags.Public | BindingFlags.Static));
             AddMembers(type.GetMembers(BindingFlags.Public | BindingFlags.CreateInstance));
         }
+
+        public List<MemberSignature> Members { get; set; }
+        public string Name { get; set; }
+        public string Namespace { get; set; }
 
         private void AddMembers(MemberInfo[] members)
         {
@@ -44,10 +47,6 @@ namespace Lx.Tools.Common.Assemblies
             }
         }
 
-        public string Name { get; set; }
-
-        public string Namespace { get; set; }
-
         public IEnumerable<MemberSignature> GetPublicMembersSignatures()
         {
             return Members;
@@ -55,7 +54,7 @@ namespace Lx.Tools.Common.Assemblies
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             foreach (var member in Members)
             {
                 builder.AppendFormat("{0}.{1}.{2}{3}", Namespace, Name, member.Signature, Environment.NewLine);

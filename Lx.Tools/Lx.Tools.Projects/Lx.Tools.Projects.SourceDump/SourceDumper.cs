@@ -39,7 +39,7 @@ namespace Lx.Tools.Projects.SourceDump
                             if (_referenceDirectory[0] != res[0])
                             {
                                 throw new InvalidOperationException("csproj in " + _referenceDirectory +
-                                                        " is not on the same drive that " + res);
+                                                                    " is not on the same drive that " + res);
                             }
                         }
                     }

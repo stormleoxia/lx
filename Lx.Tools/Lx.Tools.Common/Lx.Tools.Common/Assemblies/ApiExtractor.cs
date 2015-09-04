@@ -6,27 +6,27 @@ namespace Lx.Tools.Common.Assemblies
 {
     public sealed class ApiExtractor : MarshalByRefObject, IApiExtractor
     {
-        internal IAssemblyLoader Loader { get; set; }
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApiExtractor"/> class.
-        /// Keep it because it is used by AppDomain create instance;
+        ///     Initializes a new instance of the <see cref="ApiExtractor" /> class.
+        ///     Keep it because it is used by AppDomain create instance;
         /// </summary>
         public ApiExtractor()
         {
             Loader = new AssemblyLoader();
         }
 
+        internal IAssemblyLoader Loader { get; set; }
+
         public AssemblyApi ExtractApi(string assemblyPath)
         {
-            System.Reflection.Assembly assembly = Loader.LoadFrom(assemblyPath);
+            var assembly = Loader.LoadFrom(assemblyPath);
             var types = assembly.GetTypes();
-            Dictionary<string, NamespaceDefinition> namespaces = new Dictionary<string, NamespaceDefinition>();
+            var namespaces = new Dictionary<string, NamespaceDefinition>();
             foreach (var type in types)
             {
                 NamespaceDefinition nspace;
                 var space = type.Namespace;
-                if (String.IsNullOrEmpty(space))
+                if (string.IsNullOrEmpty(space))
                 {
                     space = "NULL";
                 }
@@ -42,7 +42,6 @@ namespace Lx.Tools.Common.Assemblies
 
         public void Dispose()
         {
-            
         }
     }
 

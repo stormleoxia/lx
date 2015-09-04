@@ -14,10 +14,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
     [TestFixture]
     public class SourceDumperUnitTest
     {
-        private Mock<IFileSystem> _fileSystem;
-        private readonly PropertyInfo _propertyInfo = typeof(UPath).GetProperty("FSystem", BindingFlags.Static | BindingFlags.NonPublic);
-
-
         [SetUp]
         public void Setup()
         {
@@ -25,15 +21,26 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             _propertyInfo.SetValue(null, _fileSystem.Object);
         }
 
-        [Test, ExpectedException(typeof(InvalidOperationException))]
+        [TearDown]
+        public void Teardown()
+        {
+            _propertyInfo.SetValue(null, new FileSystem());
+        }
+
+        private Mock<IFileSystem> _fileSystem;
+
+        private readonly PropertyInfo _propertyInfo = typeof (UPath).GetProperty("FSystem",
+            BindingFlags.Static | BindingFlags.NonPublic);
+
+        [Test, ExpectedException(typeof (InvalidOperationException))]
         public void ExceptionTest()
         {
             var unixPath =
                 @"/usr/local/teamcity-agent/work/6c86e2555ed64afc/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Tests/bin/Debug";
             var winPath =
                 @"C:\usr\local\teamcity-agent\work\6c86e2555ed64afc\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\bin\Debug\..\..\Lx.Tools.Projects.Tests.csproj";
-            var dumper = new SourceDumper(unixPath, new HashSet<Option> { SourceDumperOptions.RelativePaths });
-            var res = dumper.Dump(new List<string> { winPath }).ToArray();
+            var dumper = new SourceDumper(unixPath, new HashSet<Option> {SourceDumperOptions.RelativePaths});
+            var res = dumper.Dump(new List<string> {winPath}).ToArray();
             Assert.IsNotNull(res);
             Assert.AreEqual(1, res.Count());
             Assert.AreEqual(winPath, res.FirstOrDefault());
@@ -46,18 +53,14 @@ namespace Lx.Tools.Projects.Tests.SourceDump
                 @"/usr/local/teamcity-agent/work/6c86e2555ed64afc/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Tests/bin/Debug";
             var winPath =
                 @"\usr\local\teamcity-agent\work\6c86e2555ed64afc\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\bin\Debug\..\..\Lx.Tools.Projects.Tests.csproj";
-            _fileSystem.Setup(x => x.ResolvePath(winPath)).Returns(@"\usr\local\teamcity-agent\work\6c86e2555ed64afc\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\Lx.Tools.Projects.Tests.csproj");
-            var dumper = new SourceDumper(unixPath, new HashSet<Option> { SourceDumperOptions.RelativePaths });
-            var res = dumper.Dump(new List<string> { winPath }).ToArray();
+            _fileSystem.Setup(x => x.ResolvePath(winPath))
+                .Returns(
+                    @"\usr\local\teamcity-agent\work\6c86e2555ed64afc\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\Lx.Tools.Projects.Tests.csproj");
+            var dumper = new SourceDumper(unixPath, new HashSet<Option> {SourceDumperOptions.RelativePaths});
+            var res = dumper.Dump(new List<string> {winPath}).ToArray();
             Assert.IsNotNull(res);
             Assert.AreEqual(1, res.Count());
             Assert.AreEqual(@"..\..\Lx.Tools.Projects.Tests.csproj", res.FirstOrDefault());
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            _propertyInfo.SetValue(null, new FileSystem());
         }
     }
 }

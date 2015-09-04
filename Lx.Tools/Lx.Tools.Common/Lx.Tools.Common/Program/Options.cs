@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Lx.Tools.Common.Wrappers;
@@ -9,21 +8,20 @@ namespace Lx.Tools.Common.Program
     public class Options
     {
         public static readonly Option Help;
-        private readonly IEnvironment _environment;
         private readonly IConsole _console;
+        private readonly IEnvironment _environment;
 
         static Options()
         {
-            Help = new Option { Name = "--help", Explanation = "Display this text" };
+            Help = new Option {Name = "--help", Explanation = "Display this text"};
         }
-
 
         public Options(IEnvironment environment, IConsole console)
         {
             _environment = environment;
             _console = console;
             AvailableOptions = new List<Option>();
-            AvailableOptions.Add(Options.Help);
+            AvailableOptions.Add(Help);
         }
 
         public List<Option> AvailableOptions { get; private set; }
@@ -56,7 +54,7 @@ namespace Lx.Tools.Common.Program
                 help.AppendFormat("  {0}  {1}{2}", option.Name.PadRight(maxLength), option.Explanation,
                     nl);
             }
-         
+
             _console.Write(help.ToString());
         }
     }

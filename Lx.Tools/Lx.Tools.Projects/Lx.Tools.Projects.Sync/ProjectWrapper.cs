@@ -25,7 +25,6 @@ namespace Lx.Tools.Projects.Sync
 
         public void RemoveItem(ISyncProjectItem item)
         {
-            
             _project.RemoveItem(item.InnerItem);
         }
 
@@ -48,6 +47,10 @@ namespace Lx.Tools.Projects.Sync
         }
 
         public ProjectItem InnerItem { get; private set; }
-        public string EvaluatedInclude { get { return InnerItem.EvaluatedInclude; } }
+
+        public string EvaluatedInclude
+        {
+            get { return InnerItem.EvaluatedInclude; }
+        }
     }
 }

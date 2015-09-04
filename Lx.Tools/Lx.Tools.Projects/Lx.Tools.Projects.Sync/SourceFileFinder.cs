@@ -7,12 +7,12 @@ namespace Lx.Tools.Projects.Sync
 {
     internal class SourceFileFinder
     {
-        private readonly string _projectFilePath;
-        private readonly Targets _target;
         private readonly IConsole _console;
+        private readonly string _directory;
         private readonly IFileSystem _fileSystem;
         private readonly Targets[] _notSupportedTargets;
-        private readonly string _directory;
+        private readonly string _projectFilePath;
+        private readonly Targets _target;
 
         public SourceFileFinder(string projectFilePath, Targets target, IConsole console, IFileSystem fileSystem)
         {

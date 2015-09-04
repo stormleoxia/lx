@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
+using System.Reflection;
 using Lx.Tools.Common.Program;
 
 namespace Lx.Tools.Common
@@ -10,7 +10,7 @@ namespace Lx.Tools.Common
 
         public UsageDefinition()
         {
-            _exeName = System.Reflection.Assembly.GetCallingAssembly().GetName().Name;
+            _exeName = Assembly.GetCallingAssembly().GetName().Name;
             Arguments = new List<Arguments>();
         }
 

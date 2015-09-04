@@ -12,7 +12,8 @@ namespace Lx.Tools.Projects.Tests.Sync
         public void CompareUsageTest()
         {
             var comparer = new SourceComparer();
-            var comparison = comparer.Compare(new HashSet<string> {"first", "second"}, new HashSet<string> {"first", "third"});
+            var comparison = comparer.Compare(new HashSet<string> {"first", "second"},
+                new HashSet<string> {"first", "third"});
             Assert.IsNotNull(comparison);
             var projectMissing = comparison.MissingFilesInProject.ToArray();
             Assert.IsNotNull(projectMissing);
@@ -25,6 +26,5 @@ namespace Lx.Tools.Projects.Tests.Sync
             Assert.AreEqual("second", sourceMissing.First().Path);
             Assert.IsTrue(sourceMissing.First().ToString().Contains("second"));
         }
-
     }
 }

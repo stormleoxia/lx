@@ -13,13 +13,13 @@ namespace Lx.Tools.Projects.SourceDump
     {
         private readonly IWriterFactory _factory;
 
-        public SourceDump(SourceDumperOptions options, UsageDefinition definition, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter, 
+        public SourceDump(SourceDumperOptions options, UsageDefinition definition, IEnvironment environment,
+            IDebugger debugger, IConsole console, IVersion versionGetter,
             IWriterFactory factory) :
-            base(options, definition, environment, debugger, console, versionGetter)
+                base(options, definition, environment, debugger, console, versionGetter)
         {
             _factory = factory;
         }
-
 
         protected override HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions)
         {
@@ -28,7 +28,6 @@ namespace Lx.Tools.Projects.SourceDump
             RemoveIncompatibleOptions(activatedOptions, SourceDumperOptions.UnixPaths, SourceDumperOptions.WindowsPaths);
             return activatedOptions;
         }
-
 
         /// <summary>
         ///     Remove the incompatible option and keep the superseding one.
@@ -98,10 +97,7 @@ namespace Lx.Tools.Projects.SourceDump
                 _console.Error.WriteLine(e.ToString());
                 project = null;
                 return true;
-
             }
         }
-
-
     }
 }

@@ -50,7 +50,5 @@ namespace Lx.Tools.Projects.SourceDump
         public static Option AbsolutePaths { get; private set; }
         public static Option Help { get; private set; }
         public static Option OutputFile { get; private set; }
-
-
     }
 }

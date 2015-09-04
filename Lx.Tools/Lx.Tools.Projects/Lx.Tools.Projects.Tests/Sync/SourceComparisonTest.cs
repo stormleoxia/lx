@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Lx.Tools.Projects.Sync;
 using NUnit.Framework;
 
@@ -17,7 +13,7 @@ namespace Lx.Tools.Projects.Tests.Sync
             var sourceComparison = new SourceComparison();
             sourceComparison.Add(new MissingFileInProject("project"));
             sourceComparison.Add(new MissingFileInSource("source"));
-            
+
             Assert.IsNotNull(sourceComparison.MissingFilesInProject);
             Assert.AreEqual(1, sourceComparison.MissingFilesInProject.Count());
             var res = sourceComparison.MissingFilesInProject.FirstOrDefault();
@@ -36,7 +32,7 @@ namespace Lx.Tools.Projects.Tests.Sync
             Assert.IsTrue(sourceComparison.ToString().Contains("project"));
             var lines = sourceComparison.ToString().Split('\n');
             var lineNumber = lines.Length;
-            if (lines.Last() == String.Empty)
+            if (lines.Last() == string.Empty)
             {
                 lineNumber--;
             }

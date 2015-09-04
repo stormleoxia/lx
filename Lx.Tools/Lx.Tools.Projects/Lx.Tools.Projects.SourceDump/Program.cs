@@ -10,12 +10,12 @@ namespace Lx.Tools.Projects.SourceDump
     /// </summary>
     public class Program
     {
-        public static IUnityContainer Container { get; set; }
-
         static Program()
         {
             Container = new UnityContainer();
         }
+
+        public static IUnityContainer Container { get; set; }
 
         public static void Main(string[] args)
         {

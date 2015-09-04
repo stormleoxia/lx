@@ -7,9 +7,9 @@ namespace Lx.Tools.Common.Assemblies
     [Serializable]
     public class NamespaceDefinition
     {
-        private Dictionary<string, TypeDefinition> typeDefinitions = new Dictionary<string, TypeDefinition>(); 
-        
-        public NamespaceDefinition(string space): this()
+        private readonly Dictionary<string, TypeDefinition> typeDefinitions = new Dictionary<string, TypeDefinition>();
+
+        public NamespaceDefinition(string space) : this()
         {
             Name = space;
         }
@@ -20,7 +20,6 @@ namespace Lx.Tools.Common.Assemblies
         }
 
         public List<TypeDefinition> Types { get; set; }
-
         public string Name { get; set; }
 
         public IEnumerable<TypeDefinition> GetTypes()
@@ -41,7 +40,7 @@ namespace Lx.Tools.Common.Assemblies
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             foreach (var type in Types)
             {
                 builder.Append(type);

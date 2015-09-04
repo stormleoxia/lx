@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-//using System.IO;
 using System.Linq;
 using Lx.Tools.Common.Wrappers;
+//using System.IO;
 
 namespace Lx.Tools.Common
 {
@@ -16,8 +16,6 @@ namespace Lx.Tools.Common
         {
             FSystem = new FileSystem();
         }
-
-        internal static IFileSystem FSystem { get; set; }
 
         public UPath(string path)
         {
@@ -53,8 +51,9 @@ namespace Lx.Tools.Common
 
         public UPath(string referenceDirectory, string file) : this(Path.Combine(referenceDirectory, file))
         {
-            
         }
+
+        internal static IFileSystem FSystem { get; set; }
 
         public bool HasAbsolute
         {
@@ -99,7 +98,8 @@ namespace Lx.Tools.Common
         {
             if (referal.Drive != referee.Drive)
             {
-                throw new InvalidOperationException("Making relative path between path on two differents drives " + referal + " <> " + referee);
+                throw new InvalidOperationException("Making relative path between path on two differents drives " +
+                                                    referal + " <> " + referee);
             }
             var fileComponents = new Queue<string>(referee.Components.Take(referee.Components.Length - 1));
             var components = new Queue<string>(referal.Components);
@@ -107,7 +107,8 @@ namespace Lx.Tools.Common
             var differencefound = false;
             if (CheckDoubleDots(components, fileComponents))
             {
-                throw new InvalidOperationException("Cannot infer the name of a directory for relative path from " + referal + " to " + referee);
+                throw new InvalidOperationException("Cannot infer the name of a directory for relative path from " +
+                                                    referal + " to " + referee);
             }
             while (components.Count > 0 && fileComponents.Count > 0)
             {

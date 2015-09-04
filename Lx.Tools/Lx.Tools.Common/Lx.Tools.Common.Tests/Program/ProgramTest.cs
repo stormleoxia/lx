@@ -5,17 +5,15 @@ using Lx.Tools.Common.Wrappers;
 using Microsoft.Practices.Unity;
 using Moq;
 using NUnit.Framework;
+using IUnityContainer = Microsoft.Practices.Unity.IUnityContainer;
+using UnityContainer = Microsoft.Practices.Unity.UnityContainer;
+using UnityContainerExtensions = Microsoft.Practices.Unity.UnityContainerExtensions;
 
 namespace Lx.Tools.Common.Tests.Program
 {
     [TestFixture]
     public class ProgramTest
     {
-        private IUnityContainer _unityContainer;
-        private Mock<IEnvironment> _environment;
-        private Mock<IConsole> _console;
-        private Mock<IFileSystem> _fileSystem;
-
         [SetUp]
         public void Setup()
         {
@@ -23,18 +21,10 @@ namespace Lx.Tools.Common.Tests.Program
             ConfigureContainer(_unityContainer);
         }
 
-        [Test]
-        public void ProgramDefinitionUsageTest()
-        {
-            MyDefinition definition = _unityContainer.Resolve<MyDefinition>();
-            definition.Run(new string[] {"arg1", "--help", "arg2"});
-            Assert.AreEqual(3, definition.ReceivedArguments.Length);
-            Assert.AreEqual("arg1", definition.ReceivedArguments[0]);
-            Assert.IsNull(definition.ReceivedArguments[1]);
-            Assert.AreEqual("arg2", definition.ReceivedArguments[2]);
-            Assert.AreEqual(1, definition.ReceivedOptions.Count);
-            Assert.AreEqual(Options.Help, definition.ReceivedOptions.FirstOrDefault());
-        }
+        private IUnityContainer _unityContainer;
+        private Mock<IEnvironment> _environment;
+        private Mock<IConsole> _console;
+        private Mock<IFileSystem> _fileSystem;
 
         private void ConfigureContainer(IUnityContainer container)
         {
@@ -46,6 +36,18 @@ namespace Lx.Tools.Common.Tests.Program
             _fileSystem = container.RegisterMoqInstance<IFileSystem>();
         }
 
+        [Test]
+        public void ProgramDefinitionUsageTest()
+        {
+            var definition = UnityContainerExtensions.Resolve<MyDefinition>(_unityContainer);
+            definition.Run(new[] {"arg1", "--help", "arg2"});
+            Assert.AreEqual(3, definition.ReceivedArguments.Length);
+            Assert.AreEqual("arg1", definition.ReceivedArguments[0]);
+            Assert.IsNull(definition.ReceivedArguments[1]);
+            Assert.AreEqual("arg2", definition.ReceivedArguments[2]);
+            Assert.AreEqual(1, definition.ReceivedOptions.Count);
+            Assert.AreEqual(Options.Help, definition.ReceivedOptions.FirstOrDefault());
+        }
     }
 
     public class MyDefinition : ProgramDefinition
@@ -55,6 +57,9 @@ namespace Lx.Tools.Common.Tests.Program
             : base(options, definition, environment, debugger, console, versionGetter)
         {
         }
+
+        public string[] ReceivedArguments { get; private set; }
+        public HashSet<Option> ReceivedOptions { get; private set; }
 
         protected override HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions)
         {
@@ -67,12 +72,7 @@ namespace Lx.Tools.Common.Tests.Program
             ReceivedOptions = options;
             ReceivedArguments = args;
         }
-
-        public string[] ReceivedArguments { get; private set; }
-
-        public HashSet<Option> ReceivedOptions { get; private set; }
     }
-
 
 
     public static class MoqContainerEx
@@ -85,5 +85,4 @@ namespace Lx.Tools.Common.Tests.Program
             return mock;
         }
     }
-
 }

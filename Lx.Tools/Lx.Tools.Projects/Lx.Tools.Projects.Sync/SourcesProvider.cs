@@ -71,6 +71,5 @@ namespace Lx.Tools.Projects.Sync
             }
             return line.TrimStart(' ', '\t').StartsWith("#include");
         }
-
     }
 }

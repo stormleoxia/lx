@@ -7,8 +7,8 @@ namespace Lx.Tools.Projects.Sync
 {
     public class ProjectUpdater : IProjectUpdater
     {
-        private readonly IProject _project;
         private readonly IFileSystem _fileSystem;
+        private readonly IProject _project;
 
         public ProjectUpdater(IProject project, IFileSystem fileSystem)
         {

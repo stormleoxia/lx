@@ -7,17 +7,18 @@ namespace Lx.Tools.Common.Tests.Wrappers
     [TestFixture]
     public class FileSystemTest
     {
-        private string fileName = @"Lx.Tools.Common.Tests.csproj";
-        private string notExisting = @"Xldkfjsldkfj.dsmflkdmsf";
+        private readonly string fileName = @"Lx.Tools.Common.Tests.csproj";
+        private readonly string notExisting = @"Xldkfjsldkfj.dsmflkdmsf";
 
         [Test]
-        public void FileInfoVerifyAssertions()
+        public void DirectoryExists()
         {
             var curDirectory = Directory.GetCurrentDirectory();
-            var existingFile = Path.Combine(curDirectory, "../../" + fileName);
-            var fileInfo = new FileInfo(existingFile);
-            Assert.IsFalse(fileInfo.FullName.Contains(".."));
-            Assert.AreEqual(fileInfo.FullName, new FileSystem().ResolvePath(existingFile));
+            var existingFile = Path.Combine(curDirectory, "../../");
+            var fileSystem = new FileSystem();
+            Assert.IsTrue(fileSystem.DirectoryExists(existingFile));
+            var notExistingFile = Path.Combine(curDirectory, "../../" + notExisting + "/");
+            Assert.IsFalse(fileSystem.DirectoryExists(notExistingFile));
         }
 
         [Test]
@@ -32,14 +33,13 @@ namespace Lx.Tools.Common.Tests.Wrappers
         }
 
         [Test]
-        public void DirectoryExists()
+        public void FileInfoVerifyAssertions()
         {
             var curDirectory = Directory.GetCurrentDirectory();
-            var existingFile = Path.Combine(curDirectory, "../../");
-            var fileSystem = new FileSystem();
-            Assert.IsTrue(fileSystem.DirectoryExists(existingFile));
-            var notExistingFile = Path.Combine(curDirectory, "../../" + notExisting + "/");
-            Assert.IsFalse(fileSystem.DirectoryExists(notExistingFile));
+            var existingFile = Path.Combine(curDirectory, "../../" + fileName);
+            var fileInfo = new FileInfo(existingFile);
+            Assert.IsFalse(fileInfo.FullName.Contains(".."));
+            Assert.AreEqual(fileInfo.FullName, new FileSystem().ResolvePath(existingFile));
         }
     }
 }

@@ -6,14 +6,15 @@ namespace Lx.Tools.Common.Program
 {
     public abstract class ProgramDefinition
     {
-        private readonly Options _options;
+        protected readonly IConsole _console;
+        private readonly IDebugger _debugger;
         private readonly UsageDefinition _definition;
         private readonly IEnvironment _environment;
-        private readonly IDebugger _debugger;
-        protected readonly IConsole _console;
+        private readonly Options _options;
         private readonly IVersion _versionGetter;
 
-        protected ProgramDefinition(Options options, UsageDefinition definition, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter)
+        protected ProgramDefinition(Options options, UsageDefinition definition, IEnvironment environment,
+            IDebugger debugger, IConsole console, IVersion versionGetter)
         {
             _options = options;
             _definition = definition;
@@ -42,17 +43,16 @@ namespace Lx.Tools.Common.Program
                 DisplayUsage();
                 _options.DisplayHelp();
                 Exit(0);
-            }            
+            }
             return InnerManageOptions(activatedOptions);
         }
 
         protected abstract HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions);
-
         protected abstract void InnerRun(HashSet<Option> options, string[] args);
 
         public void DisplayUsage()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             builder.Append("Usage: ");
             builder.Append(_definition.ExeName);
             if (_options.AvailableOptions.Count > 0)

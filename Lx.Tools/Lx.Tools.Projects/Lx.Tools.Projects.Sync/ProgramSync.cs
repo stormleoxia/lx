@@ -11,7 +11,8 @@ namespace Lx.Tools.Projects.Sync
         private readonly ISyncFactory _factory;
         private readonly IFileSystem _fileSystem;
 
-        public ProgramSync(ISyncFactory factory, IFileSystem fileSystem, ProgramOptions options, UsageDefinition definition,
+        public ProgramSync(ISyncFactory factory, IFileSystem fileSystem, ProgramOptions options,
+            UsageDefinition definition,
             IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) :
                 base(options, definition, environment, debugger, console, versionGetter)
         {

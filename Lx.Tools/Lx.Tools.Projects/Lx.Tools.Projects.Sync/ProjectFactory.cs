@@ -7,23 +7,12 @@ namespace Lx.Tools.Projects.Sync
     {
         private readonly IConsole _console;
         private readonly IFileSystem _fileSystem;
-        private readonly IDictionary<string, IProject> _projects = new Dictionary<string, IProject>(); 
+        private readonly IDictionary<string, IProject> _projects = new Dictionary<string, IProject>();
 
         public ProjectFactory(IConsole console, IFileSystem fileSystem)
         {
             _console = console;
             _fileSystem = fileSystem;
-        }
-
-        internal IProject CreateProject(string projectPath)
-        {
-            IProject project;
-            if (!_projects.TryGetValue(projectPath, out project))
-            {
-                project = new ProjectWrapper(projectPath);
-                _projects[projectPath] = project;
-            }
-            return project;
         }
 
         public IProjectItemsProvider CreateProjectItemsProvider(string projectPath, Targets target)
@@ -44,6 +33,17 @@ namespace Lx.Tools.Projects.Sync
         public ISourceComparer CreateSourceComparer()
         {
             return new SourceComparer();
+        }
+
+        internal IProject CreateProject(string projectPath)
+        {
+            IProject project;
+            if (!_projects.TryGetValue(projectPath, out project))
+            {
+                project = new ProjectWrapper(projectPath);
+                _projects[projectPath] = project;
+            }
+            return project;
         }
     }
 }

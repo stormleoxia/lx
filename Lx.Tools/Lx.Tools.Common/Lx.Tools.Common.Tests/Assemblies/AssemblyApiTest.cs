@@ -11,7 +11,7 @@ namespace Lx.Tools.Common.Tests.Assemblies
         [Test]
         public void AssemblyApiWithEmptyList()
         {
-            AssemblyApi api = new AssemblyApi(new List<NamespaceDefinition>());
+            var api = new AssemblyApi(new List<NamespaceDefinition>());
             Assert.IsNotNull(api.GetNamespaces());
             Assert.AreEqual(0, api.GetNamespaces().Count());
         }
@@ -19,7 +19,7 @@ namespace Lx.Tools.Common.Tests.Assemblies
         [Test]
         public void AssemblyApiWithOneNamespace()
         {
-            AssemblyApi api = new AssemblyApi(new List<NamespaceDefinition>{new NamespaceDefinition("MyNamespace")});
+            var api = new AssemblyApi(new List<NamespaceDefinition> {new NamespaceDefinition("MyNamespace")});
             Assert.IsNotNull(api.GetNamespaces());
             Assert.AreEqual(1, api.GetNamespaces().Count());
             Assert.AreEqual("MyNamespace", api.GetNamespaces().First().Name);
@@ -28,7 +28,12 @@ namespace Lx.Tools.Common.Tests.Assemblies
         [Test]
         public void AssemblyApiWithTwoNamespaces()
         {
-            AssemblyApi api = new AssemblyApi(new List<NamespaceDefinition> { new NamespaceDefinition("MyNamespace"), new NamespaceDefinition("MyOtherNameSpace") });
+            var api =
+                new AssemblyApi(new List<NamespaceDefinition>
+                {
+                    new NamespaceDefinition("MyNamespace"),
+                    new NamespaceDefinition("MyOtherNameSpace")
+                });
             Assert.IsNotNull(api.GetNamespaces());
             Assert.AreEqual(2, api.GetNamespaces().Count());
             Assert.AreEqual("MyNamespace", api.GetNamespaces().First().Name);
