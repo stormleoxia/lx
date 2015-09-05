@@ -61,6 +61,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(unixfile, result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
             Assert.AreEqual(_unixRooted, result[3]);
+            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -73,6 +74,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("file1.cs", result[0]);
             Assert.AreEqual("file2.cs", result[1]);
+            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -105,6 +107,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1], "2: For " + winRelative);
             Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[2], "3: For " + winRooted);
             Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[3], "4: For " + unixRooted);
+            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -119,6 +122,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual("../unixfile.cs", result[1]);
             Assert.AreEqual(_windowsRooted.Replace("\\", "/"), result[2]);
             Assert.AreEqual(_unixRooted, result[3]);
+            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -133,6 +137,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(@"..\unixfile.cs", result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
             Assert.AreEqual(_unixRooted.Replace('/', '\\'), result[3]);
+            _fileSystem.VerifyAll();
         }
     }
 
