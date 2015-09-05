@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace Lx.Tools.Tests.Reflection.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class FieldExtensionTest
     {
-        [TestMethod]
+        [Test]
         public void SetFieldWithStringTest()
         {
             var container = new DummyContainer();
@@ -13,7 +13,7 @@ namespace Lx.Tools.Tests.Reflection.Tests
             Assert.AreEqual("FieldValue2", container.MyField);
         }
 
-        [TestMethod]
+        [Test]
         public void SetFieldWithClassTest()
         {
             var container = new DummyContainer();
