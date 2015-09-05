@@ -36,7 +36,7 @@
     </Task>
   </UsingTask>
 
-  <Target Name='Demo' BeforeTargets="CoreCompile" >
+  <Target Name='SnkCopy' BeforeTargets="CoreCompile" >
     <SnkCopy Source="SolutionItems\leoxia.public.snk" Destination="leoxia.public.snk"/>
   </Target>
 

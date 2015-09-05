@@ -40,8 +40,9 @@ using System.Runtime.InteropServices;
     [assembly: AssemblyCopyright("Copyright © 2015 Leoxia. Released under GPL License Terms.")]
 #endif
 
-[assembly: AssemblyKeyFile("leoxia.public.snk")]
-[assembly: AssemblyDelaySign(true)]
+//[assembly: AssemblyKeyFile("leoxia.public.snk")]
+//[assembly: AssemblyDelaySign(true)]
+
 [assembly: AssemblyTrademark("Leoxia")]
 [assembly: AssemblyCulture("")]
 
