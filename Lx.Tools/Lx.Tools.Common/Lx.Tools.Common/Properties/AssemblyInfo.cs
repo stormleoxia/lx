@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("db8cfde1-e31e-486d-956c-97353c9c9227")]
-
+#if !DEBUG
 [assembly:
     InternalsVisibleTo(
         @"Lx.Tools.Common.Tests, PublicKey=002400000e800000140200000602000000240000525341310010000001000100c72c6c92e2872a" +
@@ -29,3 +29,6 @@ using System.Runtime.InteropServices;
         "f8c42cc8bad2e40677281d4ba13d6d0e852d51e8b449a6fc82f3e021c97b6c821cfa73366f23e5" +
         "dccd812acb50a84f33f056b170c1701e7e7ef5af651f5fac29f7142d796b75ff86310a7d287d29" +
         "05e36d0328afd094b0abf9500c6b8a601526570a0cdfc638568eaccf55142a84a97f083cc7")]
+#else
+    [assembly: InternalsVisibleTo(@"Lx.Tools.Common.Tests")]
+#endif

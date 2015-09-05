@@ -8,7 +8,8 @@ using HtmlAgilityPack;
 namespace Lx.Samples.Web.Scraper
 {
     /// <summary>
-    ///     Curl like tool
+    ///     Curl like tool. Get Static Html and Get a part of it with XPath search.
+    ///     However since it doesn't handle Javascript, it's not relevant for all scrape scenario.
     /// </summary>
     public class Program
     {
@@ -22,7 +23,7 @@ namespace Lx.Samples.Web.Scraper
             var watch = new Stopwatch();
             watch.Start();
             HtmlDocument doc;
-            if (true)//!File.Exists(_file))
+            if (!File.Exists(_file))
             {
                 doc = web.Load(url);
                 doc.Save(_file);

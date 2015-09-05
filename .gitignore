@@ -39,6 +39,10 @@
 /Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.Reflection/obj
 /Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.Reflection/obj
 /Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.Reflection/bin
+/Lx.Samples/Lx.Samples.Framework/Lx.Samples.Framework.Tests/bin
+/Lx.Samples/Lx.Samples.Framework/Lx.Samples.Framework.Tests/obj
+/Lx.Samples/Lx.Samples.Web/Lx.Samples.Web.Browser/bin
+/Lx.Samples/Lx.Samples.Web/Lx.Samples.Web.Browser/obj
 /Lx.Samples/Lx.Samples.Db/*.suo
 /Lx.Tools/Lx.Tools.Tests/*.suo
 *.suo

@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using Lx.Tools.Common;
 using Lx.Tools.Common.Program;
+using Lx.Tools.Common.Wrappers;
 using Lx.Tools.Projects.SourceDump;
+using Moq;
 using NUnit.Framework;
 
 namespace Lx.Tools.Projects.Tests.SourceDump
@@ -11,40 +15,50 @@ namespace Lx.Tools.Projects.Tests.SourceDump
     [TestFixture]
     public class SourceUpdateTest
     {
+        private Mock<IFileSystem> _fileSystem;
+
+        private readonly PropertyInfo _propertyInfo = typeof(UPath).GetProperty("FSystem",
+            BindingFlags.Static | BindingFlags.NonPublic);
+
         private string _curDir;
-        private string _unixCurDir;
-        private string _unixRooted;
-        private string _winCurDir;
         private string _windowsRooted;
+        private string _unixRooted;
 
         [TestFixtureSetUp]
-        public void Setup()
+        public void FixtureSetup()
         {
             _curDir = Directory.GetCurrentDirectory();
-            _winCurDir = _curDir;
-            if (!_winCurDir.Contains(":"))
-            {
-                _unixCurDir = _winCurDir;
-                _winCurDir = "C:" + _winCurDir.Replace('/', '\\');
-            }
-            else
-            {
-                _unixCurDir = _winCurDir.Split(':')[1].Replace('\\', '/');
-            }
-            _windowsRooted = _winCurDir + @"\mywin_file.cs";
-            _unixRooted = _unixCurDir + "/root.cs";
+            _windowsRooted = _curDir.Windowsify();
+            _unixRooted = _curDir.Unixify();
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            _fileSystem = new Mock<IFileSystem>(MockBehavior.Strict);
+            _propertyInfo.SetValue(null, _fileSystem.Object);
+        }
+
+        [TestFixtureTearDown]
+        public void Teardown()
+        {
+            _propertyInfo.SetValue(null, new FileSystem());
         }
 
         [Test]
         public void TestAbsolutePaths()
         {
-            var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.AbsolutePaths});
+            string winFile = @"..\winfile.cs";
+            var unixfile = @"../unixfile.cs";
+            _fileSystem.Setup(x => x.ResolvePath(winFile)).Returns((string)null);
+            _fileSystem.Setup(x => x.ResolvePath(unixfile)).Returns((string)null);
+            var dumper = new SourceDumper(_curDir, new HashSet<Option> { SourceDumperOptions.AbsolutePaths });
             var result =
                 dumper.Dump(new List<string> {@"..\winfile.cs", "../unixfile.cs", _windowsRooted, _unixRooted}).ToList();
             Assert.IsNotNull(result);
             Assert.IsNotEmpty(result);
-            Assert.AreEqual(@"..\winfile.cs", result[0]);
-            Assert.AreEqual(@"../unixfile.cs", result[1]);
+            Assert.AreEqual(winFile, result[0]);
+            Assert.AreEqual(unixfile, result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
             Assert.AreEqual(_unixRooted, result[3]);
         }
@@ -78,7 +92,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             var fileName = Path.GetFileName(firstFoundFile);
             var unixRelative = Path.Combine(relativePath, fileName).Replace("\\", "/");
             var winRelative = Path.Combine(relativePath, fileName).Replace('/', '\\');
-            var winRooted = firstFoundFile.WindowsifyPath();
+            var winRooted = firstFoundFile.Windowsify();
             var unixRooted = firstFoundFile.Replace("\\", "/");
 
             var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.RelativePaths});
@@ -131,10 +145,14 @@ namespace Lx.Tools.Projects.Tests.SourceDump
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
-        public static string WindowsifyPath(this string path)
+        public static string Windowsify(this string path)
         {
-            var res = path.Replace('/', '\\');
-            return res;
+            return path.Replace(Path.DirectorySeparatorChar, '\\');
+        }
+
+        public static string Unixify(this string path)
+        {
+            return path.Replace(Path.DirectorySeparatorChar, '/');
         }
     }
 }

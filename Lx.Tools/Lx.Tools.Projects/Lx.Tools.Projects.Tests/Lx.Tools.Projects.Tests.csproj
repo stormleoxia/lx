@@ -77,7 +77,6 @@
     <Compile Include="Sync\ProgramTest.cs" />
     <Compile Include="Sync\SourceComparisonTest.cs" />
     <Compile Include="Sync\SourcesProviderTest.cs" />
-    <Compile Include="Sync\SourceSyncTest.cs" />
     <Compile Include="SourceDump\SourceUpdateTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +96,7 @@
       <Name>Lx.Tools.Projects.Sync</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(ProjectDir)..\..\..\SolutionItems\lx.targets"/>
+  <Import Project="$(ProjectDir)..\..\..\SolutionItems\lx.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

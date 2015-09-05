@@ -6,6 +6,7 @@ using Lx.Tools.Common;
 using Lx.Tools.Common.Program;
 using Lx.Tools.Common.Wrappers;
 using Lx.Tools.Projects.SourceDump;
+using Lx.Tools.Projects.Tests.Sync;
 using Moq;
 using NUnit.Framework;
 
@@ -53,7 +54,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
                 @"/usr/local/teamcity-agent/work/6c86e2555ed64afc/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Tests/bin/Debug";
             var winPath =
                 @"\usr\local\teamcity-agent\work\6c86e2555ed64afc\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\bin\Debug\..\..\Lx.Tools.Projects.Tests.csproj";
-            _fileSystem.Setup(x => x.ResolvePath(winPath))
+            _fileSystem.Setup(x => x.ResolvePath(winPath.ToPlatformPath()))
                 .Returns(
                     @"\usr\local\teamcity-agent\work\6c86e2555ed64afc\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\Lx.Tools.Projects.Tests.csproj");
             var dumper = new SourceDumper(unixPath, new HashSet<Option> {SourceDumperOptions.RelativePaths});
