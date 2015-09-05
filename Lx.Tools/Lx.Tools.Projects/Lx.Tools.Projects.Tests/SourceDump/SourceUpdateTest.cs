@@ -80,7 +80,9 @@ namespace Lx.Tools.Projects.Tests.SourceDump
         [Test]
         public void TestRelativePaths()
         {
-            Console.WriteLine("Current Directory: " + _curDir);
+			
+
+			Console.WriteLine("Current Directory: " + _curDir);
 
             string firstFoundFile = null;
             var higherDirectory = _curDir;
@@ -96,6 +98,8 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             var winRelative = Path.Combine(relativePath, fileName).Replace('/', '\\');
             var winRooted = firstFoundFile.Windowsify();
             var unixRooted = firstFoundFile.Replace("\\", "/");
+
+			_fileSystem.Setup (x => x.ResolvePath (winRooted)).Returns (winRooted);
 
             var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.RelativePaths});
             var result = dumper.Dump(new List<string> {unixRelative, winRelative, winRooted, unixRooted}).ToList();

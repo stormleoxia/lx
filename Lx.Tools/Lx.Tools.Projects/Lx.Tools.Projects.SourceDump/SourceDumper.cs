@@ -32,6 +32,7 @@ namespace Lx.Tools.Projects.SourceDump
                 }
                 if (_options.Contains(SourceDumperOptions.RelativePaths))
                 {
+					UPath file;
                     if (IsPathRooted(res))
                     {
                         if (res.Contains(':') && _referenceDirectory.Contains(':'))
@@ -42,8 +43,12 @@ namespace Lx.Tools.Projects.SourceDump
                                                                     " is not on the same drive that " + res);
                             }
                         }
+						file = new UPath(res);
                     }
-                    var file = new UPath(_referenceDirectory, res);
+					else
+					{
+						file = new UPath(_referenceDirectory, res);
+					}
                     res = _directoryPath.MakeRelativeUPath(file).ToString();
                 }
                 if (_options.Contains(SourceDumperOptions.WindowsPaths))
@@ -68,7 +73,7 @@ namespace Lx.Tools.Projects.SourceDump
 
         private static bool IsPathRooted(string res)
         {
-            return res.Contains(':') || res[0] == '/';
+			return res.Contains(':') || res[0] == '/' || res[0] == '\\';
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Lx.Tools.Assemblies.Tests
         public void ApiTest()
         {
             var myNamespace = new NamespaceDefinition();
+			myNamespace.AddType (typeof(MyClass));
             var api = new AssemblyApi(new List<NamespaceDefinition> {myNamespace});
             var namespaces = api.GetNamespaces().ToList();
             Assert.AreEqual(1, namespaces.Count);
@@ -25,7 +26,7 @@ namespace Lx.Tools.Assemblies.Tests
                 foreach (var c in classes)
                 {
                     var members = c.GetPublicMembersSignatures().ToList();
-                    Assert.AreEqual(1, members.Count);
+                    Assert.AreEqual(5, members.Count);
                 }
             }
         }
@@ -44,4 +45,8 @@ namespace Lx.Tools.Assemblies.Tests
             Assert.IsNotNull(comparison.ToString());
         }
     }
+
+	public class MyClass
+	{
+	}
 }

@@ -61,7 +61,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             var res = dumper.Dump(new List<string> {winPath}).ToArray();
             Assert.IsNotNull(res);
             Assert.AreEqual(1, res.Count());
-            Assert.AreEqual(@"..\..\Lx.Tools.Projects.Tests.csproj", res.FirstOrDefault());
+			Assert.AreEqual(@"..\..\Lx.Tools.Projects.Tests.csproj".ToPlatformPath(), res.FirstOrDefault());
             _fileSystem.VerifyAll();
         }
     }
