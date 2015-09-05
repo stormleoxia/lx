@@ -2,13 +2,13 @@
 
 
   <!-- Delete snk file in current directory -->
-  <Target Name="SnkDelete" AfterTargets="CopyFilesToOutputDirectory">
+<!--  <Target Name="SnkDelete" AfterTargets="CopyFilesToOutputDirectory">
     <Delete Files="leoxia.public.snk"/>
-  </Target>
+  </Target>-->
 
   <!-- Copy snk file to current directory -->
 
-  <UsingTask TaskName="SnkCopy" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+  <UsingTask TaskName="SnkCopy" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <Source ParameterType="System.String" Required="true" />
       <Destination ParameterType="System.String" Required="true" />
@@ -36,9 +36,9 @@
     </Task>
   </UsingTask>
 
-  <Target Name='SnkCopy' BeforeTargets="CoreCompile" >
+<!--  <Target Condition=" '$(OS)' != 'Unix' " Name='SnkCopy' BeforeTargets="CoreCompile" >
     <SnkCopy Source="SolutionItems\leoxia.public.snk" Destination="leoxia.public.snk"/>
-  </Target>
+  </Target>-->
 
 
 </Project>
