@@ -11,7 +11,6 @@ namespace Lx.Tools.Projects.SourceDump
     {
         static SourceDumperOptions()
         {
-            Help = Options.Help;
             UnixPaths = new Option {Name = "--unix-paths", Explanation = "Convert source path to unix paths"};
             WindowsPaths = new Option {Name = "--windows-paths", Explanation = "Convert source path to windows paths"};
             RelativePaths = new Option
@@ -48,7 +47,6 @@ namespace Lx.Tools.Projects.SourceDump
         public static Option WindowsPaths { get; private set; }
         public static Option RelativePaths { get; private set; }
         public static Option AbsolutePaths { get; private set; }
-        public static Option Help { get; private set; }
         public static Option OutputFile { get; private set; }
     }
 }

@@ -42,7 +42,6 @@ namespace Lx.Tools.Projects.Sync
             var fileName = Path.GetFileName(_projectFilePath);
             var name = fileName.Split('.')[0]; // remove extension
             var splits = name.Split('-');
-            var mainName = splits[0];
             var subName = string.Empty;
             if (splits.Length > 1)
             {
