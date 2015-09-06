@@ -23,12 +23,12 @@ namespace Lx.Tools.Projects.Sync
             foreach (var item in comparison.MissingFilesInProject)
             {
                 var fileName = Path.Combine(directory, item.Path);
-                if (_fileSystem.FileExists(fileName))
+                var filePath = _fileSystem.ResolvePath(fileName);
+                if (filePath != null)
                 {
-                    var fileInfo = new FileInfo(fileName);
                     var path = new UPath(directory);
-                    var filePath = new UPath(fileInfo.FullName);
-                    var res = path.MakeRelativeUPath(filePath);
+                    var fileUPath = new UPath(filePath);
+                    var res = path.MakeRelativeUPath(fileUPath);
                     _project.AddItem("Compile", res.ToString());
                 }
             }
