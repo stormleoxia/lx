@@ -71,7 +71,7 @@ namespace Lx.Tools.Common
 
         private bool IsPathRooted(string path)
         {
-            return (path.Contains(':') || path[0] == '/');
+            return (path.Contains(':') || path[0] == '/' || path[0] == '\\');
         }
 
         public UPath MakeRelativeUPath(UPath file)

@@ -8,11 +8,13 @@ namespace Lx.Tools.Projects.Sync
     {
         private readonly string _directory;
         private readonly IFileSystem _fileSystem;
+        private readonly IConsole _console;
         private readonly string _sourceFile;
 
         public SourcesProvider(string projectFilePath, Targets target, IFileSystem fileSystem, IConsole console)
         {
             _fileSystem = fileSystem;
+            _console = console;
             _directory = Path.GetDirectoryName(projectFilePath);
             var sourceFileFinder = new SourceFileFinder(projectFilePath, target, console, fileSystem);
             _sourceFile = sourceFileFinder.FindSourcesFile();
@@ -48,7 +50,15 @@ namespace Lx.Tools.Projects.Sync
                     }
                     else
                     {
-                        res.Add(line);
+                        var filePath = Path.Combine(_directory, line);
+                        if (_fileSystem.FileExists(filePath))
+                        {
+                            res.Add(line);
+                        }
+                        else
+                        {
+                            _console.WriteLine("Source Not Found: " + filePath);
+                        }
                     }
                 }
             }

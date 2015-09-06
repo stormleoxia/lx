@@ -27,9 +27,9 @@ namespace Lx.Tools.Projects.Tests.SourceDump
         [TestFixtureSetUp]
         public void FixtureSetup()
         {
-            _curDir = Directory.GetCurrentDirectory();
-            _windowsRooted = _curDir.Windowsify();
-            _unixRooted = _curDir.Unixify();
+            _curDir = @"D:\Development\Applications\lx\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\bin\Debug";
+            _windowsRooted = @"D:\Development\Applications\lx\Lx.Tools\Lx.Tools.Projects\Lx.Tools.Projects.Tests\bin\Debug";
+            _unixRooted = @"/usr/home/dev/lx/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Tests/bin/Debug";
         }
 
         [SetUp]
@@ -78,39 +78,35 @@ namespace Lx.Tools.Projects.Tests.SourceDump
         }
 
         [Test]
-        public void TestRelativePaths()
+        public void TestRelativePathsOnWindows()
         {
-			
-
-			Console.WriteLine("Current Directory: " + _curDir);
-
-            string firstFoundFile = null;
-            var higherDirectory = _curDir;
-            var relativePath = string.Empty;
-            while (firstFoundFile == null)
-            {
-                relativePath = (string.IsNullOrEmpty(relativePath)) ? ".." : Path.Combine(relativePath, "..");
-                higherDirectory = Path.Combine(higherDirectory, "..");
-                firstFoundFile = Directory.GetFiles(higherDirectory).FirstOrDefault();
-            }
-            var fileName = Path.GetFileName(firstFoundFile);
-            var unixRelative = Path.Combine(relativePath, fileName).Replace("\\", "/");
-            var winRelative = Path.Combine(relativePath, fileName).Replace('/', '\\');
-            var winRooted = firstFoundFile.Windowsify();
-            var unixRooted = firstFoundFile.Replace("\\", "/");
-
-			_fileSystem.Setup (x => x.ResolvePath (winRooted)).Returns (winRooted);
+            var winRelative = @"..\..\Lx.csproj";
+            var winRooted = Path.Combine(_windowsRooted, winRelative);
 
             var dumper = new SourceDumper(_curDir, new HashSet<Option> {SourceDumperOptions.RelativePaths});
-            var result = dumper.Dump(new List<string> {unixRelative, winRelative, winRooted, unixRooted}).ToList();
+            var result = dumper.Dump(new List<string> {winRelative, winRooted}).ToList();
 
+            Assert.IsNotNull(result);
+            Assert.IsNotEmpty(result);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[0], "1: For " + winRelative);
+            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1], "2: For " + winRooted);
+            _fileSystem.VerifyAll();
+        }
+
+        [Test]
+        public void TestRelativePathsOnUnix()
+        {
+            var unixRelative = "../../Lx.csproj";
+            var unixRooted = Path.Combine(_unixRooted, unixRelative);
+
+            var dumper = new SourceDumper(_unixRooted, new HashSet<Option> { SourceDumperOptions.RelativePaths });
+            var result = dumper.Dump(new List<string> { unixRelative, unixRooted }).ToList();
 
             Assert.IsNotNull(result);
             Assert.IsNotEmpty(result);
             Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[0], "1: For " + unixRelative);
-            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1], "2: For " + winRelative);
-            Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[2], "3: For " + winRooted);
-            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[3], "4: For " + unixRooted);
+            Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[1], "2: For " + unixRooted);
             _fileSystem.VerifyAll();
         }
 
