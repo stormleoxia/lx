@@ -1,13 +1,15 @@
 ﻿using System.Configuration;
+using System.Linq;
+using Lx.Tools.Common.Program;
 
 namespace Lx.Tools.Projects.Sync
 {
     public class ProjectSyncConfiguration : IProjectSyncConfiguration
     {
-        public ProjectSyncConfiguration()
+        public ProjectSyncConfiguration(ISettingsProvider provider)
         {
-            var ignored = ConfigurationManager.AppSettings["IgnoreDirectories"];
-            IgnoredDirectories = string.IsNullOrEmpty(ignored) ? new string[]{} : ignored.Split(',');
+            var ignored = provider.GetSettings("IgnoreDirectories");
+            IgnoredDirectories = string.IsNullOrEmpty(ignored) ? new string[]{} : ignored.Split(',').Select(x => x.Trim()).ToArray();
         }
 
         /// <summary>

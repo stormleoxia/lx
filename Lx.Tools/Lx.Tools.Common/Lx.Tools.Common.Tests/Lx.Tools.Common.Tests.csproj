@@ -61,6 +61,7 @@
     <Compile Include="Assemblies\TypeDefinitionTest.cs" />
     <Compile Include="HashSetExTest.cs" />
     <Compile Include="Program\ProgramTest.cs" />
+    <Compile Include="Program\SettingsProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UPathTest.cs" />
     <Compile Include="UPathUnitTest.cs" />
@@ -74,6 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
