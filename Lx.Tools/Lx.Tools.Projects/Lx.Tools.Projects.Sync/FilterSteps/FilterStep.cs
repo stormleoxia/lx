@@ -1,4 +1,4 @@
-namespace Lx.Tools.Projects.Sync
+namespace Lx.Tools.Projects.Sync.FilterSteps
 {
     public abstract class FilterStep
     {

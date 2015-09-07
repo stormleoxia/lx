@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
@@ -21,7 +23,9 @@ namespace Lx.Tools.Projects.Sync
             try
             {
                 CreateProject(projectPath);
-                return true;
+                var directory = Path.GetDirectoryName(projectPath);
+                var files = _fileSystem.GetFiles(directory, "*.sources", SearchOption.TopDirectoryOnly);
+                return files.Length > 0;
             }
             catch (Exception e)
             {
