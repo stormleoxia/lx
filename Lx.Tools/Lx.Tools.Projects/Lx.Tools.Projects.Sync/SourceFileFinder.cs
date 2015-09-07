@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
@@ -26,35 +28,38 @@ namespace Lx.Tools.Projects.Sync
 
         public string FindSourcesFile()
         {
-            try
-            {
-                return InnerFindSourcesFile();
-            }
-            catch (Exception e)
-            {
-                _console.WriteLine("ERROR: " + e.Message);
-            }
-            return null;
+            return InnerFindSourcesFile();
         }
 
         private string InnerFindSourcesFile()
         {
-            var fileName = Path.GetFileName(_projectFilePath);
-            var name = fileName.Split('.')[0]; // remove extension
-            var splits = name.Split('-');
-            var subName = string.Empty;
-            if (splits.Length > 1)
-            {
-                subName = splits[1];
-            }
-            var files = _fileSystem.GetFiles(_directory, "*.sources", SearchOption.TopDirectoryOnly);
+            var files = _fileSystem.GetFiles(_directory, "*.sources", SearchOption.TopDirectoryOnly).Select(Path.GetFileName).ToArray();
             if (files.Length == 0)
             {
                 throw new InvalidOperationException("No sources found for " + _projectFilePath);
             }
+            var projectFileName = Path.GetFileName(_projectFilePath);
+            var isTest = IsTest(projectFileName);
+            files = files.Where(x => FilterTest(isTest, x)).ToArray();
             if (files.Length != 1)
-            {
-                var targeted = files.Where(x => x.Contains(_target.Convert())).ToArray();
+            {                
+                string[] targeted;
+                if (_target != Targets.All)
+                {
+                   targeted = files.Where(x => x.Contains(_target.Convert())).ToArray();
+                }
+                else
+                {
+                    targeted = files.Where(x => !TargetsEx.GetValuesButAll().Any(y => x.Contains(y.Convert()))).ToArray();
+                }
+                if (targeted.Length > 1)
+                {
+                    var projectFileNameWithoutExtension = Path.GetFileNameWithoutExtension(projectFileName);
+                    if (projectFileNameWithoutExtension != null)
+                    {
+                        targeted = files.Where(x => x.Contains(projectFileNameWithoutExtension)).ToArray();
+                    }
+                }
                 if (targeted.Length == 1)
                 {
                     return targeted.First();
@@ -64,17 +69,27 @@ namespace Lx.Tools.Projects.Sync
                     throw new InvalidOperationException("Several targeting sources found for the same target on " +
                                                         _projectFilePath);
                 }
-            }
+            }            
             var filtered = files.Where(x =>
             {
-                var xName = Path.GetFileName(x);
-                return !_notSupportedTargets.Any(y => xName.Contains(y.Convert()));
+                return !_notSupportedTargets.Any(y => x.Contains(y.Convert()));
             }).ToArray();
             if (filtered.Length != 1)
             {
                 throw new InvalidOperationException("Unable to find unique source for " + _projectFilePath);
             }
             return filtered.First();
+        }
+
+        private bool IsTest(string projectFilePath)
+        {
+            return projectFilePath.Contains("test") || projectFilePath.Contains("Test");
+        }
+
+        private bool FilterTest(bool isTest, string sourceFile)
+        {
+            var res = IsTest(sourceFile);
+            return isTest ? res : !res;
         }
     }
 }

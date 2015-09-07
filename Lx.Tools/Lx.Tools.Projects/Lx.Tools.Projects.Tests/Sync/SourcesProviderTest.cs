@@ -40,9 +40,11 @@ namespace Lx.Tools.Projects.Tests.Sync
             Assert.AreEqual("file.txt", files.FirstOrDefault(x => x.Contains("file.txt")));
             Assert.AreEqual("file", files.FirstOrDefault(x => x == "file"));
             Assert.AreEqual("anotherfile.cs", files.FirstOrDefault(x => x.Contains("anotherfile.cs")));
+            fileSystem.VerifyAll();
+            console.VerifyAll();
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(InvalidOperationException))]
         public void NoUniqueTest()
         {
             var projectFilePath = "x/y/z";
@@ -57,6 +59,8 @@ namespace Lx.Tools.Projects.Tests.Sync
             var files = provider.GetFiles();
             Assert.IsNotNull(files);
             Assert.IsEmpty(files);
+            fileSystem.VerifyAll();
+            console.VerifyAll();
         }
     }
 

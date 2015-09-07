@@ -64,6 +64,7 @@
     <Compile Include="SourceDump\SourceDumperUnitTest.cs" />
     <Compile Include="Sync\DirectorySyncTest.cs" />
     <Compile Include="Sync\ProjectItemProviderTest.cs" />
+    <Compile Include="Sync\ProjectSyncConfigurationTest.cs" />
     <Compile Include="Sync\ProjectSyncTest.cs" />
     <Compile Include="Sync\SourceComparerTest.cs" />
     <Compile Include="Sync\ProgramTest.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="SourceDump\SourceUpdateTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

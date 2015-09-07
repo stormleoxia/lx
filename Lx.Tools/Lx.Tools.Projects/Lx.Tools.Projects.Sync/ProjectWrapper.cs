@@ -10,7 +10,7 @@ namespace Lx.Tools.Projects.Sync
 
         public ProjectWrapper(string path)
         {
-            _project = new Project(path);
+            _project = new Project(path, null, null, ProjectCollection.GlobalProjectCollection, ProjectLoadSettings.IgnoreMissingImports);
         }
 
         public void AddItem(string itemType, string itemInclude)

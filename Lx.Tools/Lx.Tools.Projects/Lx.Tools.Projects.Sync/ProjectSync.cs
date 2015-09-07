@@ -20,22 +20,15 @@ namespace Lx.Tools.Projects.Sync
 
         public void Synchronize()
         {
-            try
-            {
-                var project = _factory.CreateProjectItemsProvider(_projectPath, _target);
-                var items = project.GetItems();
-                var finder = _factory.CreateSourcesProvider(_projectPath, _target);
-                var sources = finder.GetFiles();
-                var comparer = _factory.CreateSourceComparer();
-                var comparison = comparer.Compare(items, sources);
-                _console.WriteLine(comparison.ToString());
-                var updater = _factory.CreateProjectUpdater(_projectPath);
-                updater.Update(comparison);
-            }
-            catch (Exception e)
-            {
-                _console.WriteLine(e);
-            }
+            var project = _factory.CreateProjectItemsProvider(_projectPath, _target);
+            var items = project.GetItems();
+            var finder = _factory.CreateSourcesProvider(_projectPath, _target);
+            var sources = finder.GetFiles();
+            var comparer = _factory.CreateSourceComparer();
+            var comparison = comparer.Compare(items, sources);
+            _console.WriteLine(comparison.ToString());
+            var updater = _factory.CreateProjectUpdater(_projectPath);
+            updater.Update(comparison);
         }
     }
 }

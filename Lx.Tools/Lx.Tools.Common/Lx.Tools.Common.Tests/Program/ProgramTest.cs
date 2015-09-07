@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lx.Tools.Common.Program;
 using Lx.Tools.Common.Wrappers;
@@ -32,7 +33,7 @@ namespace Lx.Tools.Common.Tests.Program
             container.RegisterMoqInstance<IVersion>();
             _environment = container.RegisterMoqInstance<IEnvironment>();
             container.RegisterMoqInstance<IDebugger>();
-            _console = container.RegisterMoqInstance<IConsole>();
+            _console = container.RegisterMoqInstance<IConsole>(MockBehavior.Strict);
             _fileSystem = container.RegisterMoqInstance<IFileSystem>();
         }
 
@@ -40,6 +41,10 @@ namespace Lx.Tools.Common.Tests.Program
         public void ProgramDefinitionUsageTest()
         {
             var definition = UnityContainerExtensions.Resolve<MyDefinition>(_unityContainer);
+            _console.Setup(x => x.WriteLine("Usage: Anonymously Hosted DynamicMethods Assembly[options] "));
+            _console.Setup(x => x.WriteLine("src-dump "));
+            _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
+            _console.Setup(x => x.Write("  --help  Display this text"));
             definition.Run(new[] {"arg1", "--help", "arg2"});
             Assert.AreEqual(3, definition.ReceivedArguments.Length);
             Assert.AreEqual("arg1", definition.ReceivedArguments[0]);
@@ -48,6 +53,37 @@ namespace Lx.Tools.Common.Tests.Program
             Assert.AreEqual(1, definition.ReceivedOptions.Count);
             Assert.AreEqual(Options.Help, definition.ReceivedOptions.FirstOrDefault());
         }
+
+        [Test, ExpectedException(typeof(InvalidOperationException))]
+        public void ExceptionTest()
+        {
+            var definition = UnityContainerExtensions.Resolve<MyExceptionDefinition>(_unityContainer);
+            _console.Setup(x => x.WriteLine("Usage: Anonymously Hosted DynamicMethods Assembly[options] "));
+            _console.Setup(x => x.WriteLine("src-dump "));
+            _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
+            _console.Setup(x => x.Write("  --help  Display this text"));
+            definition.Run(new[] { "arg1", "--help", "arg2" });
+            
+        }
+    }
+
+    public class MyExceptionDefinition : ProgramDefinition
+    {
+        public MyExceptionDefinition(Options options, UsageDefinition definition, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) : base(options, definition, environment, debugger, console, versionGetter)
+        {
+        }
+
+        protected override HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions)
+        {
+            return new HashSet<Option>();
+        }
+
+        protected override void InnerRun(HashSet<Option> options, string[] args)
+        {
+            throw new InvalidOperationException();
+        }
+
+
     }
 
     public class MyDefinition : ProgramDefinition
@@ -81,8 +117,21 @@ namespace Lx.Tools.Common.Tests.Program
             where TInterface : class
         {
             var mock = new Mock<TInterface>();
+            return RegisterInstance(container, mock);
+        }
+
+        private static Mock<TInterface> RegisterInstance<TInterface>(IUnityContainer container, Mock<TInterface> mock) where TInterface : class
+        {
             container.RegisterInstance(typeof (TInterface), mock.Object);
             return mock;
         }
+
+        public static Mock<TInterface> RegisterMoqInstance<TInterface>(this IUnityContainer container, MockBehavior behavior)
+            where TInterface : class
+        {
+            var mock = new Mock<TInterface>(behavior);
+            return RegisterInstance(container, mock); 
+        }
+
     }
 }

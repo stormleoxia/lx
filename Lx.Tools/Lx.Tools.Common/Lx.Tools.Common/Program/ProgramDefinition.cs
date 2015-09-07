@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Mime;
 using System.Text;
 using Lx.Tools.Common.Wrappers;
 
@@ -26,6 +28,7 @@ namespace Lx.Tools.Common.Program
 
         public void Run(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledExcetion;
             if (args.Length == 0)
             {
                 DisplayUsage();
@@ -33,6 +36,11 @@ namespace Lx.Tools.Common.Program
             var options = ManageOptions(args);
             InnerRun(options, args);
             Exit(0);
+        }
+
+        private void OnUnhandledExcetion(object sender, UnhandledExceptionEventArgs e)
+        {
+            _console.Error.WriteLine("Unhandled Exception: " + e.ExceptionObject);
         }
 
         private HashSet<Option> ManageOptions(string[] args)

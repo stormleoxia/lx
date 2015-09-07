@@ -38,6 +38,7 @@
       <HintPath>..\..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
@@ -60,6 +61,7 @@
     <Compile Include="IProject.cs" />
     <Compile Include="IProjectFactory.cs" />
     <Compile Include="IProjectItemsProvider.cs" />
+    <Compile Include="IProjectSyncConfiguration.cs" />
     <Compile Include="IProjectUpdater.cs" />
     <Compile Include="ISourceComparer.cs" />
     <Compile Include="ISourcesProvider.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="ProjectFactory.cs" />
     <Compile Include="ProjectItemsProvider.cs" />
     <Compile Include="ProjectSync.cs" />
+    <Compile Include="ProjectSyncConfiguration.cs" />
     <Compile Include="ProjectUpdater.cs" />
     <Compile Include="ProjectWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
