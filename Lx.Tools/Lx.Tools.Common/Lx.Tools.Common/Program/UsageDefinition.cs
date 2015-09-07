@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
-using Lx.Tools.Common.Program;
+using System.Windows.Forms;
 
-namespace Lx.Tools.Common
+namespace Lx.Tools.Common.Program
 {
     public class UsageDefinition
     {
@@ -10,7 +11,7 @@ namespace Lx.Tools.Common
 
         public UsageDefinition()
         {
-            _exeName = Assembly.GetCallingAssembly().GetName().Name;
+            _exeName = Process.GetCurrentProcess().ProcessName;
             Arguments = new List<Arguments>();
         }
 
@@ -21,4 +22,6 @@ namespace Lx.Tools.Common
 
         public List<Arguments> Arguments { get; private set; }
     }
+
+
 }

@@ -65,7 +65,11 @@ namespace Lx.Tools.Common.Program
             builder.Append(_definition.ExeName);
             if (_options.AvailableOptions.Count > 0)
             {
-                builder.Append("[options] ");
+                builder.Append(" [options]");
+            }
+            if (_definition.Arguments.Count > 0)
+            {
+                builder.Append(" ");
             }
             foreach (var arg in _definition.Arguments)
             {

@@ -80,7 +80,7 @@
     <Compile Include="Wrappers\SystemEnvironment.cs" />
     <Compile Include="UPath.cs" />
     <Compile Include="UPathComponents.cs" />
-    <Compile Include="UsageDefinition.cs" />
+    <Compile Include="Program\UsageDefinition.cs" />
     <Compile Include="Wrappers\VersionGetter.cs" />
     <Compile Include="Wrappers\WriterFactory.cs" />
   </ItemGroup>

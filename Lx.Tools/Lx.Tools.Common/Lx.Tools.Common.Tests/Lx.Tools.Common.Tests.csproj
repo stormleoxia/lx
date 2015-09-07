@@ -66,7 +66,7 @@
     <Compile Include="StringExTest.cs" />
     <Compile Include="UPathTest.cs" />
     <Compile Include="UPathUnitTest.cs" />
-    <Compile Include="UsageDefinition.cs" />
+    <Compile Include="UsageDefinitionTest.cs" />
     <Compile Include="Wrappers\FileSystemTest.cs" />
   </ItemGroup>
   <ItemGroup>

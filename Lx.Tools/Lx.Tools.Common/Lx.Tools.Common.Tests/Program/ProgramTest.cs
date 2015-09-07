@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Lx.Tools.Common.Program;
 using Lx.Tools.Common.Wrappers;
 using Microsoft.Practices.Unity;
@@ -20,12 +22,14 @@ namespace Lx.Tools.Common.Tests.Program
         {
             _unityContainer = new UnityContainer();
             ConfigureContainer(_unityContainer);
+            _processName = Process.GetCurrentProcess().ProcessName;
         }
 
         private IUnityContainer _unityContainer;
         private Mock<IEnvironment> _environment;
         private Mock<IConsole> _console;
         private Mock<IFileSystem> _fileSystem;
+        private string _processName;
 
         private void ConfigureContainer(IUnityContainer container)
         {
@@ -41,7 +45,8 @@ namespace Lx.Tools.Common.Tests.Program
         public void ProgramDefinitionUsageTest()
         {
             var definition = UnityContainerExtensions.Resolve<MyDefinition>(_unityContainer);
-            _console.Setup(x => x.WriteLine("Usage: Anonymously Hosted DynamicMethods Assembly[options] "));
+            
+            _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
             _console.Setup(x => x.WriteLine("src-dump "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
             _console.Setup(x => x.Write("  --help  Display this text"));
@@ -58,7 +63,7 @@ namespace Lx.Tools.Common.Tests.Program
         public void ExceptionTest()
         {
             var definition = UnityContainerExtensions.Resolve<MyExceptionDefinition>(_unityContainer);
-            _console.Setup(x => x.WriteLine("Usage: Anonymously Hosted DynamicMethods Assembly[options] "));
+            _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
             _console.Setup(x => x.WriteLine("src-dump "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
             _console.Setup(x => x.Write("  --help  Display this text"));
@@ -69,7 +74,7 @@ namespace Lx.Tools.Common.Tests.Program
 
     public class MyExceptionDefinition : ProgramDefinition
     {
-        public MyExceptionDefinition(Options options, UsageDefinition definition, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) : base(options, definition, environment, debugger, console, versionGetter)
+        public MyExceptionDefinition(Options options, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) : base(options, new UsageDefinition(), environment, debugger, console, versionGetter)
         {
         }
 

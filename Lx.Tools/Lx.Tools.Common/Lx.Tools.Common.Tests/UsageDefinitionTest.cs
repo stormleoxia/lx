@@ -1,4 +1,5 @@
-﻿using Lx.Tools.Common.Program;
+﻿using System.Diagnostics;
+using Lx.Tools.Common.Program;
 using NUnit.Framework;
 
 namespace Lx.Tools.Common.Tests
@@ -21,7 +22,7 @@ namespace Lx.Tools.Common.Tests
         public void CheckNameIsTheProcessName()
         {
             var definition = new UsageDefinition();
-            Assert.AreEqual("Lx.Tools.Common.Tests", definition.ExeName);
+            Assert.AreEqual(Process.GetCurrentProcess().ProcessName, definition.ExeName);
         }
     }
 }
