@@ -41,11 +41,6 @@ namespace Lx.Tools.Projects.Sync
 
         public string FindSourcesFile()
         {
-            return InnerFindSourcesFile();
-        }
-
-        private string InnerFindSourcesFile()
-        {
             var files = _fileSystem.GetFiles(_directory, "*.sources", SearchOption.TopDirectoryOnly).Select(Path.GetFileName).ToArray();
             if (files.Length == 0)
             {

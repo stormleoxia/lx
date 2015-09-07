@@ -10,12 +10,12 @@ namespace Lx.Tools.Projects.Sync
 
         public IEnumerable<MissingFileInProject> MissingFilesInProject
         {
-            get { return _results.Where(x => x is MissingFileInProject).Cast<MissingFileInProject>(); }
+            get { return _results.Where(x => x is MissingFileInProject).Cast<MissingFileInProject>().ToArray(); }
         }
 
         public IEnumerable<MissingFileInSource> MissingFilesInSource
         {
-            get { return _results.Where(x => x is MissingFileInSource).Cast<MissingFileInSource>(); }
+            get { return _results.Where(x => x is MissingFileInSource).Cast<MissingFileInSource>().ToArray(); }
         }
 
         public void Add(ComparisonResult missing)

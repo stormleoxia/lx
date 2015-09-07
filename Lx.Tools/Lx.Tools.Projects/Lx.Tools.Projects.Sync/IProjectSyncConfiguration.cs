@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Lx.Tools.Common.Program;
 
 namespace Lx.Tools.Projects.Sync
 {
@@ -15,5 +12,14 @@ namespace Lx.Tools.Projects.Sync
         /// The ignored directories pattern.
         /// </value>
         string[] IgnoredDirectories { get; }
+
+        /// <summary>
+        /// Gets or sets the options activated for the run of this program.
+        /// </summary>
+        /// <value>
+        /// The options.
+        /// </value>
+        HashSet<Option> Options { get; set; }
+
     }
 }

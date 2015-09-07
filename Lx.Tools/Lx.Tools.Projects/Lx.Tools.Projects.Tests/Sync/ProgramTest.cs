@@ -22,10 +22,12 @@ namespace Lx.Tools.Projects.Tests.Sync
         private Mock<IEnvironment> _environment;
         private Mock<IConsole> _console;
         private Mock<IDirectoryValidator> _validator;
+        private Mock<IProjectSyncConfiguration> _configuration;
 
         private void ConfigureContainer(UnityContainer container)
         {
             _validator = container.RegisterMoqInstance<IDirectoryValidator>();
+            _configuration = container.RegisterMoqInstance<IProjectSyncConfiguration>();
             _sourceFinder = container.RegisterMoqInstance<ISourcesProvider>();
             _projectFactory = container.RegisterMoqInstance<IProjectFactory>();
             _sourceComparer = container.RegisterMoqInstance<ISourceComparer>();

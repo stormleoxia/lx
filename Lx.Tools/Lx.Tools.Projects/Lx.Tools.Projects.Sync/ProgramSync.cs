@@ -11,22 +11,26 @@ namespace Lx.Tools.Projects.Sync
     {
         private readonly ISyncFactory _factory;
         private readonly IFileSystem _fileSystem;
+        private readonly IProjectSyncConfiguration _configuration;
         private readonly IDirectoryValidator _validator;
         private readonly IProjectFactory _projectFactory;
 
         public ProgramSync(ISyncFactory factory, IFileSystem fileSystem, ProgramOptions options,
+            IProjectSyncConfiguration configuration,
             UsageDefinition definition, IDirectoryValidator validator, IProjectFactory projectFactory,
             IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) :
                 base(options, definition, environment, debugger, console, versionGetter)
         {
             _factory = factory;
             _fileSystem = fileSystem;
+            _configuration = configuration;
             _validator = validator;
             _projectFactory = projectFactory;
         }
 
         protected override HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions)
         {
+            _configuration.Options = activatedOptions;
             return activatedOptions;
         }
 
@@ -81,7 +85,12 @@ namespace Lx.Tools.Projects.Sync
 
         public bool IsDirectoryValid(string path)
         {
-            return _configuration.IgnoredDirectories.All(dir => !path.ToLower().ToPlatformPath().Contains(dir.ToLower().ToPlatformPath()));
-        }  
+            if (string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+            return _configuration.IgnoredDirectories.All(
+                dir => !path.ToLower().ToPlatformPath().Contains(dir.ToLower().ToPlatformPath()));
+        }
     }
 }

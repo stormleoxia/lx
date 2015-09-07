@@ -50,15 +50,8 @@ namespace Lx.Tools.Projects.Sync
                     }
                     else
                     {
-                        var filePath = Path.Combine(_directory, line);
-                        if (_fileSystem.FileExists(filePath))
-                        {
-                            res.Add(line);
-                        }
-                        else
-                        {
-                            _console.WriteLine("Source Not Found: " + filePath);
-                        }
+                        // Cannot check for existence as there is no distinction between normal sources and generated                        
+                        res.Add(line); 
                     }
                 }
             }

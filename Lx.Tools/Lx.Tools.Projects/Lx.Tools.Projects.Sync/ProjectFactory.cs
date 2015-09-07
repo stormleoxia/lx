@@ -10,12 +10,14 @@ namespace Lx.Tools.Projects.Sync
     {
         private readonly IConsole _console;
         private readonly IFileSystem _fileSystem;
+        private readonly IProjectSyncConfiguration _configuration;
         private readonly IDictionary<string, IProject> _projects = new Dictionary<string, IProject>();
 
-        public ProjectFactory(IConsole console, IFileSystem fileSystem)
+        public ProjectFactory(IConsole console, IFileSystem fileSystem, IProjectSyncConfiguration configuration)
         {
             _console = console;
             _fileSystem = fileSystem;
+            _configuration = configuration;
         }
 
         public bool IsValidProject(string projectPath)
@@ -41,7 +43,7 @@ namespace Lx.Tools.Projects.Sync
 
         public IProjectUpdater CreateProjectUpdater(string projectPath)
         {
-            return new ProjectUpdater(CreateProject(projectPath), _fileSystem);
+            return new ProjectUpdater(CreateProject(projectPath), _fileSystem, _configuration);
         }
 
         public ISourcesProvider CreateSourcesProvider(string projectPath)

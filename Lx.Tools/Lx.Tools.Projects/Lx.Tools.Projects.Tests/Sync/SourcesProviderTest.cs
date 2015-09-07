@@ -23,11 +23,11 @@ namespace Lx.Tools.Projects.Tests.Sync
                 .Returns(sources);
             var nl = Environment.NewLine;
             var reader1 = new Mock<TextReader>();
-            fileSystem.Setup(x => x.FileExists("x\\y\\file.txt".ToPlatformPath())).Returns(true);
-            fileSystem.Setup(x => x.FileExists("x\\y\\file".ToPlatformPath())).Returns(true);
-            fileSystem.Setup(x => x.FileExists("x\\y\\nonexisting".ToPlatformPath())).Returns(false);
-            fileSystem.Setup(x => x.FileExists("x\\y\\anotherfile.cs".ToPlatformPath())).Returns(true);
-            console.Setup(x => x.WriteLine("Source Not Found: x\\y\\nonexisting".ToPlatformPath()));
+            //fileSystem.Setup(x => x.FileExists("x\\y\\file.txt".ToPlatformPath())).Returns(true);
+            //fileSystem.Setup(x => x.FileExists("x\\y\\file".ToPlatformPath())).Returns(true);
+            //fileSystem.Setup(x => x.FileExists("x\\y\\nonexisting".ToPlatformPath())).Returns(false);
+            //fileSystem.Setup(x => x.FileExists("x\\y\\anotherfile.cs".ToPlatformPath())).Returns(true);
+            //console.Setup(x => x.WriteLine("Source Not Found: x\\y\\nonexisting".ToPlatformPath()));
             reader1.Setup(x => x.ReadToEnd()).Returns(@"file.txt" + nl + "file" + nl + "nonexisting" + nl + "#include file3.src");
             fileSystem.Setup(x => x.OpenText("x\\y\\file2-net_4_5".ToPlatformPath())).Returns(reader1.Object);
             var reader2 = new Mock<TextReader>();
