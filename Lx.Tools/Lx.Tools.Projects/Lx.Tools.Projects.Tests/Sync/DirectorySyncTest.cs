@@ -14,6 +14,7 @@ namespace Lx.Tools.Projects.Tests.Sync
         private Mock<ISyncFactory> _factory;
         private Mock<ISynchronizer> _synchronizer45;
         private Mock<ISynchronizer> _synchronizerAll;
+        private Mock<IProjectFactory> _projectFactory;
 
         [SetUp]
         public void Setup()
@@ -24,6 +25,7 @@ namespace Lx.Tools.Projects.Tests.Sync
             _synchronizer45 = new Mock<ISynchronizer>(MockBehavior.Strict);
             _synchronizerAll = new Mock<ISynchronizer>(MockBehavior.Strict);
             _validator = new Mock<IDirectoryValidator>(MockBehavior.Strict);
+            _projectFactory = new Mock<IProjectFactory>(MockBehavior.Strict);
         }
 
         [TearDown]
@@ -35,6 +37,7 @@ namespace Lx.Tools.Projects.Tests.Sync
             _validator.VerifyAll();
             _synchronizer45.VerifyAll();
             _synchronizerAll.VerifyAll();
+            _projectFactory.VerifyAll();
         }
 
         [Test]
@@ -50,7 +53,9 @@ namespace Lx.Tools.Projects.Tests.Sync
             _factory.Setup(x => x.CreateProjectSynchronizer(fileAll)).Returns(_synchronizerAll.Object);
             _validator.Setup(x => x.IsDirectoryValid("file1-net_4_5")).Returns(true);
             _validator.Setup(x => x.IsDirectoryValid("file2")).Returns(true);
-            var directorySync = new DirectorySync("path", _factory.Object, _fileSystem.Object, _validator.Object);
+            _projectFactory.Setup(x => x.IsValidProject("file1-net_4_5")).Returns(true);
+            _projectFactory.Setup(x => x.IsValidProject("file2")).Returns(true);
+            var directorySync = new DirectorySync("path", _factory.Object, _fileSystem.Object, _validator.Object, _projectFactory.Object);
             directorySync.Synchronize();
         }
     }

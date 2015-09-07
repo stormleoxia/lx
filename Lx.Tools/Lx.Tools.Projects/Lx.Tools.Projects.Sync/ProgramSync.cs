@@ -12,15 +12,17 @@ namespace Lx.Tools.Projects.Sync
         private readonly ISyncFactory _factory;
         private readonly IFileSystem _fileSystem;
         private readonly IDirectoryValidator _validator;
+        private readonly IProjectFactory _projectFactory;
 
         public ProgramSync(ISyncFactory factory, IFileSystem fileSystem, ProgramOptions options,
-            UsageDefinition definition, IDirectoryValidator validator,
+            UsageDefinition definition, IDirectoryValidator validator, IProjectFactory projectFactory,
             IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) :
                 base(options, definition, environment, debugger, console, versionGetter)
         {
             _factory = factory;
             _fileSystem = fileSystem;
             _validator = validator;
+            _projectFactory = projectFactory;
         }
 
         protected override HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions)
@@ -34,7 +36,7 @@ namespace Lx.Tools.Projects.Sync
             {
                 if (_validator.IsDirectoryValid(arg))
                 {
-                    if (IsCsProj(arg))
+                    if (IsCsProj(arg) && _projectFactory.IsValidProject(arg))
                     {
                         var sync = _factory.CreateProjectSynchronizer(arg);
                         sync.Synchronize();

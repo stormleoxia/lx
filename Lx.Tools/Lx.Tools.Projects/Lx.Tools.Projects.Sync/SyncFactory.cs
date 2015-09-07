@@ -25,7 +25,7 @@ namespace Lx.Tools.Projects.Sync
 
         public ISynchronizer CreateDirectorySynchronizer(string directoryPath)
         {
-            return new DirectorySync(directoryPath, this, _fileSystem, _validator);
+            return new DirectorySync(directoryPath, this, _fileSystem, _validator, _factory);
         }
     }
 }

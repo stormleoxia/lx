@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
-    public class ProjectFactory : IProjectFactory
+    public sealed class ProjectFactory : IProjectFactory
     {
         private readonly IConsole _console;
         private readonly IFileSystem _fileSystem;
@@ -13,6 +14,20 @@ namespace Lx.Tools.Projects.Sync
         {
             _console = console;
             _fileSystem = fileSystem;
+        }
+
+        public bool IsValidProject(string projectPath)
+        {
+            try
+            {
+                CreateProject(projectPath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _console.WriteLine(e);
+            }
+            return false;
         }
 
         public IProjectItemsProvider CreateProjectItemsProvider(string projectPath)
