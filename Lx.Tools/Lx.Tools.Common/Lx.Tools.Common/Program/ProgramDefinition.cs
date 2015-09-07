@@ -67,17 +67,14 @@ namespace Lx.Tools.Common.Program
             {
                 builder.Append(" [options]");
             }
-            if (_definition.Arguments.Count > 0)
-            {
-                builder.Append(" ");
-            }
             foreach (var arg in _definition.Arguments)
             {
+                builder.Append(" ");
                 builder.Append(arg.Name);
             }
             _console.WriteLine(builder.ToString());
             var version = _versionGetter.Version;
-            _console.WriteLine("src-dump " + version);
+            _console.WriteLine(_definition.ExeName + " " + version);
             _console.WriteLine("Copyright (C) 2015 Leoxia Ltd");
         }
 

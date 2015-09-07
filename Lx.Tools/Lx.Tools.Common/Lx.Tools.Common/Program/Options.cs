@@ -49,12 +49,13 @@ namespace Lx.Tools.Common.Program
             var nl = _environment.NewLine;
             var help = new StringBuilder();
             var maxLength = AvailableOptions.Max(x => x.Name.Length);
+            help.AppendLine();
+            help.AppendLine("  AvailableOptions:");
             foreach (var option in AvailableOptions)
             {
                 help.AppendFormat("  {0}  {1}{2}", option.Name.PadRight(maxLength), option.Explanation,
                     nl);
             }
-
             _console.Write(help.ToString());
         }
     }

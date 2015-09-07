@@ -41,7 +41,7 @@ namespace Lx.Tools.Projects.Sync
                     _project.RemoveItem(item);
                 }
             }
-            //_project.Save();
+            _project.Save();
         }
     }
 }

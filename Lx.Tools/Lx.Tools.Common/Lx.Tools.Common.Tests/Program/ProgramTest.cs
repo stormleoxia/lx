@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using Lx.Tools.Common.Program;
 using Lx.Tools.Common.Wrappers;
 using Microsoft.Practices.Unity;
@@ -47,9 +48,11 @@ namespace Lx.Tools.Common.Tests.Program
             var definition = UnityContainerExtensions.Resolve<MyDefinition>(_unityContainer);
             
             _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
-            _console.Setup(x => x.WriteLine("src-dump "));
+            _console.Setup(x => x.WriteLine(_processName + " "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
-            _console.Setup(x => x.Write("  --help  Display this text"));
+            _console.Setup(x => x.Write(@"
+  AvailableOptions:
+  --help  Display this text"));
             definition.Run(new[] {"arg1", "--help", "arg2"});
             Assert.AreEqual(3, definition.ReceivedArguments.Length);
             Assert.AreEqual("arg1", definition.ReceivedArguments[0]);
@@ -64,9 +67,11 @@ namespace Lx.Tools.Common.Tests.Program
         {
             var definition = UnityContainerExtensions.Resolve<MyExceptionDefinition>(_unityContainer);
             _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
-            _console.Setup(x => x.WriteLine("src-dump "));
+            _console.Setup(x => x.WriteLine(_processName + " "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
-            _console.Setup(x => x.Write("  --help  Display this text"));
+            _console.Setup(x => x.Write(@"
+  AvailableOptions:
+  --help  Display this text"));
             definition.Run(new[] { "arg1", "--help", "arg2" });
             
         }
