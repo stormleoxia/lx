@@ -11,12 +11,12 @@ namespace Lx.Tools.Projects.Sync
         private readonly IConsole _console;
         private readonly string _sourceFile;
 
-        public SourcesProvider(string projectFilePath, Targets target, IFileSystem fileSystem, IConsole console)
+        public SourcesProvider(string projectFilePath, IFileSystem fileSystem, IConsole console)
         {
             _fileSystem = fileSystem;
             _console = console;
             _directory = Path.GetDirectoryName(projectFilePath);
-            var sourceFileFinder = new SourceFileFinder(projectFilePath, target, console, fileSystem);
+            var sourceFileFinder = new SourceFileFinder(projectFilePath, fileSystem);
             _sourceFile = sourceFileFinder.FindSourcesFile();
         }
 

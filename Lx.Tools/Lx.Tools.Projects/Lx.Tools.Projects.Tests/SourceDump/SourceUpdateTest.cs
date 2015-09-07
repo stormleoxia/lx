@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -43,6 +42,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
         public void Teardown()
         {
             _propertyInfo.SetValue(null, new FileSystem());
+            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -61,7 +61,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(unixfile, result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
             Assert.AreEqual(_unixRooted, result[3]);
-            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -74,7 +73,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("file1.cs", result[0]);
             Assert.AreEqual("file2.cs", result[1]);
-            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -91,7 +89,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[0], "1: For " + winRelative);
             Assert.AreEqual(winRelative.Replace('\\', Path.DirectorySeparatorChar), result[1], "2: For " + winRooted);
-            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -107,7 +104,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.IsNotEmpty(result);
             Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[0], "1: For " + unixRelative);
             Assert.AreEqual(unixRelative.Replace('/', Path.DirectorySeparatorChar), result[1], "2: For " + unixRooted);
-            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -122,7 +118,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual("../unixfile.cs", result[1]);
             Assert.AreEqual(_windowsRooted.Replace("\\", "/"), result[2]);
             Assert.AreEqual(_unixRooted, result[3]);
-            _fileSystem.VerifyAll();
         }
 
         [Test]
@@ -137,7 +132,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.AreEqual(@"..\unixfile.cs", result[1]);
             Assert.AreEqual(_windowsRooted, result[2]);
             Assert.AreEqual(_unixRooted.Replace('/', '\\'), result[3]);
-            _fileSystem.VerifyAll();
         }
     }
 

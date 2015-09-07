@@ -24,8 +24,14 @@ namespace Lx.Tools.Projects.Sync
                     return "basic";
                 case Targets.Xammac:
                     return "xammac";
+                case Targets.XammacNet4Dot5:
+                    return "xammac_net_4_5";
                 case Targets.Monotouch:
                     return "monotouch";
+                case Targets.Mobile:
+                    return "mobile";
+                case Targets.MobileStatic:
+                    return "mobile_static";
                 case Targets.Monodroid:
                     return "monodroid";
                 case Targets.Net2Dot0:

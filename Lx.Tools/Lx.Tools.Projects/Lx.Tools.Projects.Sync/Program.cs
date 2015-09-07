@@ -30,6 +30,10 @@ namespace Lx.Tools.Projects.Sync
 
         public static void ContainerConfigure(IUnityContainer container)
         {
+            container.RegisterType<ISettingsProvider, SettingsProvider>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IProjectSyncConfiguration, ProjectSyncConfiguration>(
+                new ContainerControlledLifetimeManager());
+            container.RegisterType<IDirectoryValidator, DirectoryValidator>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISourcesProvider, SourcesProvider>(new ContainerControlledLifetimeManager());
             container.RegisterType<IProjectFactory, ProjectFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISourceComparer, SourceComparer>(new ExternallyControlledLifetimeManager());

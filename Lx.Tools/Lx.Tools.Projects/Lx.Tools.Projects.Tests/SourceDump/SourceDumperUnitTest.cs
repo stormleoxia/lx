@@ -26,6 +26,7 @@ namespace Lx.Tools.Projects.Tests.SourceDump
         public void Teardown()
         {
             _propertyInfo.SetValue(null, new FileSystem());
+            _fileSystem.VerifyAll();
         }
 
         private Mock<IFileSystem> _fileSystem;
@@ -59,7 +60,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             Assert.IsNotNull(res);
             Assert.AreEqual(1, res.Count());
 			Assert.AreEqual(@"..\..\Lx.Tools.Projects.Tests.csproj".ToPlatformPath(), res.FirstOrDefault());
-            _fileSystem.VerifyAll();
         }
     }
 }

@@ -8,14 +8,16 @@ namespace Lx.Tools.Projects.Sync
     {
         private readonly List<ISynchronizer> _projects = new List<ISynchronizer>();
 
-        public DirectorySync(string directoryPath, ISyncFactory factory, IFileSystem fileSystem)
+        public DirectorySync(string directoryPath, ISyncFactory factory, IFileSystem fileSystem, IDirectoryValidator validator)
         {
             var files = fileSystem.GetFiles(directoryPath, "*.csproj", SearchOption.AllDirectories);
             foreach (var file in files)
             {
-                var target = TargetsEx.ExtractTarget(file);
-                var project = factory.CreateProjectSynchronizer(file, target);
-                _projects.Add(project);
+                if (validator.IsDirectoryValid(file))
+                {
+                    var project = factory.CreateProjectSynchronizer(file);
+                    _projects.Add(project);
+                }
             }
         }
 

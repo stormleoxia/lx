@@ -20,9 +20,9 @@ namespace Lx.Tools.Projects.Sync
 
         public void Synchronize()
         {
-            var project = _factory.CreateProjectItemsProvider(_projectPath, _target);
+            var project = _factory.CreateProjectItemsProvider(_projectPath);
             var items = project.GetItems();
-            var finder = _factory.CreateSourcesProvider(_projectPath, _target);
+            var finder = _factory.CreateSourcesProvider(_projectPath);
             var sources = finder.GetFiles();
             var comparer = _factory.CreateSourceComparer();
             var comparison = comparer.Compare(items, sources);

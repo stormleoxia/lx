@@ -58,6 +58,7 @@
     <Compile Include="Assemblies\MemberSignature.cs" />
     <Compile Include="Assemblies\NamespaceDefinition.cs" />
     <Compile Include="Program\SettingsProvider.cs" />
+    <Compile Include="StringEx.cs" />
     <Compile Include="Wrappers\ConsoleWriter.cs" />
     <Compile Include="Wrappers\FileWriter.cs" />
     <Compile Include="Assemblies\IApiExtractor.cs" />

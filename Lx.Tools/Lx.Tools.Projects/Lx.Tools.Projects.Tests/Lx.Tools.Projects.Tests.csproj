@@ -63,6 +63,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceDump\SourceDumperUnitTest.cs" />
     <Compile Include="Sync\DirectorySyncTest.cs" />
+    <Compile Include="Sync\DirectoryValidatorTest.cs" />
+    <Compile Include="Sync\ProjectAttributesTest.cs" />
+    <Compile Include="Sync\SourceFileFinderTest.cs" />
+    <Compile Include="Sync\SyncFactoryTest.cs" />
     <Compile Include="Sync\ProjectItemProviderTest.cs" />
     <Compile Include="Sync\ProjectSyncConfigurationTest.cs" />
     <Compile Include="Sync\ProjectSyncTest.cs" />

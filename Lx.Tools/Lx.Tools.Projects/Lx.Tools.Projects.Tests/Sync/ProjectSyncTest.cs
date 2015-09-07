@@ -19,10 +19,10 @@ namespace Lx.Tools.Projects.Tests.Sync
             var factory = new Mock<IProjectFactory>(MockBehavior.Strict);
             var provider = new Mock<IProjectItemsProvider>(MockBehavior.Strict);
             provider.Setup(x => x.GetItems()).Returns(projectItems);
-            factory.Setup(x => x.CreateProjectItemsProvider(projectPath, target)).Returns(provider.Object);
+            factory.Setup(x => x.CreateProjectItemsProvider(projectPath)).Returns(provider.Object);
             var sourceProvider = new Mock<ISourcesProvider>(MockBehavior.Strict);
             sourceProvider.Setup(x => x.GetFiles()).Returns(sourceFiles);
-            factory.Setup(x => x.CreateSourcesProvider(projectPath, target)).Returns(sourceProvider.Object);
+            factory.Setup(x => x.CreateSourcesProvider(projectPath)).Returns(sourceProvider.Object);
             var comparer = new Mock<ISourceComparer>(MockBehavior.Strict);
             var comparison = new SourceComparison();
             comparer.Setup(x => x.Compare(projectItems, sourceFiles)).Returns(comparison);

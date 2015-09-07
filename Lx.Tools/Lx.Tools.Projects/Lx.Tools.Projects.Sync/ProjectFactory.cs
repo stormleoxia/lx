@@ -15,7 +15,7 @@ namespace Lx.Tools.Projects.Sync
             _fileSystem = fileSystem;
         }
 
-        public IProjectItemsProvider CreateProjectItemsProvider(string projectPath, Targets target)
+        public IProjectItemsProvider CreateProjectItemsProvider(string projectPath)
         {
             return new ProjectItemsProvider(CreateProject(projectPath));
         }
@@ -25,9 +25,9 @@ namespace Lx.Tools.Projects.Sync
             return new ProjectUpdater(CreateProject(projectPath), _fileSystem);
         }
 
-        public ISourcesProvider CreateSourcesProvider(string projectPath, Targets target)
+        public ISourcesProvider CreateSourcesProvider(string projectPath)
         {
-            return new SourcesProvider(projectPath, target, _fileSystem, _console);
+            return new SourcesProvider(projectPath, _fileSystem, _console);
         }
 
         public ISourceComparer CreateSourceComparer()

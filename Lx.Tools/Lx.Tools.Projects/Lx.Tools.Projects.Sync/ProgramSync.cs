@@ -1,23 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lx.Tools.Common;
 using Lx.Tools.Common.Program;
 using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {
-    public class ProgramSync : ProgramDefinition
+    public sealed class ProgramSync : ProgramDefinition
     {
         private readonly ISyncFactory _factory;
         private readonly IFileSystem _fileSystem;
+        private readonly IDirectoryValidator _validator;
 
         public ProgramSync(ISyncFactory factory, IFileSystem fileSystem, ProgramOptions options,
-            UsageDefinition definition,
+            UsageDefinition definition, IDirectoryValidator validator,
             IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) :
                 base(options, definition, environment, debugger, console, versionGetter)
         {
             _factory = factory;
             _fileSystem = fileSystem;
+            _validator = validator;
         }
 
         protected override HashSet<Option> InnerManageOptions(HashSet<Option> activatedOptions)
@@ -29,19 +32,21 @@ namespace Lx.Tools.Projects.Sync
         {
             foreach (var arg in args)
             {
-                if (IsCsProj(arg))
+                if (_validator.IsDirectoryValid(arg))
                 {
-                    var target = TargetsEx.ExtractTarget(arg);
-                    var sync = _factory.CreateProjectSynchronizer(arg, target);
-                    sync.Synchronize();
-                }
-                else if (IsDirectory(arg))
-                {
-                    var sync = _factory.CreateDirectorySynchronizer(arg);
-                    sync.Synchronize();
+                    if (IsCsProj(arg))
+                    {
+                        var sync = _factory.CreateProjectSynchronizer(arg);
+                        sync.Synchronize();
+                    }
+                    else if (IsDirectory(arg))
+                    {
+                        var sync = _factory.CreateDirectorySynchronizer(arg);
+                        sync.Synchronize();
+                    }
                 }
             }
-        }
+        }      
 
         private bool IsDirectory(string directoryPath)
         {
@@ -56,5 +61,25 @@ namespace Lx.Tools.Projects.Sync
             }
             return false;
         }
+    }
+
+    public interface IDirectoryValidator
+    {
+        bool IsDirectoryValid(string path);
+    }
+
+    public sealed class DirectoryValidator : IDirectoryValidator
+    {
+        private readonly IProjectSyncConfiguration _configuration;
+
+        public DirectoryValidator(IProjectSyncConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public bool IsDirectoryValid(string path)
+        {
+            return _configuration.IgnoredDirectories.All(dir => !path.ToLower().ToPlatformPath().Contains(dir.ToLower().ToPlatformPath()));
+        }  
     }
 }

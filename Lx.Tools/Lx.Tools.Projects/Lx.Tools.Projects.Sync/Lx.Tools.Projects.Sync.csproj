@@ -58,6 +58,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="DirectorySync.cs" />
+    <Compile Include="FilterSteps\FilterStep.cs" />
     <Compile Include="IProject.cs" />
     <Compile Include="IProjectFactory.cs" />
     <Compile Include="IProjectItemsProvider.cs" />
@@ -69,7 +70,10 @@
     <Compile Include="ISynchronizer.cs" />
     <Compile Include="MissingFileInProject.cs" />
     <Compile Include="MissingFileInSource.cs" />
+    <Compile Include="FilterSteps\NameFilterStep.cs" />
+    <Compile Include="FilterSteps\NotSupportedTargetStep.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectAttributes.cs" />
     <Compile Include="ProjectFactory.cs" />
     <Compile Include="ProjectItemsProvider.cs" />
     <Compile Include="ProjectSync.cs" />
@@ -77,14 +81,19 @@
     <Compile Include="ProjectUpdater.cs" />
     <Compile Include="ProjectWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FilterSteps\ScopeFilterStep.cs" />
+    <Compile Include="Scopes.cs" />
     <Compile Include="SourceComparer.cs" />
     <Compile Include="SourceComparison.cs" />
     <Compile Include="SourceFileFinder.cs" />
     <Compile Include="SourcesProvider.cs" />
     <Compile Include="ProgramSync.cs" />
     <Compile Include="ProgramOptions.cs" />
+    <Compile Include="SyncFactory.cs" />
+    <Compile Include="FilterSteps\TargetFilterStep.cs" />
     <Compile Include="Targets.cs" />
     <Compile Include="TargetsEx.cs" />
+    <Compile Include="FilterSteps\TestFilterStep.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

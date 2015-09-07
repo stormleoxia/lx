@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Lx.Tools.Common;
 using Lx.Tools.Common.Wrappers;
 using Lx.Tools.Projects.Sync;
 using Moq;
@@ -14,8 +15,7 @@ namespace Lx.Tools.Projects.Tests.Sync
         [Test]
         public void Dot45Test()
         {
-            var projectFilePath = "x/y/z";
-            var target = Targets.Net4Dot5;
+            var projectFilePath = "x/y/net_4_5-file2.csproj";
             var console = new Mock<IConsole>(MockBehavior.Strict);
             var fileSystem = new Mock<IFileSystem>(MockBehavior.Strict);
             string[] sources = {"file1", "file2-net_4_5"};
@@ -33,7 +33,7 @@ namespace Lx.Tools.Projects.Tests.Sync
             var reader2 = new Mock<TextReader>();
             reader2.Setup(x => x.ReadToEnd()).Returns(@"anotherfile.cs");
             fileSystem.Setup(x => x.OpenText("x\\y\\file3.src".ToPlatformPath())).Returns(reader2.Object);
-            var provider = new SourcesProvider(projectFilePath, target, fileSystem.Object, console.Object);
+            var provider = new SourcesProvider(projectFilePath, fileSystem.Object, console.Object);
             var files = provider.GetFiles();
             Assert.IsNotNull(files);
             Assert.IsNotEmpty(files);
@@ -55,7 +55,7 @@ namespace Lx.Tools.Projects.Tests.Sync
             fileSystem.Setup(x => x.GetFiles("x\\y".ToPlatformPath(), "*.sources", SearchOption.TopDirectoryOnly))
                 .Returns(sources);
             console.Setup(x => x.WriteLine(It.Is<string>(y => y.Contains("ERROR"))));
-            var provider = new SourcesProvider(projectFilePath, target, fileSystem.Object, console.Object);
+            var provider = new SourcesProvider(projectFilePath, fileSystem.Object, console.Object);
             var files = provider.GetFiles();
             Assert.IsNotNull(files);
             Assert.IsEmpty(files);
@@ -64,11 +64,5 @@ namespace Lx.Tools.Projects.Tests.Sync
         }
     }
 
-    public static class StringEx
-    {
-        public static string ToPlatformPath(this string path)
-        {
-            return path.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
-        }
-    }
+
 }

@@ -2,9 +2,9 @@ namespace Lx.Tools.Projects.Sync
 {
     public interface IProjectFactory
     {
-        IProjectItemsProvider CreateProjectItemsProvider(string projectPath, Targets target);
+        IProjectItemsProvider CreateProjectItemsProvider(string projectPath);
         IProjectUpdater CreateProjectUpdater(string projectPath);
-        ISourcesProvider CreateSourcesProvider(string projectPath, Targets target);
+        ISourcesProvider CreateSourcesProvider(string projectPath);
         ISourceComparer CreateSourceComparer();
     }
 }
