@@ -1,4 +1,4 @@
-﻿#region Copyright (c) 2015 Leoxia Ltd.
+﻿#region Copyright (c) 2015 Leoxia Ltd
 
 // Copyright © 2015 Leoxia Ltd.
 // 
