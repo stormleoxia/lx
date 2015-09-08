@@ -63,8 +63,12 @@ namespace Lx.Tools.Projects.Sync
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <returns></returns>
-        public static Targets ExtractTarget(string fileName)
+        public static Targets ExtractTarget(this string fileName)
         {
+            if (fileName.Contains(Targets.XammacNet4Dot5.Convert()))
+            {
+                return Targets.XammacNet4Dot5;
+            }
             foreach (var target in GetValuesButAll())
             {
                 if (fileName.Contains(target.Convert()))

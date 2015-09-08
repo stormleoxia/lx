@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Lx.Tools.Common;
 using Lx.Tools.Common.Wrappers;
 
@@ -25,16 +27,7 @@ namespace Lx.Tools.Projects.Sync
         /// <param name="comparison">The comparison.</param>
         public void Update(SourceComparison comparison)
         {
-            var directory = Path.GetDirectoryName(_project.FullPath);
-
-            foreach (var item in comparison.MissingFilesInProject)
-            {
-                var fileName = Path.Combine(directory, item.Path);
-                var path = new UPath(directory);
-                var fileUPath = new UPath(fileName);
-                var res = path.MakeRelativeUPath(fileUPath);
-                _project.AddItem("Compile", res.ToString());
-            }
+            Cleanup();
             if (!_configuration.Options.Contains(ProgramOptions.NoDelete))
             {
                 var hash = comparison.MissingFilesInSource.Select(x => x.Path.ToLower()).ToHashSet();
@@ -47,7 +40,34 @@ namespace Lx.Tools.Projects.Sync
                     }
                 }
             }
+            var directory = Path.GetDirectoryName(_project.FullPath);
+            foreach (var item in comparison.MissingFilesInProject)
+            {
+                var fileName = Path.Combine(directory, item.Path);
+                var path = new UPath(directory);
+                var fileUPath = new UPath(fileName);
+                var res = path.MakeRelativeUPath(fileUPath);
+                _project.AddItem("Compile", res.ToString());
+            }
+
             _project.Save();
+        }
+
+        private void Cleanup()
+        {
+            var items = _project.GetItems("Compile").ToArray();
+            var duplicates = items.Select(x => x.EvaluatedInclude.ToLower().ToPlatformPath().Trim().RemoveDotPath())
+                .GroupBy(x => x)
+                .Where(g => g.Count() > 1).Select(x => x.Key).ToHashSet();
+            foreach (var item in items)
+            {
+                string comparable = item.EvaluatedInclude.ToLower().ToPlatformPath().Trim().RemoveDotPath();
+                if (duplicates.Contains(comparable))
+                {
+                    _project.RemoveItem(item);
+                    duplicates.Remove(comparable);
+                }
+            }
         }
     }
 }

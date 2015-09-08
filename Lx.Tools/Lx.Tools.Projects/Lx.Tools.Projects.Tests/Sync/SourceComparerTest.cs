@@ -26,5 +26,19 @@ namespace Lx.Tools.Projects.Tests.Sync
             Assert.AreEqual("second", sourceMissing.First().Path);
             Assert.IsTrue(sourceMissing.First().ToString().Contains("second"));
         }
+
+
+        [Test]
+        public void CompareComplexDifferencesTest()
+        {
+            var comparer = new SourceComparer();
+            var comparison = comparer.Compare(new HashSet<string> { "First", "thirD", " second", @"..\fourth" },
+                new HashSet<string> { "Third", "./First", "Second ", "../FourTH" });
+            Assert.IsNotNull(comparison);
+            var projectMissing = comparison.MissingFilesInProject.ToArray();
+            Assert.IsEmpty(projectMissing);
+            var sourceMissing = comparison.MissingFilesInSource.ToArray();
+            Assert.IsEmpty(sourceMissing);
+        }
     }
 }

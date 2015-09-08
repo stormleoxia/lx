@@ -31,7 +31,7 @@ namespace Lx.Tools.Projects.Sync
             }
             catch (Exception e)
             {
-                _console.WriteLine(e);
+                _console.WriteLine(e.Message);
             }
             return false;
         }

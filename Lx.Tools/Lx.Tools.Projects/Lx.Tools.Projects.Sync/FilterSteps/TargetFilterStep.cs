@@ -10,7 +10,7 @@ namespace Lx.Tools.Projects.Sync.FilterSteps
             {
                 return files.Where(x => !TargetsEx.GetValuesButAll().Any(y => x.Contains(TargetsEx.Convert(y)))).ToArray();
             }
-            return files.Where(x => x.Contains(attributes.Target.Convert())).ToArray();
+            return files.Where(x => x.ExtractTarget() == attributes.Target).ToArray();
         }
     }
 }

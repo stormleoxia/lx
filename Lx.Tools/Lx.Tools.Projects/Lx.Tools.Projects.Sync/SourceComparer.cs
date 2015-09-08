@@ -8,21 +8,21 @@ namespace Lx.Tools.Projects.Sync
     {
         public SourceComparison Compare(HashSet<string> itemsInCsProj, HashSet<string> sourcesInSourceFile)
         {
-            var pathInCsProj = itemsInCsProj.Select(x => x.ToLower()).ToHashSet();
-            var pathInSourceFile = sourcesInSourceFile.Select(x => x.ToLower()).ToHashSet();
+            var pathInCsProj = itemsInCsProj.ToDictionaryIgnoreDuplicates(x => x.ToLower().ToPlatformPath().Trim().RemoveDotPath(), x => x);
+            var pathInSourceFile = sourcesInSourceFile.ToDictionaryIgnoreDuplicates(x => x.ToLower().ToPlatformPath().Trim().RemoveDotPath(), x => x);
             var comparison = new SourceComparison();
             foreach (var item in pathInCsProj)
             {
-                if (!pathInSourceFile.Contains(item))
+                if (!pathInSourceFile.ContainsKey(item.Key))
                 {
-                    comparison.Add(new MissingFileInSource(item));
+                    comparison.Add(new MissingFileInSource(item.Value));
                 }
             }
             foreach (var source in pathInSourceFile)
             {
-                if (!pathInCsProj.Contains(source))
+                if (!pathInCsProj.ContainsKey(source.Key))
                 {
-                    comparison.Add(new MissingFileInProject(source));
+                    comparison.Add(new MissingFileInProject(source.Value));
                 }
             }
             return comparison;

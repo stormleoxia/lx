@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Lx.Samples.Web.Browser
 {
@@ -11,8 +8,26 @@ namespace Lx.Samples.Web.Browser
     /// </summary>
     class Program
     {
+
+
         static void Main(string[] args)
         {
+            try
+            {
+                string url = @"http://www.google.com";
+                var browser = new Awesomium.Browser();
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                var document = browser.Load(url);
+                stopwatch.Stop();
+                Console.WriteLine(document.DocumentNode.InnerText);
+                Console.WriteLine("Loaded in " + stopwatch.Elapsed);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            Console.ReadLine();
         }
     }
 }

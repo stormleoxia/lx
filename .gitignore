@@ -50,3 +50,13 @@
 *.user
 /Lx.Samples/packages
 /Lx.Tools/packages
+/Lx.Samples/Lx.Samples.Web/Lx.Samples.Web.Awesomium/obj
+/Lx.Samples/Lx.Samples.Web/Lx.Samples.Web.Awesomium/bin
+/Lx.Web/Lx.Web.Browser.Hap/obj
+/Lx.Web/Lx.Web.Browser.Hap/bin
+/Lx.Web/Lx.Web.Common/obj
+/Lx.Web/Lx.Web.Common/bin
+/Lx.Web/Lx.Web.Browser.Asm/bin
+/Lx.Web/Lx.Web.Browser.Asm/obj
+/Lx.Web/Lx.Web.Browser/bin
+/Lx.Web/Lx.Web.Browser/obj

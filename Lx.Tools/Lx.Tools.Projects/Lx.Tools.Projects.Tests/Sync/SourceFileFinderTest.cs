@@ -52,7 +52,8 @@ namespace Lx.Tools.Projects.Tests.Sync
                     "basic_Lx.Tools.Common.dll.sources"
                 });
             var sourceFileFinder = new SourceFileFinder(@"x/y/z/net_4_5-Lx.Tools.Common.csproj", _fileSystem.Object);
-            sourceFileFinder.FindSourcesFile();
+            var sourceFound = sourceFileFinder.FindSourcesFile();
+            Assert.AreEqual("net_4_5_Lx.Tools.Common.dll.sources", sourceFound);
         }
 
         [Test]
@@ -67,7 +68,8 @@ namespace Lx.Tools.Projects.Tests.Sync
                     "basic_Lx.Tools.Common.dll.sources"
                 });
             var sourceFileFinder = new SourceFileFinder(@"x/y/z/Lx.Tools.Common.csproj", _fileSystem.Object);
-            sourceFileFinder.FindSourcesFile();
+            var sourceFound = sourceFileFinder.FindSourcesFile();
+            Assert.AreEqual("Lx.Tools.Common.dll.sources", sourceFound);
         }
 
         [Test]
@@ -82,7 +84,41 @@ namespace Lx.Tools.Projects.Tests.Sync
                     "build_Lx.Tools.Common.dll.sources"
                 });
             var sourceFileFinder = new SourceFileFinder(@"x/y/z/build-Lx.Tools.Common.csproj", _fileSystem.Object);
-            sourceFileFinder.FindSourcesFile();
+            var sourceFound = sourceFileFinder.FindSourcesFile();
+            Assert.AreEqual("build_Lx.Tools.Common.dll.sources", sourceFound);
+        }
+
+        [Test]
+        public void TryWithXammacNet45Test()
+        {
+           
+                _fileSystem.Setup(x => x.GetFiles("x/y/z".ToPlatformPath(), "*.sources", SearchOption.TopDirectoryOnly))
+                .Returns(new[]
+                {
+                    "Lx.Tools.Common.dll.sources", 
+                    "net_4_5_Lx.Tools.Common.Test.dll.sources",
+                    "net_4_5_Lx.Tools.Common.dll.sources",
+                    "xammac_net_4_5-Lx.Tools.Common.dll.sources"
+                });
+                var sourceFileFinder = new SourceFileFinder(@"x/y/z/net_4_5-Lx.Tools.Common.csproj", _fileSystem.Object);
+            var sourceFound = sourceFileFinder.FindSourcesFile();
+            Assert.AreEqual("net_4_5_Lx.Tools.Common.dll.sources", sourceFound);
+        }
+
+        [Test]
+        public void ReproduceXammacNet45Bug()
+        {
+
+            _fileSystem.Setup(x => x.GetFiles("x/y/z".ToPlatformPath(), "*.sources", SearchOption.TopDirectoryOnly))
+            .Returns(new[]
+                {
+                    "Lx.Tools.Common.dll.sources", 
+                    "net_4_5_Lx.Tools.Common.Test.dll.sources",
+                    "xammac_net_4_5_Lx.Tools.Common.dll.sources"
+                });
+            var sourceFileFinder = new SourceFileFinder(@"x/y/z/net_4_5-Lx.Tools.Common.csproj", _fileSystem.Object);
+            var sourceFound = sourceFileFinder.FindSourcesFile();
+            Assert.AreEqual("Lx.Tools.Common.dll.sources", sourceFound);
         }
 
     }
