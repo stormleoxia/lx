@@ -44,6 +44,10 @@
     <Compile Include="..\..\SolutionItems\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Cloners\ClassToClone.cs" />
+    <Compile Include="Cloners\CloneBenchmarkGroup.cs" />
+    <Compile Include="Cloners\DelegateCloneBenchmark.cs" />
+    <Compile Include="Cloners\FrameworkCloneBenchmark.cs" />
     <Compile Include="MethodCalls\DelegateCallBenchmark.cs" />
     <Compile Include="MethodCalls\ExpressionTreeCallBenchmark.cs" />
     <Compile Include="MethodCalls\InvokeMemberBenchmark.cs" />
@@ -62,7 +66,12 @@
       <Project>{F93DC759-9432-4CB9-B1F8-1529DE84B338}</Project>
       <Name>Lx.Tools.Performance</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Lx.Tools.Reflection\Lx.Tools.Reflection.csproj">
+      <Project>{77A881B9-628E-4591-8FF6-FFC81431A8D2}</Project>
+      <Name>Lx.Tools.Reflection</Name>
+    </ProjectReference>
   </ItemGroup>
+  <Import Project="$(ProjectDir)..\..\SolutionItems\lx.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,9 +2,9 @@
 
 
   <!-- Delete snk file in current directory -->
-<!--  <Target Name="SnkDelete" AfterTargets="CopyFilesToOutputDirectory">
+  <Target Condition=" '$(OS)' != 'Unix' " Name="SnkDelete" AfterTargets="CopyFilesToOutputDirectory">
     <Delete Files="leoxia.public.snk"/>
-  </Target>-->
+  </Target>
 
   <!-- Copy snk file to current directory -->
 
@@ -36,9 +36,11 @@
     </Task>
   </UsingTask>
 
-<!--  <Target Condition=" '$(OS)' != 'Unix' " Name='SnkCopy' BeforeTargets="CoreCompile" >
-    <SnkCopy Source="SolutionItems\leoxia.public.snk" Destination="leoxia.public.snk"/>
-  </Target>-->
+  
+  
+  <Target Condition=" '$(OS)' != 'Unix' " Name='SnkCopy' BeforeTargets="CoreCompile" >
+    <SnkCopy Source="SolutionItems\leoxia.snk" Destination="leoxia.snk"/>
+  </Target>
 
 
 </Project>
