@@ -48,6 +48,7 @@
     <Compile Include="Cloners\CloneBenchmarkGroup.cs" />
     <Compile Include="Cloners\DelegateCloneBenchmark.cs" />
     <Compile Include="Cloners\FrameworkCloneBenchmark.cs" />
+    <Compile Include="Cloners\ManualCloneBenchmark.cs" />
     <Compile Include="MethodCalls\DelegateCallBenchmark.cs" />
     <Compile Include="MethodCalls\ExpressionTreeCallBenchmark.cs" />
     <Compile Include="MethodCalls\InvokeMemberBenchmark.cs" />

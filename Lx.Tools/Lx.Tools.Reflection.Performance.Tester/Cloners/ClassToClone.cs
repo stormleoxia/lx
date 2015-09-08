@@ -36,5 +36,16 @@ namespace Lx.Tools.Reflection.Performance.Tester.Cloners
             _copier.Copy(this, instance);
             return instance;
         }
+
+        public ClassToClone ManualClone()
+        {
+            var clone = new ClassToClone();
+            clone.StringProperty = StringProperty;
+            clone.IntegerProperty = IntegerProperty;
+            clone.StringProperty2 = StringProperty2;
+            clone.IntegerProperty1 = IntegerProperty1;
+            clone.DoubleProperty = DoubleProperty;
+            return clone;
+        }
     }
 }

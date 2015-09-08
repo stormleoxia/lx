@@ -11,7 +11,7 @@ namespace Lx.Tools.Reflection.Performance.Tester.Cloners
     {
         public CloneBenchmarkGroup()
         {
-            Benchmarks = new List<IBenchmark>{ new FrameworkCloneBenchmark(), new DelegateCloneBenchmark()};
+            Benchmarks = new List<IBenchmark>{ new FrameworkCloneBenchmark(), new DelegateCloneBenchmark(), new ManualCloneBenchmark() };
             Iterations = 100000;
             Name = "Clone Instance";
         }
