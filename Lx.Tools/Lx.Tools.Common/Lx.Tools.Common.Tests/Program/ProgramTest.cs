@@ -1,4 +1,38 @@
-﻿using System;
+﻿#region Copyright (c) 2015 Leoxia Ltd
+
+// #region Copyright (c) 2015 Leoxia Ltd
+// 
+// // Copyright © 2015 Leoxia Ltd.
+// // 
+// // This file is part of Lx.
+// //
+// // Lx is released under GNU General Public License unless stated otherwise.
+// // You may not use this file except in compliance with the License.
+// // You can redistribute it and/or modify it under the terms of the GNU General Public License 
+// // as published by the Free Software Foundation, either version 3 of the License, 
+// // or any later version.
+// // 
+// // In case GNU General Public License is not applicable for your use of Lx, 
+// // you can subscribe to commercial license on 
+// // http://www.leoxia.com 
+// // by contacting us through the form page or send us a mail
+// // mailto:contact@leoxia.com
+// //  
+// // Unless required by applicable law or agreed to in writing, 
+// // Lx is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+// // OR CONDITIONS OF ANY KIND, either express or implied. 
+// // See the GNU General Public License for more details.
+// //
+// // You should have received a copy of the GNU General Public License along with Lx.
+// // It is present in the Lx root folder SolutionItems/GPL.txt
+// // If not, see http://www.gnu.org/licenses/.
+// //
+// 
+// #endregion
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,11 +76,24 @@ namespace Lx.Tools.Common.Tests.Program
             _fileSystem = container.RegisterMoqInstance<IFileSystem>();
         }
 
+        [Test, ExpectedException(typeof (InvalidOperationException))]
+        public void ExceptionTest()
+        {
+            var definition = _unityContainer.Resolve<MyExceptionDefinition>();
+            _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
+            _console.Setup(x => x.WriteLine(_processName + " "));
+            _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
+            _console.Setup(x => x.Write(@"
+  AvailableOptions:
+  --help  Display this text"));
+            definition.Run(new[] {"arg1", "--help", "arg2"});
+        }
+
         [Test]
         public void ProgramDefinitionUsageTest()
         {
-            var definition = UnityContainerExtensions.Resolve<MyDefinition>(_unityContainer);
-            
+            var definition = _unityContainer.Resolve<MyDefinition>();
+
             _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
             _console.Setup(x => x.WriteLine(_processName + " "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
@@ -61,25 +108,13 @@ namespace Lx.Tools.Common.Tests.Program
             Assert.AreEqual(1, definition.ReceivedOptions.Count);
             Assert.AreEqual(Options.Help, definition.ReceivedOptions.FirstOrDefault());
         }
-
-        [Test, ExpectedException(typeof(InvalidOperationException))]
-        public void ExceptionTest()
-        {
-            var definition = UnityContainerExtensions.Resolve<MyExceptionDefinition>(_unityContainer);
-            _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
-            _console.Setup(x => x.WriteLine(_processName + " "));
-            _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
-            _console.Setup(x => x.Write(@"
-  AvailableOptions:
-  --help  Display this text"));
-            definition.Run(new[] { "arg1", "--help", "arg2" });
-            
-        }
     }
 
     public class MyExceptionDefinition : ProgramDefinition
     {
-        public MyExceptionDefinition(Options options, IEnvironment environment, IDebugger debugger, IConsole console, IVersion versionGetter) : base(options, new UsageDefinition(), environment, debugger, console, versionGetter)
+        public MyExceptionDefinition(Options options, IEnvironment environment, IDebugger debugger, IConsole console,
+            IVersion versionGetter)
+            : base(options, new UsageDefinition(), environment, debugger, console, versionGetter)
         {
         }
 
@@ -92,8 +127,6 @@ namespace Lx.Tools.Common.Tests.Program
         {
             throw new InvalidOperationException();
         }
-
-
     }
 
     public class MyDefinition : ProgramDefinition
@@ -130,18 +163,19 @@ namespace Lx.Tools.Common.Tests.Program
             return RegisterInstance(container, mock);
         }
 
-        private static Mock<TInterface> RegisterInstance<TInterface>(IUnityContainer container, Mock<TInterface> mock) where TInterface : class
+        private static Mock<TInterface> RegisterInstance<TInterface>(IUnityContainer container, Mock<TInterface> mock)
+            where TInterface : class
         {
             container.RegisterInstance(typeof (TInterface), mock.Object);
             return mock;
         }
 
-        public static Mock<TInterface> RegisterMoqInstance<TInterface>(this IUnityContainer container, MockBehavior behavior)
+        public static Mock<TInterface> RegisterMoqInstance<TInterface>(this IUnityContainer container,
+            MockBehavior behavior)
             where TInterface : class
         {
             var mock = new Mock<TInterface>(behavior);
-            return RegisterInstance(container, mock); 
+            return RegisterInstance(container, mock);
         }
-
     }
 }
