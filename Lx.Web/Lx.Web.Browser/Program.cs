@@ -27,6 +27,8 @@
 
 #endregion
 
+using System;
+using System.Diagnostics;
 using Lx.Web.Common;
 
 namespace Lx.Web.Browser
@@ -36,7 +38,12 @@ namespace Lx.Web.Browser
         private static void Main(string[] args)
         {
             IBrowser browser = new Hap.Browser();
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             var doc = browser.Load("http://www.google.com");
+            stopWatch.Stop();
+            Console.WriteLine("Loaded in: " + stopWatch.Elapsed);
+            Console.ReadLine();
         }
     }
 }

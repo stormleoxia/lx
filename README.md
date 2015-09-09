@@ -1,3 +1,4 @@
+[![Build status](http://www.leoxia.com/tc/app/rest/builds/buildType:(id:Lx_MasterRelease)/statusIcon)](http://www.leoxia.com/tc/project.html?projectId=Lx&tab=projectOverview)
 # L X
 
 Lx is a set of libraries developped by Leoxia (http://www.leoxia.com)
