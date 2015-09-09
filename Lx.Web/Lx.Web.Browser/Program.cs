@@ -37,12 +37,15 @@ namespace Lx.Web.Browser
     {
         private static void Main(string[] args)
         {
-            IBrowser browser = new Hap.Browser();
+            As.Browser browser = new As.Browser();
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            var doc = browser.Load("http://www.google.com");
+            var res = browser.Load("http://www.leoxia.com");
+            res = browser.Load("http://www.google.com");
+            res = browser.Load("http://www.leoxia.com");
             stopWatch.Stop();
-            Console.WriteLine("Loaded in: " + stopWatch.Elapsed);
+            //Console.WriteLine(res);
+            Console.WriteLine("Loaded With AngleSharp in: " + stopWatch.Elapsed);
             Console.ReadLine();
         }
     }
