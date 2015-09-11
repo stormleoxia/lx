@@ -27,6 +27,7 @@
 
 #endregion
 
+using System;
 using System.IO;
 using System.Linq;
 
@@ -45,5 +46,11 @@ namespace Lx.Tools.Common
             return string.Join(Path.DirectorySeparatorChar.ToString(),
                 components.Select(x => x.Trim()).Where(x => x != "."));
         }
+
+        public static bool IsDirectorySeparator(this char character)
+        {
+            return character == '/' || character == '\\';
+        }
+
     }
 }

@@ -39,5 +39,6 @@ namespace Lx.Tools.Common.Wrappers
         TextReader OpenText(string filePath);
         string ResolvePath(string path);
         string[] GetDirectories(string path, string filter, SearchOption searchOption);
+        bool IsRoot(string path);
     }
 }

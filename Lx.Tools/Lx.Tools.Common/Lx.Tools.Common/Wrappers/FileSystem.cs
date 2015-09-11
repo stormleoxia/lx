@@ -70,5 +70,14 @@ namespace Lx.Tools.Common.Wrappers
         {
             return Directory.GetDirectories(path, filter, searchOption);
         }
+
+        public bool IsRoot(string path)
+        {
+            if (DirectoryExists(path))
+            {
+                return new DirectoryInfo(path).Parent == null;
+            }
+            return false;
+        }
     }
 }

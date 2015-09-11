@@ -51,6 +51,21 @@
     <Compile Include="..\..\..\SolutionItems\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Paths\IPath.cs" />
+    <Compile Include="Paths\PathConfiguration.cs" />
+    <Compile Include="Paths\PathFactory.cs" />
+    <Compile Include="Paths\PathUtility.cs" />
+    <Compile Include="Paths\PathIntersections.cs" />
+    <Compile Include="Paths\PathTypes.cs" />
+    <Compile Include="Paths\PlatformPathTypes.cs" />
+    <Compile Include="Paths\UnixDirectoryPath.cs" />
+    <Compile Include="Paths\UnixFilePath.cs" />
+    <Compile Include="Paths\UnixPath.cs" />
+    <Compile Include="Paths\UnixRootPath.cs" />
+    <Compile Include="Paths\WinDirectoryPath.cs" />
+    <Compile Include="Paths\WinFilePath.cs" />
+    <Compile Include="Paths\WinPath.cs" />
+    <Compile Include="Paths\WinRootPath.cs" />
     <Compile Include="Program\Arguments.cs" />
     <Compile Include="Assemblies\ApiExtractor.cs" />
     <Compile Include="Assemblies\AssemblyApi.cs" />
@@ -85,9 +100,7 @@
     <Compile Include="Wrappers\VersionGetter.cs" />
     <Compile Include="Wrappers\WriterFactory.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Path\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

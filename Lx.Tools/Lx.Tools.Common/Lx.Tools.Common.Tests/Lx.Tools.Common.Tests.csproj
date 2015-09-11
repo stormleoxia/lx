@@ -60,6 +60,8 @@
     <Compile Include="Assemblies\NamespaceDefinitionTest.cs" />
     <Compile Include="Assemblies\TypeDefinitionTest.cs" />
     <Compile Include="HashSetExTest.cs" />
+    <Compile Include="Paths\FilePathTest.cs" />
+    <Compile Include="Paths\PathUtilityTest.cs" />
     <Compile Include="Program\ProgramTest.cs" />
     <Compile Include="Program\SettingsProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
