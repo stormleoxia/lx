@@ -43,9 +43,9 @@ namespace Lx.Tools.Projects.Sync
                 ProjectLoadSettings.IgnoreMissingImports);
         }
 
-        public void AddItem(string itemType, string itemInclude)
+        public void AddItem(string itemType, string itemInclude, IList<KeyValuePair<string, string>> metadata)
         {
-            _project.AddItem(itemType, itemInclude);
+            _project.AddItem(itemType, itemInclude, metadata);
         }
 
         public ICollection<ISyncProjectItem> GetItems(string itemType)

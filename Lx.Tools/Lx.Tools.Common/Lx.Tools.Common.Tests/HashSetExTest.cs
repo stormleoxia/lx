@@ -28,15 +28,16 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Configuration;
 using NUnit.Framework;
 
 namespace Lx.Tools.Common.Tests
 {
     [TestFixture]
-    public class HashSetExTest
+    public class CollectionExTest
     {
         [Test]
-        public void UseCaseTest()
+        public void ToHashSetTest()
         {
             var list = new List<string> {"toto", "toto", "tutu"};
             var hash = list.ToHashSet();
@@ -46,6 +47,29 @@ namespace Lx.Tools.Common.Tests
             Assert.IsTrue(hash.Contains("tutu"));
             Assert.IsTrue(hash.Contains("toto"));
             Assert.IsFalse(hash.Contains("totu"));
+        }
+
+        [Test]
+        public void ToDictionaryIgnoreDuplicatesTest()
+        {
+            var list = new List<string> { "toTo", "toto", "toto", "Toto", "tutut" };
+            Dictionary<string, int> dic = list.ToDictionaryIgnoreDuplicates(x => x.ToLower(), x => x.Length);
+            Assert.IsNotNull(dic);
+            Assert.AreEqual(2, dic.Count);
+            Assert.AreEqual(4, dic["toto"]);
+            Assert.AreEqual(5, dic["tutut"]);
+        }
+
+        [Test]
+        public void ToStackTest()
+        {
+            var list = new List<string> { "totu", "toto", "tutu" };
+            Stack<string> stack = list.ToStack();
+            Assert.IsNotNull(stack);
+            Assert.AreEqual(3, stack.Count);
+            Assert.AreEqual("tutu",stack.Pop());
+            Assert.AreEqual("toto", stack.Pop());
+            Assert.AreEqual("totu", stack.Pop());
         }
     }
 }

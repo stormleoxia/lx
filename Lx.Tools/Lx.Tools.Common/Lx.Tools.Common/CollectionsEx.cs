@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 
 namespace Lx.Tools.Common
 {
-    public static class HashSetEx
+    public static class CollectionsEx
     {
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> items)
         {
@@ -58,6 +58,11 @@ namespace Lx.Tools.Common
                 }
             }
             return dictionary;
+        }
+
+        public static Stack<T> ToStack<T>(this IEnumerable<T> enumerable)
+        {
+            return new Stack<T>(enumerable);
         }
     }
 }

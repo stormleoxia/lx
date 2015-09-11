@@ -65,5 +65,10 @@ namespace Lx.Tools.Common.Wrappers
             }
             return null;
         }
+
+        public string[] GetDirectories(string path, string filter, SearchOption searchOption)
+        {
+            return Directory.GetDirectories(path, filter, searchOption);
+        }
     }
 }

@@ -38,5 +38,6 @@ namespace Lx.Tools.Common.Wrappers
         string[] GetFiles(string path, string filter, SearchOption searchOption);
         TextReader OpenText(string filePath);
         string ResolvePath(string path);
+        string[] GetDirectories(string path, string filter, SearchOption searchOption);
     }
 }

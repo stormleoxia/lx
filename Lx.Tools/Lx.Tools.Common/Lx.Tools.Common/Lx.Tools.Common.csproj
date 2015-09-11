@@ -63,7 +63,7 @@
     <Compile Include="Wrappers\ConsoleWriter.cs" />
     <Compile Include="Wrappers\FileWriter.cs" />
     <Compile Include="Assemblies\IApiExtractor.cs" />
-    <Compile Include="HashSetEx.cs" />
+    <Compile Include="CollectionsEx.cs" />
     <Compile Include="Wrappers\FileSystem.cs" />
     <Compile Include="Wrappers\IConsole.cs" />
     <Compile Include="Wrappers\IFileSystem.cs" />
@@ -85,7 +85,9 @@
     <Compile Include="Wrappers\VersionGetter.cs" />
     <Compile Include="Wrappers\WriterFactory.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Path\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

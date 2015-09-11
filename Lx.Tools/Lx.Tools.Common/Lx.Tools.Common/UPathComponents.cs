@@ -122,5 +122,10 @@ namespace Lx.Tools.Common
                 return x + Path.DirectorySeparatorChar + y;
             });
         }
+
+        public bool Contains(string component)
+        {
+            return Components.Contains(component);
+        }
     }
 }

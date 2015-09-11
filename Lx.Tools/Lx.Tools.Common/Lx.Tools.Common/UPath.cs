@@ -98,6 +98,11 @@ namespace Lx.Tools.Common
             get { return _absolute; }
         }
 
+        public UPathComponents Components
+        {
+            get { return HasAbsolute ? _absolute : _relative; }
+        }
+
         private bool IsPathRooted(string path)
         {
             return (path.Contains(':') || path[0] == '/' || path[0] == '\\');

@@ -35,7 +35,7 @@ namespace Lx.Tools.Projects.Sync
     public interface IProject
     {
         string FullPath { get; }
-        void AddItem(string itemType, string itemInclude);
+        void AddItem(string itemType, string itemInclude, IList<KeyValuePair<string, string>> metadata);
         ICollection<ISyncProjectItem> GetItems(string itemType);
         void RemoveItem(ISyncProjectItem item);
         void Save();
