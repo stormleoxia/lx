@@ -33,6 +33,7 @@ using System.Runtime.Remoting.Messaging;
 using Lx.Tools.Performance;
 using Lx.Tools.Reflection.Performance.Tester.Cloners;
 using Lx.Tools.Reflection.Performance.Tester.Constructor;
+using Lx.Tools.Reflection.Performance.Tester.StringSplit;
 
 namespace Lx.Tools.Reflection.Performance.Tester
 {
@@ -41,6 +42,7 @@ namespace Lx.Tools.Reflection.Performance.Tester
         private static void Main(string[] args)
         {
             var benchmarkGroups = new List<IBenchmarkGroup>();
+            benchmarkGroups.Add(new StringSplitWithDelimiterGroup());
             benchmarkGroups.Add(new ConstructorBenchmarkGroup());
             benchmarkGroups.Add(new CloneBenchmarkGroup());
             benchmarkGroups.Add(new MethodCallBenchmarkGroup());

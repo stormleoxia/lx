@@ -27,6 +27,8 @@
 
 #endregion
 
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using NUnit.Framework;
 
@@ -43,5 +45,71 @@ namespace Lx.Tools.Common.Tests
             Assert.AreEqual(@"\usr\lib\myfile.lib".Replace('\\', Path.DirectorySeparatorChar),
                 @"\usr\lib\myfile.lib".ToPlatformPath());
         }
+
+        [Test]
+        public void SplitKeepDelimitersWithPathTest()
+        {
+            var res = StringEx.SplitKeepDelimiters(@"C:\Directory\Other/File.txt", new string[] {@"\", @"/"});
+            Assert.AreEqual(7, res.Length);
+            Assert.AreEqual("C:", res[0]);
+            Assert.AreEqual(@"\", res[1]);
+            Assert.AreEqual("Directory", res[2]);
+            Assert.AreEqual("\\", res[3]);
+            Assert.AreEqual("Other", res[4]);
+            Assert.AreEqual("/", res[5]);
+            Assert.AreEqual("File.txt", res[6]);
+        }
+
+        [Test]
+        public void SplitKeepDelimitersWithPathWithLongDelimiterTest()
+        {
+            var input = @"//a///";
+            var res = StringEx.SplitKeepDelimiters(input, new string[] { @"ab", @"/" });
+            Assert.AreEqual(input, string.Concat(res));
+        }
+
+        [Test]
+        public void SplitKeepDelimitersWithPathWithOverlappingDelimiterTest()
+        {
+            var input = @"abc";
+            var res = StringEx.SplitKeepDelimiters(input, new string[] { @"ab", @"bc" });
+            Assert.AreEqual(input, string.Concat(res));
+            Assert.AreEqual(3, res.Length);
+            Assert.AreEqual(string.Empty, res[0]);
+            Assert.AreEqual("ab", res[1]);
+            Assert.AreEqual("c", res[2]);
+        }
+
+        [Test]
+        public void SplitKeepDelimitersWithSeveralInputTest()
+        {
+            var inputs = new List<KeyValuePair<string[], string>>()
+            {
+                new KeyValuePair<string[], string>(
+                    new string[]{"ab", "bc"}, "abcdef"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"abc", "def"}, "abcdef"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"abc"}, "/abc/"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"abc"}, "abc"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"/"}, "/"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"ab"}, "ab"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"/"}, "////////"),
+                new KeyValuePair<string[], string>(
+                    new string[]{"/", @"\\"}, @"//\///\\//\Toto/\\"),
+                new KeyValuePair<string[], string>(
+                    new string[]{".", @".."}, @"..\/..//.\\...//...\T..oto/\\")
+            };
+            foreach (var input in inputs)
+            {
+                var res = StringEx.SplitKeepDelimiters(input.Value, input.Key);
+                Assert.AreEqual(input.Value, string.Concat(res));
+            }
+        }
+        
     }
 }

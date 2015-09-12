@@ -4,9 +4,10 @@ namespace Lx.Tools.Common.Paths
 {
     internal class UnixRootPath : UnixPath
     {
-        public UnixRootPath(string path, string[] components)
+
+        public UnixRootPath(PathFactory factory, PlatformPathTypes platformPathType, PathTypes pathType, string path, string[] components)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

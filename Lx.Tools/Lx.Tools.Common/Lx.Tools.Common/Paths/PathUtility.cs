@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -70,5 +71,59 @@ namespace Lx.Tools.Common.Paths
             }
             return PathTypes.File;
         }
+
+        /// <summary>
+        /// Gets the drive.
+        /// </summary>
+        /// <param name="component">The component.</param>
+        /// <returns></returns>
+        internal static string GetDrive(string component)
+        {
+            if (!string.IsNullOrEmpty(component))
+            {
+                if (component.Length < 3)
+                {
+                    if (component[1] == ':')
+                    {
+                        return component[0].ToString();
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Gets file name and extension.
+        /// </summary>
+        /// <param name="components">The components.</param>
+        /// <returns></returns>
+        internal static string GetFile(string[] components)
+        {
+            return components.LastOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the parent path from the given path and its components.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="components">The components.</param>
+        /// <returns></returns>
+        internal static string GetParent(string path, string[] components)
+        {
+            var last = components.Last();
+            var index = path.IndexOf(last, StringComparison.InvariantCulture);
+            return path.Remove(index);
+        }
+
+        internal static string GetRootPath(string path, string[] components)
+        {
+            var first = components.First();
+            if (first.Contains(":"))
+            {
+                return first;
+            }
+            return null;
+        }
+
     }
 }

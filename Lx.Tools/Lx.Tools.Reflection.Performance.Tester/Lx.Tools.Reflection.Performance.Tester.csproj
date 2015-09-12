@@ -67,11 +67,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MethodCalls\StandardMethodBenchmark.cs" />
+    <Compile Include="StringSplit\FastSplitBenchmark.cs" />
+    <Compile Include="StringSplit\OptimizedBuggySplitBenchmark.cs" />
+    <Compile Include="StringSplit\OptimizedSplitBenchmark.cs" />
+    <Compile Include="StringSplit\RegexBaseSplitBenchmark.cs" />
+    <Compile Include="StringSplit\RegexMatchBenchmark.cs" />
+    <Compile Include="StringSplit\BaseSplitBenchmark.cs" />
+    <Compile Include="StringSplit\RegexSplitBenchmark.cs" />
+    <Compile Include="StringSplit\StringSplitWithDelimiterGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lx.Tools.Common\Lx.Tools.Common\Lx.Tools.Common.csproj">
+      <Project>{38B7BAB4-345D-47A2-BAA2-274B9320E6A0}</Project>
+      <Name>Lx.Tools.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lx.Tools.Performance\Lx.Tools.Performance.csproj">
       <Project>{F93DC759-9432-4CB9-B1F8-1529DE84B338}</Project>
       <Name>Lx.Tools.Performance</Name>

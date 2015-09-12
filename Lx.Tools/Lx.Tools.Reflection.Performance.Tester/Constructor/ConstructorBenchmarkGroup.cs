@@ -11,7 +11,7 @@ namespace Lx.Tools.Reflection.Performance.Tester.Constructor
         public ConstructorBenchmarkGroup()
         {
             Name = "Construction";
-            Iterations = 500000;
+            Iterations = 200000;
             Benchmarks = new List<IBenchmark>
             {
                 new NewConstructorBenchmark(), 

@@ -2,12 +2,11 @@
 
 namespace Lx.Tools.Common.Paths
 {
-    internal class WinRootPath : WinPath
+    internal class WinRootPath : WinDirectoryPath
     {
-        public WinRootPath(string path, string[] components)
-            : base(path, components)
+        public WinRootPath(PathFactory factory, PlatformPathTypes platformPathType, PathTypes pathType, string path, string[] components) :
+            base(factory, platformPathType, pathType, path, components)
         {
-            throw new NotImplementedException();
         }
     }
 }

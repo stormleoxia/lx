@@ -19,7 +19,7 @@ namespace Lx.Tools.Common.Tests.Paths
             _factory = new PathFactory(_system.Object, new PathConfiguration());
         }
 
-        [Test, Ignore]
+        [Test]
         public void AbsolutePathTest()
         {
             var path = @"C:\Directory\SubDirectory\MyFile.txt";
@@ -28,8 +28,8 @@ namespace Lx.Tools.Common.Tests.Paths
             Assert.IsNotNull(filePath.File);
             Assert.AreEqual("MyFile.txt", filePath.File.Path);
             Assert.IsNotNull(filePath.Parent);
-            Assert.AreEqual(@"C:\Directory\SubDirectory", filePath.Parent.Path);
-            Assert.ReferenceEquals(filePath, filePath.Parent.Child);
+            Assert.AreEqual(@"C:\Directory\SubDirectory\", filePath.Parent.Path);
+            Assert.IsTrue(ReferenceEquals(filePath, filePath.Parent.Child));
             Assert.IsNotNull(filePath.Root);
             Assert.AreEqual(@"C:", filePath.Root.Path);
         }

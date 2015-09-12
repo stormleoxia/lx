@@ -1,4 +1,5 @@
-﻿using Lx.Tools.Common.Paths;
+﻿using System;
+using Lx.Tools.Common.Paths;
 using NUnit.Framework;
 
 namespace Lx.Tools.Common.Tests.Paths
@@ -99,6 +100,36 @@ namespace Lx.Tools.Common.Tests.Paths
             input = PathUtility.CleanUp(path.Split('/', '\\'));
             res = PathUtility.InferPathType(path, input);
             Assert.AreEqual(PathTypes.Root, res);
+        }
+
+        [Test, Ignore]
+        public void GetDriveTest()
+        {
+            Assert.IsNull(PathUtility.GetDrive(string.Empty));
+            Assert.IsNull(PathUtility.GetDrive(null));
+            Assert.IsNull(PathUtility.GetDrive("x"));
+            Assert.IsNull(PathUtility.GetDrive("C"));
+            Assert.IsNull(PathUtility.GetDrive("My"));
+            Assert.IsNull(PathUtility.GetDrive("no"));
+            Assert.AreEqual("D", PathUtility.GetDrive("D:"));
+            Assert.AreEqual("C", PathUtility.GetDrive("C:"));
+            Assert.IsNull(PathUtility.GetDrive("no"));
+        }
+
+        [Test]
+        public void GetParentTest()
+        {
+            Assert.AreEqual(@"C:\", CheckGetParent(@"C:\Directory"));
+            Assert.AreEqual(@"C:\", CheckGetParent(@"C:\Directory\"));
+            Assert.AreEqual(@"C:\Directory\", CheckGetParent(@"C:\Directory\File.txt"));
+            Assert.AreEqual(@"C:\", CheckGetParent(@"C:\File.txt"));
+            Assert.AreEqual(@"/", CheckGetParent(@"/Directory"));
+            Assert.AreEqual(@"/Directory/", CheckGetParent(@"/Directory/File"));
+        }
+
+        private string CheckGetParent(string path)
+        {
+            return PathUtility.GetParent(path, PathUtility.CleanUp(path.Split('/', '\\')));
         }
     }
 }

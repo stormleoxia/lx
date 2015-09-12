@@ -54,7 +54,7 @@ namespace Lx.Tools.Reflection.Performance.Tester
 
         public decimal Iterations
         {
-            get { return 2000000; }
+            get { return 1000000; }
         }
 
         public string Name

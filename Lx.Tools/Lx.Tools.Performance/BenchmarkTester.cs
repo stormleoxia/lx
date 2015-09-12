@@ -72,14 +72,21 @@ namespace Lx.Tools.Performance
             builder.AppendLine("      Elapsed : " + TimeSpan.FromMilliseconds(_miliseconds) + ".");
             builder.AppendLine("      Elapsed : " + _miliseconds + " ms.");
             builder.AppendLine("      Elapsed : " + _ticks + " ticks.");
-            var rate = Math.Round(_iterations/_miliseconds, 0);
-            var suffix = "/ms";
-            if (rate == 0)
+            if (_miliseconds > 0)
             {
-                rate = Math.Round(_iterations*1000/_miliseconds, 0);
-                suffix = "/s";
+                var rate = Math.Round(_iterations/_miliseconds, 0);
+                var suffix = "/ms";
+                if (rate == 0)
+                {
+                    rate = Math.Round(_iterations*1000/_miliseconds, 0);
+                    suffix = "/s";
+                }
+                builder.AppendLine("      Rate : " + rate + " Calls" + suffix);
             }
-            builder.AppendLine("      Rate : " + rate + " Calls" + suffix);
+            else
+            {
+                builder.AppendLine("      Rate : Not sufficient time elapsed to compute rate.");
+            }
             return builder.ToString();
         }
     }
