@@ -110,6 +110,33 @@ namespace Lx.Tools.Common.Tests
                 Assert.AreEqual(input.Value, string.Concat(res));
             }
         }
-        
+
+
+        [Test]
+        public void IntersectFromEndTest()
+        {
+            // Identity
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd(string.Empty, string.Empty));
+            Assert.AreEqual("a", StringEx.IntersectFromEnd("a", "a"));
+            Assert.AreEqual("ab", StringEx.IntersectFromEnd("ab", "ab"));
+            Assert.AreEqual("abc", StringEx.IntersectFromEnd("abc", "abc"));
+
+            // No Match
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("a", string.Empty));
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd(string.Empty, "a"));
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("ab", string.Empty));
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd(string.Empty, "ab"));           
+
+            // Intersections but not in the right way
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("a", "ab"));
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("ab", "abc"));
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("abc", "ab"));
+            
+            // True intersections
+            Assert.AreEqual("b", StringEx.IntersectFromEnd("ab", "b"));
+            Assert.AreEqual("b", StringEx.IntersectFromEnd("b", "ab"));
+            Assert.AreEqual("bc", StringEx.IntersectFromEnd("abc", "bc"));
+            Assert.AreEqual("bc", StringEx.IntersectFromEnd("bc", "abc"));
+        }
     }
 }

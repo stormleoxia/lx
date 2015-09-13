@@ -104,6 +104,7 @@ namespace Lx.Tools.Common.Paths
         }
     }
 
+
     public class PathPart
     {
         public PathComponentKind Kind { get; private set; }
@@ -114,14 +115,5 @@ namespace Lx.Tools.Common.Paths
             Kind = kind;
             RawValue = rawValue;
         }
-    }
-
-    public enum PathComponentKind
-    {
-        GoToParent,
-        Directory,
-        Root,
-        Separator,
-        File
     }
 }

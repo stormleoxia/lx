@@ -88,5 +88,25 @@ namespace Lx.Tools.Common
         }
 
 
+        public static string IntersectFromEnd(string reference, string compared)
+        {
+            int refIndex = reference.Length - 1;
+            int compIndex = compared.Length -1;
+            while (refIndex >= 0 && compIndex >= 0)
+            {
+                if (Char.ToLowerInvariant(reference[refIndex]) != Char.ToLowerInvariant(compared[compIndex]))
+                {
+                    var startIndex = refIndex + 1;
+                    if (startIndex >= reference.Length)
+                    {
+                        return string.Empty;
+                    }
+                    return reference.Substring(startIndex, reference.Length - startIndex);
+                }
+                refIndex--;
+                compIndex--;
+            }
+            return reference.Length > compared.Length ? compared : reference;
+        }
     }
 }

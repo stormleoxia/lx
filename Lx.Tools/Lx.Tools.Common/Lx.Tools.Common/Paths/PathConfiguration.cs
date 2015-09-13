@@ -7,17 +7,19 @@ namespace Lx.Tools.Common.Paths
         public PathConfiguration()
         {
             DefaultPlatformPathType = PlatformPathTypes.Infer;
-            GoToParentPattern = "..";
-            StayInCurrentPattern = ".";
-            DirectorySeparatorPattern = Path.DirectorySeparatorChar.ToString();
+            GoToParent = "..";
+            StayInCurrent = ".";
+            DirectorySeparator = Path.DirectorySeparatorChar.ToString();
+            AltDirectorySeparator = Path.AltDirectorySeparatorChar.ToString();
         }
 
-        public string DirectorySeparatorPattern { get; private set; }
+        public string DirectorySeparator { get; private set; }
 
-        public string StayInCurrentPattern { get; private set; }
+        public string StayInCurrent { get; private set; }
         public bool NormalizePath { get; set; }
         public bool IgnoreCase { get; set; }
         public PlatformPathTypes DefaultPlatformPathType { get; set; }
-        public string GoToParentPattern { get; set; }
+        public string GoToParent { get; set; }
+        public string AltDirectorySeparator { get; set; }
     }
 }

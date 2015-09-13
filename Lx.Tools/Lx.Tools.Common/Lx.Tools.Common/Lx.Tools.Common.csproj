@@ -54,6 +54,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Paths\IPath.cs" />
+    <Compile Include="Paths\PathComponentKind.cs" />
     <Compile Include="Paths\PathConfiguration.cs" />
     <Compile Include="Paths\PathFactory.cs" />
     <Compile Include="Paths\PathPartFactory.cs" />

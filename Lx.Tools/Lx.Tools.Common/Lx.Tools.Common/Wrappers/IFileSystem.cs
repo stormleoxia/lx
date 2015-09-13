@@ -40,5 +40,6 @@ namespace Lx.Tools.Common.Wrappers
         string ResolvePath(string path);
         string[] GetDirectories(string path, string filter, SearchOption searchOption);
         bool IsRoot(string path);
+        string[] GetSubDirectories(string path, string filter, SearchOption searchOption);
     }
 }

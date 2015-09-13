@@ -28,6 +28,7 @@
 #endregion
 
 using System.IO;
+using System.Linq;
 
 namespace Lx.Tools.Common.Wrappers
 {
@@ -78,6 +79,15 @@ namespace Lx.Tools.Common.Wrappers
                 return new DirectoryInfo(path).Parent == null;
             }
             return false;
+        }
+
+        public string[] GetSubDirectories(string path, string filter, SearchOption searchOption)
+        {
+            if (DirectoryExists(path))
+            {
+                return Directory.EnumerateDirectories(path, filter, searchOption).ToArray();
+            }
+            return null;
         }
     }
 }

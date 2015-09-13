@@ -80,7 +80,7 @@ namespace Lx.Tools.Projects.Sync
                 var path = new UPath(directory);
                 var fileUPath = new UPath(fileName);
                 var res = path.MakeRelativeUPath(fileUPath);
-                var metadata = ExtractMetadata(directory, res);
+                var metadata = ExtractMetadata(directory, res.ToString());
                 _project.AddItem("Compile", res.ToString(), metadata);
             }
             _project.Save();
@@ -91,11 +91,12 @@ namespace Lx.Tools.Projects.Sync
             var directory = Path.GetDirectoryName(_project.FullPath);
             var items = _project.GetItems("Compile");
             foreach (var item in items)
-            {                
-                var metadatas = ExtractMetadata(directory, new UPath(item.EvaluatedInclude));
-                if (metadatas != null)
+            {
+                // Replace existing Links
+                if (_configuration.Options.Contains(ProgramOptions.UpdateLinks) || item.InnerItem.Metadata.All(x => x.Name != "Link"))
                 {
-                    if (item.InnerItem.Metadata.All(x => x.ItemType != "Link"))
+                    var metadatas = ExtractMetadata(directory, item.EvaluatedInclude);
+                    if (metadatas != null)
                     {
                         foreach (var metadata in metadatas)
                         {
@@ -107,34 +108,49 @@ namespace Lx.Tools.Projects.Sync
             }               
         }
 
-        private IList<KeyValuePair<string, string>> ExtractMetadata(string directory, UPath sourcePath)
+        private IList<KeyValuePair<string, string>> ExtractMetadata(string directory, string sourcePath)
         {            
-            if (sourcePath.Components.Contains("..")) // sourcePath is not in directory, make it as a link
+            if (sourcePath.StartsWith("..")) // sourcePath is not in directory, make it as a link
             {
+                var fileName = Path.GetFileName(sourcePath);
+                var reference = Path.GetDirectoryName(sourcePath).ToPlatformPath();
                 IList<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
-                string[] subDirectories = _fileSystem.GetDirectories(directory, "*", SearchOption.AllDirectories);
-                var components = new List<string>();
-                foreach (var subDirectory in subDirectories)
+                string[] subDirectories = _fileSystem.GetSubDirectories(directory, "*", SearchOption.AllDirectories).
+                    Select(x => x.Replace(directory + Path.DirectorySeparatorChar, string.Empty)).ToArray(); // Make it a relative path                
+                var intersections = subDirectories
+                    .Select(x => StringEx.IntersectFromEnd(x.Replace('.', '/').ToPlatformPath(), reference))
+                    .Where(x => !string.IsNullOrEmpty(x))
+                    // if the path starts with separator, match was incomplete
+                    .Where(x => !x.StartsWith(Path.DirectorySeparatorChar.ToString()) && !x.StartsWith(Path.AltDirectorySeparatorChar.ToString()))
+                    .ToArray();
+                if (intersections.Any())
                 {
-                    var path = new UPath(subDirectory);
-                    var subDirStack = path.Components.Components.ToStack();
-                    var sourceStack = sourcePath.Components.Components.ToStack();                    
-                    sourceStack.Pop(); // remove file name
-                    while (subDirStack.Count > 0 &&
-                           sourceStack.Count > 0 &&
-                           string.Compare(sourceStack.Peek(), subDirStack.Peek(), StringComparison.InvariantCultureIgnoreCase) == 0)
+                    var maxIntersection = intersections.Aggregate(string.Empty, (seed, x) => x.Length > seed.Length ? x : seed);
+                    var linkDirectory = GetLinkDirectory(directory, maxIntersection);
+                    if (linkDirectory != null)
                     {
-                        sourceStack.Pop();
-                        var component = subDirStack.Pop();
-                        components.Add(component);
-                    }
-                    if (components.Any())
-                    {
-                        break;
+                        list.Add(new KeyValuePair<string, string>("Link", linkDirectory + "/" + fileName));
                     }
                 }
-                list.Add(new KeyValuePair<string, string>("Link", string.Join(Path.DirectorySeparatorChar.ToString(), components)));
+                else
+                {
+                    list.Add(new KeyValuePair<string, string>("Link", fileName)); 
+                }
                 return list;
+            }
+            return null;
+        }
+
+        private string GetLinkDirectory(string directory, string maxIntersection)
+        {
+            if (_fileSystem.DirectoryExists(Path.Combine(directory, maxIntersection)))
+            {
+                return maxIntersection;
+            }
+            maxIntersection = maxIntersection.Replace('/', '.').Replace('\\', '.');
+            if (_fileSystem.DirectoryExists(Path.Combine(directory, maxIntersection)))
+            {
+                return maxIntersection;
             }
             return null;
         }
