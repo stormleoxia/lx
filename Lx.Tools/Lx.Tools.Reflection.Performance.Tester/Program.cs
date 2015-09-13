@@ -43,9 +43,9 @@ namespace Lx.Tools.Reflection.Performance.Tester
         {
             var benchmarkGroups = new List<IBenchmarkGroup>();
             benchmarkGroups.Add(new StringSplitWithDelimiterGroup());
-            benchmarkGroups.Add(new ConstructorBenchmarkGroup());
-            benchmarkGroups.Add(new CloneBenchmarkGroup());
-            benchmarkGroups.Add(new MethodCallBenchmarkGroup());
+            //benchmarkGroups.Add(new ConstructorBenchmarkGroup());
+            //benchmarkGroups.Add(new CloneBenchmarkGroup());
+            //benchmarkGroups.Add(new MethodCallBenchmarkGroup());
             foreach (var group in benchmarkGroups)
             {
                 var tester = new BenchmarkGroupTester(group);

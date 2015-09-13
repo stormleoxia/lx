@@ -8,15 +8,16 @@ namespace Lx.Tools.Reflection.Performance.Tester.StringSplit
         public StringSplitWithDelimiterGroup()
         {
             Name = "String Split with several string delimiters";
-            Iterations = 10000;
+            Iterations = 20000;
             Benchmarks = new List<IBenchmark>
             {
                 new CompiledRegexSplitBenchmark(), 
-                new OptimizedBuggySplitBenchmark(), 
+                new AnotherOptimizedSplitBenchmark(), 
                 new OptimizedSplitBenchmark(),
                 new RegexSplitBenchmark(),
                 new RegexMatchBenchmark(),
-                new FastSplitBenchmark()
+                new UnsafeSplitBenchmark(),
+                new LxStringSplitBenchmark()
             };
         }
 

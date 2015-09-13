@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Lx.Tools.Common.Wrappers;
 
@@ -105,57 +104,24 @@ namespace Lx.Tools.Common.Paths
         }
     }
 
-    public class PathPartFactory
-    {
-        private readonly PathConfiguration _pathConfiguration;
-
-        public PathPartFactory(PathConfiguration pathConfiguration)
-        {
-            _pathConfiguration = pathConfiguration;
-        }
-
-
-        public PathPart[] MakeParts(string path)
-        {
-            //path.
-            List<PathPart> list = new List<PathPart>();
-            /*foreach (var component in components)
-            {
-                list.Add(MakePart(component));
-            }*/
-            return list.ToArray();
-        }
-
-        private PathPart MakePart(string component)
-        {
-            if (IsGoToParent(component))
-            {
-                return new GoToParentPart(component);
-            }
-            return null;
-        }
-
-        private bool IsGoToParent(string component)
-        {
-            return component == _pathConfiguration.GoToParentPattern;
-        }
-    }
-
-    internal class GoToParentPart : PathPart
-    {
-        public GoToParentPart(string rawValue): base(rawValue)
-        {
-            
-        }
-    }
-
     public class PathPart
     {
+        public PathComponentKind Kind { get; private set; }
         public string RawValue { get; private set; }
 
-        protected PathPart(string rawValue)
+        internal PathPart(string rawValue, PathComponentKind kind)
         {
+            Kind = kind;
             RawValue = rawValue;
         }
+    }
+
+    public enum PathComponentKind
+    {
+        GoToParent,
+        Directory,
+        Root,
+        Separator,
+        File
     }
 }

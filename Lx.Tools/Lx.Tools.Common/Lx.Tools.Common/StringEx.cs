@@ -28,12 +28,9 @@
 #endregion
 
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Security;
 
 namespace Lx.Tools.Common
 {
@@ -62,94 +59,34 @@ namespace Lx.Tools.Common
         /// <param name="input">The input.</param>
         /// <param name="delimiters">The delimiters.</param>
         /// <returns></returns>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
-        public unsafe static string[] SplitKeepDelimiters(string input, string[] delimiters)
+        public static string[] SplitKeepDelimiters(string input, string[] delimiters)
         {
-            unchecked
+            List<string> result = new List<string>();
+            int length = input.Length;
+            int lastMatchEnd = 0;
+            var delLen = delimiters.Length;
+            for (int i = 0; i < length; ++i)
             {
-                List<string> result = new List<string>(10);
-                int length = input.Length;
-                fixed (char* inputFixed = input)
+                for (int j = 0; j < delLen; ++j)
                 {
-                    char* inputPtr = inputFixed;
-                    char* endPtr = inputPtr + length;
-                    char* lastMatchPtr = inputFixed;
-                    var delLen = delimiters.Length;
-                    for (; inputPtr < endPtr; inputPtr++)
+                    string str = delimiters[j];
+                    int sepLen = str.Length;
+                    if (((input[i] == str[0]) && (sepLen <= (length - i))) &&
+                        ((sepLen == 1) || (String.CompareOrdinal(input, i, str, 0, sepLen) == 0)))
                     {
-                        for (int j = 0; j < delLen; j++)
-                        {
-                            string str = delimiters[j];
-                            fixed (char* sepFixed = str)
-                            {
-                                char* sep = sepFixed;
-                                int sepLen = str.Length;
-                                if (((*inputPtr == *sep) && (inputPtr + sepLen <= endPtr)) &&
-                                    ((sepLen == 1) || (CompareOrdinal(inputPtr, sep, sepLen))))
-                                {
-                                    result.Add(Substring(lastMatchPtr, inputPtr));
-                                    result.Add(str);
-                                    inputPtr += sepLen;
-                                    lastMatchPtr = inputPtr;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (lastMatchPtr < endPtr)
-                        result.Add(Substring(lastMatchPtr, endPtr));
-                    return result.ToArray();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Create a substrings start at the specified start and ending just before the end pointer.
-        /// </summary>
-        /// <param name="start">The start.</param>
-        /// <param name="end">The end.</param>
-        /// <returns></returns>
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
-        private unsafe static string Substring(char* start, char* end)
-        {
-            unchecked
-            {
-                char* result = stackalloc char[(int) (end - start + 1)];
-                var moving = result;
-                while (start < end)
-                {
-                    *moving = *start;
-                    ++start;
-                    ++moving;
-                }
-                *moving = '\0';
-                var res = new string(result);
-                return res;
-            }
-        }
-
-        [SuppressUnmanagedCodeSecurity]
-        [SecurityCritical]
-        internal unsafe static bool CompareOrdinal(char* first, char* second, int length)
-        {
-            unchecked
-            {
-                int i = 0;
-                while (*first == *second)
-                {
-                    ++first;
-                    ++second;
-                    ++i;
-                    if (i == length)
-                    {
-                        return true;
+                        result.Add(input.Substring(lastMatchEnd, i - lastMatchEnd));
+                        result.Add(str);
+                        i += sepLen - 1;
+                        lastMatchEnd = i + 1;
+                        break;
                     }
                 }
-                return false;
             }
+            if (lastMatchEnd != length)
+                result.Add(input.Substring(lastMatchEnd));
+            return result.ToArray();
         }
+
+
     }
 }
