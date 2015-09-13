@@ -1,13 +1,46 @@
-﻿using System.Collections.Generic;
+﻿#region Copyright (c) 2015 Leoxia Ltd
+
+//  Copyright © 2015 Leoxia Ltd
+//  
+//  This file is part of Lx.
+// 
+//  Lx is released under GNU General Public License unless stated otherwise.
+//  You may not use this file except in compliance with the License.
+//  You can redistribute it and/or modify it under the terms of the GNU General Public License 
+//  as published by the Free Software Foundation, either version 3 of the License, 
+//  or any later version.
+//  
+//  In case GNU General Public License is not applicable for your use of Lx, 
+//  you can subscribe to commercial license on 
+//  http://www.leoxia.com 
+//  by contacting us through the form page or send us a mail
+//  mailto:contact@leoxia.com
+//   
+//  Unless required by applicable law or agreed to in writing, 
+//  Lx is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+//  OR CONDITIONS OF ANY KIND, either express or implied. 
+//  See the GNU General Public License for more details.
+// 
+//  You should have received a copy of the GNU General Public License along with Lx.
+//  It is present in the Lx root folder SolutionItems/GPL.txt
+//  If not, see http://www.gnu.org/licenses/.
+
+#endregion
+
+using System.Collections.Generic;
 using System.Security;
 using Lx.Tools.Common;
 using Lx.Tools.Performance;
 
 namespace Lx.Tools.Reflection.Performance.Tester.StringSplit
 {
-    class UnsafeSplitBenchmark : BaseSplitBenchmark, IBenchmark
+    internal class UnsafeSplitBenchmark : BaseSplitBenchmark, IBenchmark
     {
-        public string Name { get { return "Unsafe Split"; } }
+        public string Name
+        {
+            get { return "Unsafe Split"; }
+        }
+
         public void Init()
         {
         }
@@ -20,27 +53,31 @@ namespace Lx.Tools.Reflection.Performance.Tester.StringSplit
             }
         }
 
+        public void Cleanup()
+        {
+        }
+
         private unsafe string[] SplitKeepDelimiters(string input, string[] delimiters)
         {
             unchecked
             {
-                List<string> result = new List<string>(10);
-                int length = input.Length;
+                var result = new List<string>(10);
+                var length = input.Length;
                 fixed (char* inputFixed = input)
                 {
-                    char* inputPtr = inputFixed;
-                    char* endPtr = inputPtr + length;
-                    char* lastMatchPtr = inputFixed;
+                    var inputPtr = inputFixed;
+                    var endPtr = inputPtr + length;
+                    var lastMatchPtr = inputFixed;
                     var delLen = delimiters.Length;
                     for (; inputPtr < endPtr; inputPtr++)
                     {
-                        for (int j = 0; j < delLen; j++)
+                        for (var j = 0; j < delLen; j++)
                         {
-                            string str = delimiters[j];
+                            var str = delimiters[j];
                             fixed (char* sepFixed = str)
                             {
-                                char* sep = sepFixed;
-                                int sepLen = str.Length;
+                                var sep = sepFixed;
+                                var sepLen = str.Length;
                                 if (((*inputPtr == *sep) && (inputPtr + sepLen <= endPtr)) &&
                                     ((sepLen == 1) || (CompareOrdinal(inputPtr, sep, sepLen))))
                                 {
@@ -62,18 +99,18 @@ namespace Lx.Tools.Reflection.Performance.Tester.StringSplit
         }
 
         /// <summary>
-        /// Create a substrings start at the specified start and ending just before the end pointer.
+        ///     Create a substrings start at the specified start and ending just before the end pointer.
         /// </summary>
         /// <param name="start">The start.</param>
         /// <param name="end">The end.</param>
         /// <returns></returns>
         [SuppressUnmanagedCodeSecurity]
         [SecurityCritical]
-        private unsafe static string Substring(char* start, char* end)
+        private static unsafe string Substring(char* start, char* end)
         {
             unchecked
             {
-                var res = new string('c', (int)(end - start));
+                var res = new string('c', (int) (end - start));
                 fixed (char* result = res)
                 {
                     var moving = result;
@@ -91,11 +128,11 @@ namespace Lx.Tools.Reflection.Performance.Tester.StringSplit
 
         [SuppressUnmanagedCodeSecurity]
         [SecurityCritical]
-        internal unsafe static bool CompareOrdinal(char* first, char* second, int length)
+        internal static unsafe bool CompareOrdinal(char* first, char* second, int length)
         {
             unchecked
             {
-                int i = 0;
+                var i = 0;
                 while (*first == *second)
                 {
                     ++first;
@@ -108,10 +145,6 @@ namespace Lx.Tools.Reflection.Performance.Tester.StringSplit
                 }
                 return false;
             }
-        }
-
-        public void Cleanup()
-        {
         }
     }
 }

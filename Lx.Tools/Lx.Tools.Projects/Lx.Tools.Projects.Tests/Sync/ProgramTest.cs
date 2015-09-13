@@ -43,15 +43,15 @@ namespace Lx.Tools.Projects.Tests.Sync
     [TestFixture]
     public class ProgramTest
     {
-        private Mock<ISourcesProvider> _sourceFinder;
+        private Mock<IProjectSyncConfiguration> _configuration;
+        private Mock<IConsole> _console;
+        private Mock<IEnvironment> _environment;
+        private Mock<IFileSystem> _fileSystem;
         private Mock<IProjectFactory> _projectFactory;
         private Mock<ISourceComparer> _sourceComparer;
+        private Mock<ISourcesProvider> _sourceFinder;
         private Mock<ISyncFactory> _syncFactory;
-        private Mock<IFileSystem> _fileSystem;
-        private Mock<IEnvironment> _environment;
-        private Mock<IConsole> _console;
         private Mock<IDirectoryValidator> _validator;
-        private Mock<IProjectSyncConfiguration> _configuration;
 
         private void ConfigureContainer(UnityContainer container)
         {

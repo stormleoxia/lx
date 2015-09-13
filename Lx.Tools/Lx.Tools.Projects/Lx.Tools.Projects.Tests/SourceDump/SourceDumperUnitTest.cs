@@ -44,6 +44,11 @@ namespace Lx.Tools.Projects.Tests.SourceDump
     [TestFixture]
     public class SourceDumperUnitTest
     {
+        private readonly PropertyInfo _propertyInfo = typeof (UPath).GetProperty("FSystem",
+            BindingFlags.Static | BindingFlags.NonPublic);
+
+        private Mock<IFileSystem> _fileSystem;
+
         [SetUp]
         public void Setup()
         {
@@ -57,11 +62,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             _propertyInfo.SetValue(null, new FileSystem());
             _fileSystem.VerifyAll();
         }
-
-        private Mock<IFileSystem> _fileSystem;
-
-        private readonly PropertyInfo _propertyInfo = typeof (UPath).GetProperty("FSystem",
-            BindingFlags.Static | BindingFlags.NonPublic);
 
         [Test, ExpectedException(typeof (InvalidOperationException))]
         public void ExceptionTest()

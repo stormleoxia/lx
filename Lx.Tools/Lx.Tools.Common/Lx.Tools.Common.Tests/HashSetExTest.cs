@@ -52,8 +52,8 @@ namespace Lx.Tools.Common.Tests
         [Test]
         public void ToDictionaryIgnoreDuplicatesTest()
         {
-            var list = new List<string> { "toTo", "toto", "toto", "Toto", "tutut" };
-            Dictionary<string, int> dic = list.ToDictionaryIgnoreDuplicates(x => x.ToLower(), x => x.Length);
+            var list = new List<string> {"toTo", "toto", "toto", "Toto", "tutut"};
+            var dic = list.ToDictionaryIgnoreDuplicates(x => x.ToLower(), x => x.Length);
             Assert.IsNotNull(dic);
             Assert.AreEqual(2, dic.Count);
             Assert.AreEqual(4, dic["toto"]);
@@ -63,11 +63,11 @@ namespace Lx.Tools.Common.Tests
         [Test]
         public void ToStackTest()
         {
-            var list = new List<string> { "totu", "toto", "tutu" };
-            Stack<string> stack = list.ToStack();
+            var list = new List<string> {"totu", "toto", "tutu"};
+            var stack = list.ToStack();
             Assert.IsNotNull(stack);
             Assert.AreEqual(3, stack.Count);
-            Assert.AreEqual("tutu",stack.Pop());
+            Assert.AreEqual("tutu", stack.Pop());
             Assert.AreEqual("toto", stack.Pop());
             Assert.AreEqual("totu", stack.Pop());
         }

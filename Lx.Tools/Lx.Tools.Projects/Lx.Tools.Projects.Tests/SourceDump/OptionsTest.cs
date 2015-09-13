@@ -37,6 +37,10 @@ namespace Lx.Tools.Projects.Tests.SourceDump
     [TestFixture]
     public class SourceDumperOptionsTest
     {
+        private Mock<IConsole> _console;
+        private Mock<IEnvironment> _environment;
+        private SourceDumperOptions _options;
+
         [SetUp]
         public void Setup()
         {
@@ -44,10 +48,6 @@ namespace Lx.Tools.Projects.Tests.SourceDump
             _console = new Mock<IConsole>();
             _options = new SourceDumperOptions(_environment.Object, _console.Object);
         }
-
-        private SourceDumperOptions _options;
-        private Mock<IEnvironment> _environment;
-        private Mock<IConsole> _console;
 
         [Test]
         public void GetOptionsShouldDetectAbsolutePath()

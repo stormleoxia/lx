@@ -47,6 +47,12 @@ namespace Lx.Tools.Common.Tests.Program
     [TestFixture]
     public class ProgramTest
     {
+        private Mock<IConsole> _console;
+        private Mock<IEnvironment> _environment;
+        private Mock<IFileSystem> _fileSystem;
+        private string _processName;
+        private IUnityContainer _unityContainer;
+
         [SetUp]
         public void Setup()
         {
@@ -54,12 +60,6 @@ namespace Lx.Tools.Common.Tests.Program
             ConfigureContainer(_unityContainer);
             _processName = Process.GetCurrentProcess().ProcessName;
         }
-
-        private IUnityContainer _unityContainer;
-        private Mock<IEnvironment> _environment;
-        private Mock<IConsole> _console;
-        private Mock<IFileSystem> _fileSystem;
-        private string _processName;
 
         private void ConfigureContainer(IUnityContainer container)
         {

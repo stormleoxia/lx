@@ -93,7 +93,8 @@ namespace Lx.Tools.Projects.Sync
             foreach (var item in items)
             {
                 // Replace existing Links
-                if (_configuration.Options.Contains(ProgramOptions.UpdateLinks) || item.InnerItem.Metadata.All(x => x.Name != "Link"))
+                if (_configuration.Options.Contains(ProgramOptions.UpdateLinks) ||
+                    item.InnerItem.Metadata.All(x => x.Name != "Link"))
                 {
                     var metadatas = ExtractMetadata(directory, item.EvaluatedInclude);
                     if (metadatas != null)
@@ -104,28 +105,32 @@ namespace Lx.Tools.Projects.Sync
                         }
                     }
                 }
-
-            }               
+            }
         }
 
         private IList<KeyValuePair<string, string>> ExtractMetadata(string directory, string sourcePath)
-        {            
+        {
             if (sourcePath.StartsWith("..")) // sourcePath is not in directory, make it as a link
             {
                 var fileName = Path.GetFileName(sourcePath);
                 var reference = Path.GetDirectoryName(sourcePath).ToPlatformPath();
                 IList<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
-                string[] subDirectories = _fileSystem.GetSubDirectories(directory, "*", SearchOption.AllDirectories).
-                    Select(x => x.Replace(directory + Path.DirectorySeparatorChar, string.Empty)).ToArray(); // Make it a relative path                
+                var subDirectories = _fileSystem.GetSubDirectories(directory, "*", SearchOption.AllDirectories).
+                    Select(x => x.Replace(directory + Path.DirectorySeparatorChar, string.Empty)).ToArray();
+                    // Make it a relative path                
                 var intersections = subDirectories
                     .Select(x => StringEx.IntersectFromEnd(x.Replace('.', '/').ToPlatformPath(), reference))
                     .Where(x => !string.IsNullOrEmpty(x))
                     // if the path starts with separator, match was incomplete
-                    .Where(x => !x.StartsWith(Path.DirectorySeparatorChar.ToString()) && !x.StartsWith(Path.AltDirectorySeparatorChar.ToString()))
+                    .Where(
+                        x =>
+                            !x.StartsWith(Path.DirectorySeparatorChar.ToString()) &&
+                            !x.StartsWith(Path.AltDirectorySeparatorChar.ToString()))
                     .ToArray();
                 if (intersections.Any())
                 {
-                    var maxIntersection = intersections.Aggregate(string.Empty, (seed, x) => x.Length > seed.Length ? x : seed);
+                    var maxIntersection = intersections.Aggregate(string.Empty,
+                        (seed, x) => x.Length > seed.Length ? x : seed);
                     var linkDirectory = GetLinkDirectory(directory, maxIntersection);
                     if (linkDirectory != null)
                     {
@@ -134,7 +139,7 @@ namespace Lx.Tools.Projects.Sync
                 }
                 else
                 {
-                    list.Add(new KeyValuePair<string, string>("Link", fileName)); 
+                    list.Add(new KeyValuePair<string, string>("Link", fileName));
                 }
                 return list;
             }

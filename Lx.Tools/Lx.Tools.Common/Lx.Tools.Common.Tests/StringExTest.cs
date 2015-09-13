@@ -49,7 +49,7 @@ namespace Lx.Tools.Common.Tests
         [Test]
         public void SplitKeepDelimitersWithPathTest()
         {
-            var res = StringEx.SplitKeepDelimiters(@"C:\Directory\Other/File.txt", new string[] {@"\", @"/"});
+            var res = StringEx.SplitKeepDelimiters(@"C:\Directory\Other/File.txt", new[] {@"\", @"/"});
             Assert.AreEqual(7, res.Length);
             Assert.AreEqual("C:", res[0]);
             Assert.AreEqual(@"\", res[1]);
@@ -64,7 +64,7 @@ namespace Lx.Tools.Common.Tests
         public void SplitKeepDelimitersWithPathWithLongDelimiterTest()
         {
             var input = @"//a///";
-            var res = StringEx.SplitKeepDelimiters(input, new string[] { @"ab", @"/" });
+            var res = StringEx.SplitKeepDelimiters(input, new[] {@"ab", @"/"});
             Assert.AreEqual(input, string.Concat(res));
         }
 
@@ -72,7 +72,7 @@ namespace Lx.Tools.Common.Tests
         public void SplitKeepDelimitersWithPathWithOverlappingDelimiterTest()
         {
             var input = @"abc";
-            var res = StringEx.SplitKeepDelimiters(input, new string[] { @"ab", @"bc" });
+            var res = StringEx.SplitKeepDelimiters(input, new[] {@"ab", @"bc"});
             Assert.AreEqual(input, string.Concat(res));
             Assert.AreEqual(3, res.Length);
             Assert.AreEqual(string.Empty, res[0]);
@@ -83,26 +83,26 @@ namespace Lx.Tools.Common.Tests
         [Test]
         public void SplitKeepDelimitersWithSeveralInputTest()
         {
-            var inputs = new List<KeyValuePair<string[], string>>()
+            var inputs = new List<KeyValuePair<string[], string>>
             {
                 new KeyValuePair<string[], string>(
-                    new string[]{"ab", "bc"}, "abcdef"),
+                    new[] {"ab", "bc"}, "abcdef"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"abc", "def"}, "abcdef"),
+                    new[] {"abc", "def"}, "abcdef"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"abc"}, "/abc/"),
+                    new[] {"abc"}, "/abc/"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"abc"}, "abc"),
+                    new[] {"abc"}, "abc"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"/"}, "/"),
+                    new[] {"/"}, "/"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"ab"}, "ab"),
+                    new[] {"ab"}, "ab"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"/"}, "////////"),
+                    new[] {"/"}, "////////"),
                 new KeyValuePair<string[], string>(
-                    new string[]{"/", @"\\"}, @"//\///\\//\Toto/\\"),
+                    new[] {"/", @"\\"}, @"//\///\\//\Toto/\\"),
                 new KeyValuePair<string[], string>(
-                    new string[]{".", @".."}, @"..\/..//.\\...//...\T..oto/\\")
+                    new[] {".", @".."}, @"..\/..//.\\...//...\T..oto/\\")
             };
             foreach (var input in inputs)
             {
@@ -110,7 +110,6 @@ namespace Lx.Tools.Common.Tests
                 Assert.AreEqual(input.Value, string.Concat(res));
             }
         }
-
 
         [Test]
         public void IntersectFromEndTest()
@@ -125,13 +124,13 @@ namespace Lx.Tools.Common.Tests
             Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("a", string.Empty));
             Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd(string.Empty, "a"));
             Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("ab", string.Empty));
-            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd(string.Empty, "ab"));           
+            Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd(string.Empty, "ab"));
 
             // Intersections but not in the right way
             Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("a", "ab"));
             Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("ab", "abc"));
             Assert.AreEqual(string.Empty, StringEx.IntersectFromEnd("abc", "ab"));
-            
+
             // True intersections
             Assert.AreEqual("b", StringEx.IntersectFromEnd("ab", "b"));
             Assert.AreEqual("b", StringEx.IntersectFromEnd("b", "ab"));

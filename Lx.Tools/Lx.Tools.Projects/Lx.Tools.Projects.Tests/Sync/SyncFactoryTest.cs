@@ -38,6 +38,11 @@ namespace Lx.Tools.Projects.Tests.Sync
     [TestFixture]
     public class SyncFactoryTest
     {
+        private Mock<IConsole> _console;
+        private Mock<IFileSystem> _fileSystem;
+        private Mock<IProjectFactory> _projectFactory;
+        private Mock<IDirectoryValidator> _validator;
+
         [SetUp]
         public void Setup()
         {
@@ -55,11 +60,6 @@ namespace Lx.Tools.Projects.Tests.Sync
             _console.VerifyAll();
             _fileSystem.VerifyAll();
         }
-
-        private Mock<IProjectFactory> _projectFactory;
-        private Mock<IFileSystem> _fileSystem;
-        private Mock<IConsole> _console;
-        private Mock<IDirectoryValidator> _validator;
 
         [Test]
         public void CreateDirectorySyncTest()

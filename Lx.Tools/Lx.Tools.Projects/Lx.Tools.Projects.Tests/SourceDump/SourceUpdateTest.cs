@@ -43,21 +43,20 @@ namespace Lx.Tools.Projects.Tests.SourceDump
     [TestFixture]
     public class SourceUpdateTest
     {
+        private readonly PropertyInfo _propertyInfo = typeof (UPath).GetProperty("FSystem",
+            BindingFlags.Static | BindingFlags.NonPublic);
+
+        private string _curDir;
+        private Mock<IFileSystem> _fileSystem;
+        private string _unixRooted;
+        private string _windowsRooted;
+
         [SetUp]
         public void Setup()
         {
             _fileSystem = new Mock<IFileSystem>(MockBehavior.Strict);
             _propertyInfo.SetValue(null, _fileSystem.Object);
         }
-
-        private Mock<IFileSystem> _fileSystem;
-
-        private readonly PropertyInfo _propertyInfo = typeof (UPath).GetProperty("FSystem",
-            BindingFlags.Static | BindingFlags.NonPublic);
-
-        private string _curDir;
-        private string _windowsRooted;
-        private string _unixRooted;
 
         [TestFixtureSetUp]
         public void FixtureSetup()

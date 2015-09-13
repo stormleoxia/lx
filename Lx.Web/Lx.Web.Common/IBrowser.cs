@@ -32,19 +32,19 @@ using System;
 namespace Lx.Web.Common
 {
     /// <summary>
-    /// Defines what should implement a simple html browser
+    ///     Defines what should implement a simple html browser
     /// </summary>
     public interface IBrowser : IDisposable
     {
         /// <summary>
-        /// Loads the specified URL and interprets scripts and styles.
+        ///     Loads the specified URL and interprets scripts and styles.
         /// </summary>
         /// <param name="url">The URL.</param>
         /// <returns>resulting data</returns>
         string Load(string url);
 
         /// <summary>
-        /// Interprets scripts within the specified source.
+        ///     Interprets scripts within the specified source.
         /// </summary>
         /// <param name="source">The source including the scripts.</param>
         /// <returns>resulting document</returns>

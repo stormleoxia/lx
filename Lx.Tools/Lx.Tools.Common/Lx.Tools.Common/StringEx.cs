@@ -54,23 +54,23 @@ namespace Lx.Tools.Common
         }
 
         /// <summary>
-        /// Splits the input with delimiters while keeping them in the output list
+        ///     Splits the input with delimiters while keeping them in the output list
         /// </summary>
         /// <param name="input">The input.</param>
         /// <param name="delimiters">The delimiters.</param>
         /// <returns></returns>
         public static string[] SplitKeepDelimiters(string input, string[] delimiters)
         {
-            List<string> result = new List<string>();
-            int length = input.Length;
-            int lastMatchEnd = 0;
+            var result = new List<string>();
+            var length = input.Length;
+            var lastMatchEnd = 0;
             var delLen = delimiters.Length;
-            for (int i = 0; i < length; ++i)
+            for (var i = 0; i < length; ++i)
             {
-                for (int j = 0; j < delLen; ++j)
+                for (var j = 0; j < delLen; ++j)
                 {
-                    string str = delimiters[j];
-                    int sepLen = str.Length;
+                    var str = delimiters[j];
+                    var sepLen = str.Length;
                     if (((input[i] == str[0]) && (sepLen <= (length - i))) &&
                         ((sepLen == 1) || (String.CompareOrdinal(input, i, str, 0, sepLen) == 0)))
                     {
@@ -87,11 +87,10 @@ namespace Lx.Tools.Common
             return result.ToArray();
         }
 
-
         public static string IntersectFromEnd(string reference, string compared)
         {
-            int refIndex = reference.Length - 1;
-            int compIndex = compared.Length -1;
+            var refIndex = reference.Length - 1;
+            var compIndex = compared.Length - 1;
             while (refIndex >= 0 && compIndex >= 0)
             {
                 if (Char.ToLowerInvariant(reference[refIndex]) != Char.ToLowerInvariant(compared[compIndex]))

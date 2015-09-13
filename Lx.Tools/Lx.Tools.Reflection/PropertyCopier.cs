@@ -33,7 +33,7 @@ using System.Reflection;
 namespace Lx.Tools.Reflection
 {
     /// <summary>
-    /// ast Access to Property Copy between two objects of the same type.
+    ///     ast Access to Property Copy between two objects of the same type.
     /// </summary>
     /// <typeparam name="TContainer">The type of the container.</typeparam>
     public class PropertyCopier<TContainer> : IPropertyCopier<TContainer>

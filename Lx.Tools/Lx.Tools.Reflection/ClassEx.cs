@@ -1,4 +1,33 @@
-﻿using System;
+﻿#region Copyright (c) 2015 Leoxia Ltd
+
+//  Copyright © 2015 Leoxia Ltd
+//  
+//  This file is part of Lx.
+// 
+//  Lx is released under GNU General Public License unless stated otherwise.
+//  You may not use this file except in compliance with the License.
+//  You can redistribute it and/or modify it under the terms of the GNU General Public License 
+//  as published by the Free Software Foundation, either version 3 of the License, 
+//  or any later version.
+//  
+//  In case GNU General Public License is not applicable for your use of Lx, 
+//  you can subscribe to commercial license on 
+//  http://www.leoxia.com 
+//  by contacting us through the form page or send us a mail
+//  mailto:contact@leoxia.com
+//   
+//  Unless required by applicable law or agreed to in writing, 
+//  Lx is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+//  OR CONDITIONS OF ANY KIND, either express or implied. 
+//  See the GNU General Public License for more details.
+// 
+//  You should have received a copy of the GNU General Public License along with Lx.
+//  It is present in the Lx root folder SolutionItems/GPL.txt
+//  If not, see http://www.gnu.org/licenses/.
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -6,14 +35,14 @@ using System.Reflection;
 namespace Lx.Tools.Reflection
 {
     /// <summary>
-    /// Extension for any class
+    ///     Extension for any class
     /// </summary>
     public static class ClassEx
     {
-        private static readonly IDictionary<Type, object> dictionary = new Dictionary<Type, object>(); 
+        private static readonly IDictionary<Type, object> dictionary = new Dictionary<Type, object>();
 
         /// <summary>
-        /// Clone instance Property-wise.
+        ///     Clone instance Property-wise.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance">The instance.</param>
@@ -55,7 +84,7 @@ namespace Lx.Tools.Reflection
 
         public void Copy(T source, T destination)
         {
-            for (int index = 0; index < _copiers.Length; index++)
+            for (var index = 0; index < _copiers.Length; index++)
             {
                 _copiers[index].Copy(source, destination);
             }
@@ -76,7 +105,7 @@ namespace Lx.Tools.Reflection
                 _dictionary[key] = copier;
                 return copier;
             }
-            return (PropertyCopier<T>)boxed;
+            return (PropertyCopier<T>) boxed;
         }
     }
 }

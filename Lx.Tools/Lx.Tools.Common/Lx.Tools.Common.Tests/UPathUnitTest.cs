@@ -37,6 +37,8 @@ namespace Lx.Tools.Common.Tests
     [TestFixture]
     public class UPathUnitTest
     {
+        private Mock<IFileSystem> _fileSystem;
+
         [SetUp]
         public void Setup()
         {
@@ -49,8 +51,6 @@ namespace Lx.Tools.Common.Tests
         {
             UPath.FSystem = new FileSystem();
         }
-
-        private Mock<IFileSystem> _fileSystem;
 
         [Test, ExpectedException(typeof (InvalidOperationException))]
         public void ReproduceUnixRelativePathNotOnTheSameDrive()

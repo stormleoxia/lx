@@ -37,7 +37,7 @@ namespace Lx.Web.Browser
     {
         private static void Main(string[] args)
         {
-            As.Browser browser = new As.Browser();
+            var browser = new As.Browser();
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             var res = browser.Load("http://www.leoxia.com");

@@ -37,7 +37,7 @@ namespace Lx.Tools.Projects.Sync
         static ProgramOptions()
         {
             NoDelete = new Option {Name = "--no-delete", Explanation = "Missing files from sources are not deleted"};
-            UpdateLinks = new Option {Name = "--update-links", Explanation = "Update Link of Compile items"};            
+            UpdateLinks = new Option {Name = "--update-links", Explanation = "Update Link of Compile items"};
         }
 
         public ProgramOptions(IEnvironment environment, IConsole console) : base(environment, console)

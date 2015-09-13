@@ -40,6 +40,8 @@ namespace Lx.Tools.Projects.Tests.Sync
     [TestFixture]
     public class SourceFileFinderTest
     {
+        private Mock<IFileSystem> _fileSystem;
+
         [SetUp]
         public void Setup()
         {
@@ -51,8 +53,6 @@ namespace Lx.Tools.Projects.Tests.Sync
         {
             _fileSystem.VerifyAll();
         }
-
-        private Mock<IFileSystem> _fileSystem;
 
         [Test]
         public void AllTest()
