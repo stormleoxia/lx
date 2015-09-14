@@ -42,8 +42,8 @@ namespace Lx.Tools.Common.Paths
             AltDirectorySeparator = Path.AltDirectorySeparatorChar.ToString();
         }
 
-        public string DirectorySeparator { get; private set; }
-        public string StayInCurrent { get; private set; }
+        public string DirectorySeparator { get; set; }
+        public string StayInCurrent { get; set; }
         public bool NormalizePath { get; set; }
         public bool IgnoreCase { get; set; }
         public PlatformPathTypes DefaultPlatformPathType { get; set; }

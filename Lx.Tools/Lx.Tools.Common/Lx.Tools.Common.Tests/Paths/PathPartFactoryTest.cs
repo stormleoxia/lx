@@ -44,7 +44,7 @@ namespace Lx.Tools.Common.Tests.Paths
         public void MakePartsWithWindowsAbsolutePathTest()
         {
             var input = @"C:\dir1\Dir2/test.txt";
-            var factory = new PathPartFactory(new PathConfiguration());
+            var factory = new PathPartFactory(new PathConfiguration{DirectorySeparator = "/", AltDirectorySeparator = @"\"});
             var res = factory.MakeParts(input);
             Assert.IsNotNull(res);
             Assert.AreEqual(7, res.Length);
