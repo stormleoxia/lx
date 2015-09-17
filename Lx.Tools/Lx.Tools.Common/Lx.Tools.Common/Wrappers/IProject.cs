@@ -30,20 +30,20 @@
 using System.Collections.Generic;
 using Microsoft.Build.Evaluation;
 
-namespace Lx.Tools.Projects.Sync
+namespace Lx.Tools.Common.Wrappers
 {
     public interface IProject
     {
         string FullPath { get; }
         void AddItem(string itemType, string itemInclude, IList<KeyValuePair<string, string>> metadata);
-        ICollection<ISyncProjectItem> GetItems(string itemType);
-        void RemoveItem(ISyncProjectItem item);
+        ICollection<IProjectItem> GetItems(string itemType);
+        void RemoveItem(IProjectItem item);
         void Save();
     }
 
-    public interface ISyncProjectItem
+    public interface IProjectItem
     {
-        ProjectItem InnerItem { get; }
+        Microsoft.Build.Evaluation.ProjectItem InnerItem { get; }
         string EvaluatedInclude { get; }
     }
 }

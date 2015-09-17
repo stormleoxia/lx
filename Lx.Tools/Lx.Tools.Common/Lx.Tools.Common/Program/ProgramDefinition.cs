@@ -29,7 +29,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Text;
 using Lx.Tools.Common.Wrappers;
 
@@ -63,7 +62,18 @@ namespace Lx.Tools.Common.Program
                 DisplayUsage();
             }
             var options = ManageOptions(args);
-            InnerRun(options, args);
+            try
+            {
+                InnerRun(options, args);
+            }
+            catch (Exception e)
+            {
+                _console.WriteLine(e);
+                if (!_debugger.IsAttached)
+                {
+                    throw;
+                }
+            }
             Exit(0);
         }
 

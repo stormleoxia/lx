@@ -60,6 +60,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="References\ProgramTest.cs" />
+    <Compile Include="References\ReferenceAdderTest.cs" />
     <Compile Include="References\ReferenceManagerTest.cs" />
     <Compile Include="SourceDump\OptionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

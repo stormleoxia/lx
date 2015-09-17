@@ -31,7 +31,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Build.Evaluation;
 
-namespace Lx.Tools.Projects.Sync
+namespace Lx.Tools.Common.Wrappers
 {
     public class ProjectWrapper : IProject
     {
@@ -48,12 +48,12 @@ namespace Lx.Tools.Projects.Sync
             _project.AddItem(itemType, itemInclude, metadata);
         }
 
-        public ICollection<ISyncProjectItem> GetItems(string itemType)
+        public ICollection<IProjectItem> GetItems(string itemType)
         {
-            return _project.GetItems(itemType).Select(x => new SyncProjectItem(x)).ToArray();
+            return _project.GetItems(itemType).Select(x => new ProjectWrapperItem(x)).ToArray();
         }
 
-        public void RemoveItem(ISyncProjectItem item)
+        public void RemoveItem(IProjectItem item)
         {
             _project.RemoveItem(item.InnerItem);
         }
@@ -69,14 +69,14 @@ namespace Lx.Tools.Projects.Sync
         }
     }
 
-    public class SyncProjectItem : ISyncProjectItem
+    public class ProjectWrapperItem : IProjectItem
     {
-        public SyncProjectItem(ProjectItem projectItem)
+        public ProjectWrapperItem(Microsoft.Build.Evaluation.ProjectItem projectItem)
         {
             InnerItem = projectItem;
         }
 
-        public ProjectItem InnerItem { get; private set; }
+        public Microsoft.Build.Evaluation.ProjectItem InnerItem { get; private set; }
 
         public string EvaluatedInclude
         {

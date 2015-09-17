@@ -81,6 +81,7 @@ namespace Lx.Tools.Common.Tests.Program
             _console.Setup(x => x.Write(@"
   AvailableOptions:
   --help  Display this text"));
+            _console.Setup(x => x.WriteLine(It.IsAny<InvalidOperationException>()));
             definition.Run(new[] {"arg1", "--help", "arg2"});
         }
 

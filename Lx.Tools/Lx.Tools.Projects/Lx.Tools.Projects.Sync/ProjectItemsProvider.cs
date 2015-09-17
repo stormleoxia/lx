@@ -28,6 +28,7 @@
 #endregion
 
 using System.Collections.Generic;
+using Lx.Tools.Common.Wrappers;
 
 namespace Lx.Tools.Projects.Sync
 {

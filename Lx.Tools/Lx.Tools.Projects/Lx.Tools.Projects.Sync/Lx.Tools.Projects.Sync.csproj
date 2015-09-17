@@ -60,7 +60,6 @@
     </Compile>
     <Compile Include="DirectorySync.cs" />
     <Compile Include="FilterSteps\FilterStep.cs" />
-    <Compile Include="IProject.cs" />
     <Compile Include="IProjectFactory.cs" />
     <Compile Include="IProjectItemsProvider.cs" />
     <Compile Include="IProjectSyncConfiguration.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="ProjectSync.cs" />
     <Compile Include="ProjectSyncConfiguration.cs" />
     <Compile Include="ProjectUpdater.cs" />
-    <Compile Include="ProjectWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FilterSteps\ScopeFilterStep.cs" />
     <Compile Include="Scopes.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Lx.Tools.Common.Program;
 using Lx.Tools.Common.Wrappers;
 using Lx.Tools.Projects.Reference;
@@ -34,12 +35,24 @@ namespace Lx.Tools.Projects.Tests.References
             var mockContainer = new Mock<IUnityContainer>(MockBehavior.Strict);
             var unityContainer = new UnityContainer();
             var usageDefinition = unityContainer.Resolve<UsageDefinition>();
+            mockContainer.Setup(
+                x => x.RegisterInstance(typeof(IUnityContainer), null, mockContainer.Object, It.IsAny<LifetimeManager>()))
+                .Returns(mockContainer.Object);
             mockContainer.Setup(x => x.Resolve(typeof (UsageDefinition), null)).Returns(usageDefinition);
             mockContainer.Setup(x => x.RegisterType(It.IsAny<Type>(), It.IsAny<Type>(), It.IsAny<string>(), null, new InjectionMember[0]))
                 .Callback<Type, Type, string, LifetimeManager, InjectionMember[]>((x, y, v, z, w) =>
                 {
                     RegisterType(mockContainer, unityContainer, x);
                 }).Returns(mockContainer.Object);
+            mockContainer.Setup(
+                x =>
+                    x.RegisterType(typeof (IProject), typeof (ProjectWrapper), null, It.IsAny<LifetimeManager>(),
+                        new InjectionMember[0])).Returns(mockContainer.Object);
+                        mockContainer.Setup(
+                x =>
+                    x.RegisterType(typeof (IReferenceAdder), typeof (ReferenceAdder), null, It.IsAny<LifetimeManager>(),
+                        new InjectionMember[0])).Returns(mockContainer.Object);
+
             ConfigureContainer(unityContainer);
 
             var programRef = unityContainer.Resolve<ReferenceManager>();

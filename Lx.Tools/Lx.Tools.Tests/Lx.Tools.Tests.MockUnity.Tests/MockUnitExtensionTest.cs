@@ -10,24 +10,20 @@ namespace Lx.Tools.Tests.MockUnity.Tests
         [Test]
         public void AddExtensionTest()
         {
-            var container = new UnityContainer();
-            container.AddExtension(MockUnity.MockUnit.Extension);
-            var list = container.Resolve<IList>();
+            var list = Container.Resolve<IList>();
             Assert.IsNotNull(list);
         }
 
         [Test, ExpectedException(typeof(ResolutionFailedException))]
         public void RemoveExtensionTest()
         {
-            var container = new UnityContainer();
-            container.AddExtension(MockUnity.MockUnit.Extension);
-            container.RemoveAllExtensions();
+            Container.RemoveAllExtensions();
             // Re add all extensions present before remove all. 
             // Beware though because it could change in future versions of Unity.
-            container.AddExtension(new InjectedMembers());
-            container.AddExtension(new UnityDefaultBehaviorExtension());
-            container.AddExtension(new UnityDefaultStrategiesExtension());
-            var resolved = container.Resolve<IList>();
+            Container.AddExtension(new InjectedMembers());
+            Container.AddExtension(new UnityDefaultBehaviorExtension());
+            Container.AddExtension(new UnityDefaultStrategiesExtension());
+            var resolved = Container.Resolve<IList>();
             Assert.IsNull(resolved);
         }
     }
