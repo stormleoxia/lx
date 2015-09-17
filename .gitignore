@@ -75,3 +75,9 @@
 /Lx.Web/Lx.Web.Browser.Tests/bin
 /Lx.Web/Lx.Web.Browser.As/bin
 leoxia.snk
+/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Reference/bin
+/Lx.Tools/Lx.Tools.Projects/Lx.Tools.Projects.Reference/obj
+/Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.MockUnity.Tests/obj
+/Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.MockUnity.Tests/bin
+/Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.MockUnity/obj
+/Lx.Tools/Lx.Tools.Tests/Lx.Tools.Tests.MockUnity/bin
