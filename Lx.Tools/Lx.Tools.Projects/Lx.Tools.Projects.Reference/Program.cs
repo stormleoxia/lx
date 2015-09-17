@@ -32,7 +32,7 @@ namespace Lx.Tools.Projects.Reference
             container.RegisterType<IDebugger, SystemDebugger>();
             container.RegisterType<IConsole, SystemConsole>();
             container.RegisterType<IFileSystem, FileSystem>();
-            container.RegisterType<IProject, ProjectWrapper>(new ExternallyControlledLifetimeManager());
+            container.RegisterType<IProject, ProjectWrapper>(new TransientLifetimeManager());
             container.RegisterType<IReferenceAdder, ReferenceAdder>(new ContainerControlledLifetimeManager());
         }
     }

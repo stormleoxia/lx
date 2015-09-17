@@ -71,17 +71,15 @@ namespace Lx.Tools.Common.Tests.Program
             _fileSystem = container.RegisterMoqInstance<IFileSystem>();
         }
 
-        [Test, ExpectedException(typeof (InvalidOperationException))]
+        [Test, ExpectedException(typeof(InvalidOperationException))]
         public void ExceptionTest()
         {
-            var definition = _unityContainer.Resolve<MyExceptionDefinition>();
             _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
             _console.Setup(x => x.WriteLine(_processName + " "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
-            _console.Setup(x => x.Write(@"
-  AvailableOptions:
-  --help  Display this text"));
+            _console.Setup(x => x.Write(Environment.NewLine + @"  AvailableOptions:" + Environment.NewLine + "  --help  Display this text"));
             _console.Setup(x => x.WriteLine(It.IsAny<InvalidOperationException>()));
+            var definition = _unityContainer.Resolve<MyExceptionDefinition>();
             definition.Run(new[] {"arg1", "--help", "arg2"});
         }
 
@@ -93,9 +91,7 @@ namespace Lx.Tools.Common.Tests.Program
             _console.Setup(x => x.WriteLine("Usage: " + _processName + " [options]"));
             _console.Setup(x => x.WriteLine(_processName + " "));
             _console.Setup(x => x.WriteLine("Copyright (C) 2015 Leoxia Ltd"));
-            _console.Setup(x => x.Write(@"
-  AvailableOptions:
-  --help  Display this text"));
+            _console.Setup(x => x.Write(Environment.NewLine + @"  AvailableOptions:" + Environment.NewLine + "  --help  Display this text"));
             definition.Run(new[] {"arg1", "--help", "arg2"});
             Assert.AreEqual(3, definition.ReceivedArguments.Length);
             Assert.AreEqual("arg1", definition.ReceivedArguments[0]);

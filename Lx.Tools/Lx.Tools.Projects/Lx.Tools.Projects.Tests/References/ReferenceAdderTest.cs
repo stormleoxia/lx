@@ -26,6 +26,8 @@ namespace Lx.Tools.Projects.Tests.References
             project.Setup(x => x.GetItems("Reference")).Returns(new IProjectItem[0]);
             project.Setup(x => x.AddItem("Reference", reference, null));
             project.Setup(x => x.Save());
+            var console = MockUnit.Get<IConsole>();
+            console.Setup(x => x.WriteLine(It.IsAny<string>()));
             Assert.IsNotNull(manager);
             manager.AddReference(new []{ null, fileName, null, reference});
         }

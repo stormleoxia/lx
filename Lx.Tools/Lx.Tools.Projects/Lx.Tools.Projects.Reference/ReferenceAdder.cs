@@ -76,6 +76,7 @@ namespace Lx.Tools.Projects.Reference
             {
                 foreach (var projectPath in _projects)
                 {
+                    var fileName = Path.GetFileName(projectPath);
                     var parameters = new ParameterOverrides();
                     parameters.Add("path", projectPath);
                     var project = _container.Resolve<IProject>("", parameters);
@@ -89,13 +90,13 @@ namespace Lx.Tools.Projects.Reference
                         }
                         else
                         {
-                            var fileName = Path.GetFileName(projectPath);
                             _console.WriteLine(reference + " is already in " + fileName);
                         }
                     }
                     if (projectHasChanged)
                     {
                         project.Save();
+                        _console.WriteLine(fileName + " has new references added.");
                     }
                 }
             }

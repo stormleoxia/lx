@@ -24,7 +24,9 @@
             while (!File.Exists(filePath) && directoryInfo.Exists)
             {
                 directoryInfo = directoryInfo.Parent;
-                filePath = Path.Combine(directoryInfo.FullName, this.Source);
+                if (directoryInfo == null)
+                  break;  
+                filePath = Path.Combine(directoryInfo.FullName, this.Source);                
             }
             if (File.Exists(filePath))
             {
