@@ -43,7 +43,7 @@ namespace Lx.Tools.Common.Wrappers
 
     public interface IProjectItem
     {
-        Microsoft.Build.Evaluation.ProjectItem InnerItem { get; }
+        ProjectItem InnerItem { get; }
         string EvaluatedInclude { get; }
     }
 }

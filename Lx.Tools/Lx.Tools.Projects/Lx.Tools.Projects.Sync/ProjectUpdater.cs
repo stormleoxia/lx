@@ -117,7 +117,7 @@ namespace Lx.Tools.Projects.Sync
                 IList<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
                 var subDirectories = _fileSystem.GetSubDirectories(directory, "*", SearchOption.AllDirectories).
                     Select(x => x.Replace(directory + Path.DirectorySeparatorChar, string.Empty)).ToArray();
-                    // Make it a relative path                
+                // Make it a relative path                
                 var intersections = subDirectories
                     .Select(x => StringEx.IntersectFromEnd(x.Replace('.', '/').ToPlatformPath(), reference))
                     .Where(x => !string.IsNullOrEmpty(x))

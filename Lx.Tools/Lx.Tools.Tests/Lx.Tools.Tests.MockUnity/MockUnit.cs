@@ -1,4 +1,33 @@
-﻿using System;
+﻿#region Copyright (c) 2015 Leoxia Ltd
+
+//  Copyright © 2015 Leoxia Ltd
+//  
+//  This file is part of Lx.
+// 
+//  Lx is released under GNU General Public License unless stated otherwise.
+//  You may not use this file except in compliance with the License.
+//  You can redistribute it and/or modify it under the terms of the GNU General Public License 
+//  as published by the Free Software Foundation, either version 3 of the License, 
+//  or any later version.
+//  
+//  In case GNU General Public License is not applicable for your use of Lx, 
+//  you can subscribe to commercial license on 
+//  http://www.leoxia.com 
+//  by contacting us through the form page or send us a mail
+//  mailto:contact@leoxia.com
+//   
+//  Unless required by applicable law or agreed to in writing, 
+//  Lx is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+//  OR CONDITIONS OF ANY KIND, either express or implied. 
+//  See the GNU General Public License for more details.
+// 
+//  You should have received a copy of the GNU General Public License along with Lx.
+//  It is present in the Lx root folder SolutionItems/GPL.txt
+//  If not, see http://www.gnu.org/licenses/.
+
+#endregion
+
+using System;
 using Moq;
 
 namespace Lx.Tools.Tests.MockUnity
@@ -6,11 +35,6 @@ namespace Lx.Tools.Tests.MockUnity
     public class MockUnit
     {
         private readonly MockFactory _factory;
-
-        public static void Setup()
-        {
-            Instance = new MockUnit();
-        }
 
         private MockUnit()
         {
@@ -26,13 +50,18 @@ namespace Lx.Tools.Tests.MockUnity
             {
                 if (Instance == null)
                 {
-                    throw new InvalidOperationException("Call MoqInject.Setup() or Use " + typeof(MockUnitTestFixture));
+                    throw new InvalidOperationException("Call MoqInject.Setup() or Use " + typeof (MockUnitTestFixture));
                 }
                 return Instance.InnerExtension;
             }
         }
 
         private MockUnitExtension InnerExtension { get; set; }
+
+        public static void Setup()
+        {
+            Instance = new MockUnit();
+        }
 
         public static void TearDown()
         {
@@ -50,7 +79,7 @@ namespace Lx.Tools.Tests.MockUnity
 
         public static Mock<T> Get<T>() where T : class
         {
-            return (Mock<T>)Get(typeof(T));
+            return (Mock<T>) Get(typeof (T));
         }
 
         public static Mock Get(Type type)

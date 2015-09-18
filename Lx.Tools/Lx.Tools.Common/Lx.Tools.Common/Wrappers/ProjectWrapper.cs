@@ -71,12 +71,12 @@ namespace Lx.Tools.Common.Wrappers
 
     public class ProjectWrapperItem : IProjectItem
     {
-        public ProjectWrapperItem(Microsoft.Build.Evaluation.ProjectItem projectItem)
+        public ProjectWrapperItem(ProjectItem projectItem)
         {
             InnerItem = projectItem;
         }
 
-        public Microsoft.Build.Evaluation.ProjectItem InnerItem { get; private set; }
+        public ProjectItem InnerItem { get; private set; }
 
         public string EvaluatedInclude
         {
