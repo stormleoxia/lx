@@ -38,9 +38,9 @@ namespace Lx.Tools.Common.Wrappers
             return Console.ReadLine();
         }
 
-        public void WriteLine(string text)
+        public void WriteLine(string text, params object[] parameters)
         {
-            Console.WriteLine(text);
+            Console.WriteLine(text, parameters);
         }
 
         public void Write(string text)

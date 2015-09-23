@@ -50,12 +50,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Lx.Samples.Web.Awesomium\Lx.Samples.Web.Awesomium.csproj">
-      <Project>{1BCDD4B5-3497-4C05-B31E-B90DB5AC9C1B}</Project>
-      <Name>Lx.Samples.Web.Awesomium</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(ProjectDir)..\..\..\SolutionItems\lx.targets" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

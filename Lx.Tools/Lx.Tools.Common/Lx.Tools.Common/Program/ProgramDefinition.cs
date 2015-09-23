@@ -121,6 +121,7 @@ namespace Lx.Tools.Common.Program
         {
             if (_debugger.IsAttached)
             {
+                _console.WriteLine("Press a key to exit...");
                 _console.ReadLine();
             }
             _environment.Exit(exitCode);

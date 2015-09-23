@@ -35,7 +35,7 @@ namespace Lx.Tools.Common.Wrappers
     {
         IWriter Error { get; }
         string ReadLine();
-        void WriteLine(string text);
+        void WriteLine(string text, params object[] parameters);
         void Write(string text);
         void WriteLine(Exception exception);
     }

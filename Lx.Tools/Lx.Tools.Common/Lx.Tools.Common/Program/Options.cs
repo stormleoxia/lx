@@ -65,6 +65,7 @@ namespace Lx.Tools.Common.Program
                 {
                     if (arg == option.Name)
                     {
+                        option.Index = index;
                         list.Add(option);
                         arguments[index] = null;
                     }

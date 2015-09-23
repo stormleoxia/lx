@@ -35,6 +35,8 @@ namespace Lx.Tools.Common.Program
     {
         public string Name { get; set; }
         public string Explanation { get; set; }
+        
+        public int Index { get; set; }
 
         public bool Equals(Option other)
         {
