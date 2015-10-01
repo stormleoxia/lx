@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8BC9FC77-AEAF-4007-8CF9-C2511F234C31}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lx.Web.LinkedIn.Console</RootNamespace>
+    <AssemblyName>Lx.Web.LinkedIn.Console</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\WatiN.2.1.0\lib\net40\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\packages\WatiN.2.1.0\lib\net40\Microsoft.mshtml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="WatiN.Core, Version=2.1.0.1196, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\WatiN.2.1.0\lib\net40\WatiN.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Lx.Tools\Lx.Tools.Common\Lx.Tools.Common\Lx.Tools.Common.csproj">
+      <Project>{38B7BAB4-345D-47A2-BAA2-274B9320E6A0}</Project>
+      <Name>Lx.Tools.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Lx.Tools\Lx.Tools.Db\Lx.Tools.Db.Credentials\Lx.Tools.Db.Credentials.csproj">
+      <Project>{37EF2603-A9BE-4D13-AECE-92BCEED9ED25}</Project>
+      <Name>Lx.Tools.Db.Credentials</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lx.Web.Browser.As\Lx.Web.Browser.As.csproj">
+      <Project>{f3d6c7a6-eed2-4157-82ce-ae82bf2b4544}</Project>
+      <Name>Lx.Web.Browser.As</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lx.Web.Browser.Selenium\Lx.Web.Browser.Selenium.csproj">
+      <Project>{80214fb8-6788-4fd8-85a6-5d821039cfc8}</Project>
+      <Name>Lx.Web.Browser.Selenium</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lx.Web.Browser\Lx.Web.Browser.WatiN\Lx.Web.Browser.WatiN.csproj">
+      <Project>{24669c99-a67c-43c9-87f5-05438a98ab83}</Project>
+      <Name>Lx.Web.Browser.WatiN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lx.Web.Common\Lx.Web.Common.csproj">
+      <Project>{01CD164A-6F79-42CC-8B65-A969B1E4E1BC}</Project>
+      <Name>Lx.Web.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

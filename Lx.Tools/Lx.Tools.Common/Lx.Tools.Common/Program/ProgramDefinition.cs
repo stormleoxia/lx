@@ -54,6 +54,11 @@ namespace Lx.Tools.Common.Program
             _versionGetter = versionGetter;
         }
 
+        public List<Argument> Arguments
+        {
+            get { return _definition.Arguments; }
+        }
+
         public void Run(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledExcetion;

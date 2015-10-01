@@ -41,7 +41,7 @@ namespace Lx.Tools.Common.Program
         public UsageDefinition()
         {
             _exeName = Process.GetCurrentProcess().ProcessName;
-            Arguments = new List<Arguments>();
+            Arguments = new List<Argument>();
         }
 
         public string ExeName
@@ -49,6 +49,6 @@ namespace Lx.Tools.Common.Program
             get { return _exeName; }
         }
 
-        public List<Arguments> Arguments { get; private set; }
+        public List<Argument> Arguments { get; private set; }
     }
 }

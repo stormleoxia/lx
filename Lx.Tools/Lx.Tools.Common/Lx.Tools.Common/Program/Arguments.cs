@@ -29,7 +29,7 @@
 
 namespace Lx.Tools.Common.Program
 {
-    public class Arguments
+    public class Argument
     {
         public string Name { get; set; }
     }

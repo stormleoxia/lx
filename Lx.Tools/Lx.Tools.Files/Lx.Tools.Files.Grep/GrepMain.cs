@@ -23,10 +23,11 @@ namespace Lx.Tools.Files.Grep
 
         protected override void InnerRun(HashSet<Option> options, string[] args)
         {
+
             if (args.Count(x => !string.IsNullOrEmpty(x)) < 2)
             {
                 _console.Error.WriteLine("Not enough arguments.");
-                DisplayUsage();
+                return;
             }
             var regex = args.First(x => !string.IsNullOrEmpty(x));
             foreach (var argument in args)

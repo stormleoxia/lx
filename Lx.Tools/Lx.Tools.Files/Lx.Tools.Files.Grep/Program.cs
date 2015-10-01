@@ -26,9 +26,9 @@ namespace Lx.Tools.Files.Grep
         public static void Main(string[] args)
         {
             var usage = Container.Resolve<UsageDefinition>();
-            usage.Arguments.Add(new Arguments {Name = "regular_expression"});
-            usage.Arguments.Add(new Arguments {Name = "directory"});
-            usage.Arguments.Add(new Arguments {Name = "[ other_directory ]"});
+            usage.Arguments.Add(new Argument {Name = "regular_expression"});
+            usage.Arguments.Add(new Argument {Name = "directory"});
+            usage.Arguments.Add(new Argument {Name = "[ other_directory ]"});
             var program = Container.Resolve<GrepMain>();
             program.Run(args);
         }

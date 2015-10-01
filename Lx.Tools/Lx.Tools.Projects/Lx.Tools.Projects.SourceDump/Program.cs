@@ -50,8 +50,8 @@ namespace Lx.Tools.Projects.SourceDump
         {
             ContainerConfigure(Container);
             var usage = Container.Resolve<UsageDefinition>();
-            usage.Arguments.Add(new Arguments {Name = "file.csproj"});
-            usage.Arguments.Add(new Arguments {Name = "[other.csproj]"});
+            usage.Arguments.Add(new Argument {Name = "file.csproj"});
+            usage.Arguments.Add(new Argument {Name = "[other.csproj]"});
             Container.RegisterInstance(usage, new ContainerControlledLifetimeManager());
             var program = Container.Resolve<SourceDump>();
             program.Run(args);

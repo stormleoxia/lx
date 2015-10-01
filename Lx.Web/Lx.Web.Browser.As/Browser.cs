@@ -48,7 +48,7 @@ namespace Lx.Web.Browser.As
 
         public string Load(string url)
         {
-            var browsingContext = BrowsingContext.New(_config);
+            var browsingContext = BrowsingContext.New(_config);           
             string result = null;
             using (var task = browsingContext.OpenAsync(new Url(url)))
             {

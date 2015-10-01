@@ -43,12 +43,14 @@ namespace Lx.Tools.Projects.Sync
         private readonly IProjectSyncConfiguration _configuration;
         private readonly IFileSystem _fileSystem;
         private readonly IProject _project;
+        private readonly string directory;
 
         public ProjectUpdater(IProject project, IFileSystem fileSystem, IProjectSyncConfiguration configuration)
         {
             _project = project;
             _fileSystem = fileSystem;
             _configuration = configuration;
+            directory = Path.GetDirectoryName(_project.FullPath);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Lx.Tools.Projects.Sync
         /// </summary>
         /// <param name="comparison">The comparison.</param>
         public void Update(SourceComparison comparison)
-        {
+        {            
             RemoveDuplicates();
             ReplaceByLinks();
             if (!_configuration.Options.Contains(ProgramOptions.NoDelete))
@@ -73,7 +75,7 @@ namespace Lx.Tools.Projects.Sync
                     }
                 }
             }
-            var directory = Path.GetDirectoryName(_project.FullPath);
+            
             foreach (var item in comparison.MissingFilesInProject)
             {
                 var fileName = Path.Combine(directory, item.Path);
@@ -83,12 +85,30 @@ namespace Lx.Tools.Projects.Sync
                 var metadata = ExtractMetadata(directory, res.ToString());
                 _project.AddItem("Compile", res.ToString(), metadata);
             }
+            RemoveNotExisting();
             _project.Save();
+        }
+
+        private void RemoveNotExisting()
+        {
+            if (_configuration.Options.Contains(ProgramOptions.RemoveMissing))
+            {
+                var items = _project.GetItems("Compile");
+                var missings = (from item in items let itemPath = Path.Combine(directory, item.EvaluatedInclude) 
+                                where !_fileSystem.FileExists(itemPath) 
+                                select item).ToList();
+                foreach (var item in missings)
+                {
+                    _project.RemoveItem(item);
+                }
+            }
         }
 
         private void ReplaceByLinks()
         {
             var directory = Path.GetDirectoryName(_project.FullPath);
+            var directories = new HashSet<string>(_fileSystem.GetSubDirectories(directory, "*", SearchOption.TopDirectoryOnly)
+                .Select(x => Path.GetFileName(x)));
             var items = _project.GetItems("Compile");
             foreach (var item in items)
             {
@@ -96,16 +116,24 @@ namespace Lx.Tools.Projects.Sync
                 if (_configuration.Options.Contains(ProgramOptions.UpdateLinks) ||
                     item.InnerItem.Metadata.All(x => x.Name != "Link"))
                 {
-                    var metadatas = ExtractMetadata(directory, item.EvaluatedInclude);
-                    if (metadatas != null)
+                    var link = GetLinkFromNamespace(directories, Path.Combine(directory, item.EvaluatedInclude));
+                    if (!string.IsNullOrEmpty(link))
                     {
-                        foreach (var metadata in metadatas)
-                        {
-                            item.InnerItem.SetMetadataValue(metadata.Key, metadata.Value);
-                        }
+                        item.InnerItem.SetMetadataValue("Link", link);
                     }
                 }
             }
+        }
+
+        private string GetLinkFromNamespace(HashSet<string> directories, string sourcePath)
+        {
+            var fileName = Path.GetFileName(sourcePath);
+            var linkDirectory = GetLinkDirectoryFromNamespace(sourcePath);
+            if (directories.Contains(linkDirectory))
+            {
+                return linkDirectory + "/" + fileName;
+            }
+            return null;
         }
 
         private IList<KeyValuePair<string, string>> ExtractMetadata(string directory, string sourcePath)
@@ -132,6 +160,10 @@ namespace Lx.Tools.Projects.Sync
                     var maxIntersection = intersections.Aggregate(string.Empty,
                         (seed, x) => x.Length > seed.Length ? x : seed);
                     var linkDirectory = GetLinkDirectory(directory, maxIntersection);
+                    if (linkDirectory == null)
+                    {
+                        linkDirectory = GetLinkDirectoryFromNamespace(sourcePath);
+                    }
                     if (linkDirectory != null)
                     {
                         list.Add(new KeyValuePair<string, string>("Link", linkDirectory + "/" + fileName));
@@ -142,6 +174,27 @@ namespace Lx.Tools.Projects.Sync
                     list.Add(new KeyValuePair<string, string>("Link", fileName));
                 }
                 return list;
+            }
+            return null;
+        }
+
+        private string GetLinkDirectoryFromNamespace(string fileName)
+        {
+            if (_fileSystem.FileExists(fileName))
+            {
+                using (var file = _fileSystem.OpenText(fileName))
+                {
+                    var str = file.ReadLine();
+                    while (str != null)
+                    {
+                        var index = str.IndexOf("namespace", StringComparison.Ordinal);
+                        if (index >= 0)
+                        {
+                            return str.Remove(index, 9).Trim('\t', ' ', '{');
+                        }
+                        str = file.ReadLine();
+                    }
+                }
             }
             return null;
         }

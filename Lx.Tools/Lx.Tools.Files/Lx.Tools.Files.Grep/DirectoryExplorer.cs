@@ -69,7 +69,7 @@ namespace Lx.Tools.Files.Grep
                                     }
                                     line = reader.ReadLine();
                                     lineNumber++;
-                                } while (!string.IsNullOrEmpty(line));
+                                } while (line != null);
                             }
                         }
                     }

@@ -40,7 +40,7 @@ namespace Lx.Tools.Common.Tests
         public void CheckArgumentsAreUsable()
         {
             var definition = new UsageDefinition();
-            definition.Arguments.Add(new Arguments {Name = "MyFirstArg"});
+            definition.Arguments.Add(new Argument {Name = "MyFirstArg"});
             Assert.IsNotNull(definition.Arguments);
             Assert.AreEqual(1, definition.Arguments.Count);
             Assert.IsNotNull(definition.Arguments[0]);

@@ -38,15 +38,18 @@ namespace Lx.Tools.Projects.Sync
         {
             NoDelete = new Option {Name = "--no-delete", Explanation = "Missing files from sources are not deleted"};
             UpdateLinks = new Option {Name = "--update-links", Explanation = "Update Link of Compile items"};
+            RemoveMissing = new Option {Name = "--remove-missing", Explanation = "Remove not existing Compile items"};
         }
 
         public ProgramOptions(IEnvironment environment, IConsole console) : base(environment, console)
         {
             AvailableOptions.Add(NoDelete);
             AvailableOptions.Add(UpdateLinks);
+            AvailableOptions.Add(RemoveMissing);
         }
 
         public static Option NoDelete { get; private set; }
         public static Option UpdateLinks { get; private set; }
+        public static Option RemoveMissing { get; private set; }
     }
 }

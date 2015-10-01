@@ -35,8 +35,8 @@ namespace Lx.Tools.Projects.Reference
     {
         public ReferenceManagerDefinition()
         {
-            Arguments.Add(new Arguments {Name = "csproj | directory"});
-            Arguments.Add(new Arguments {Name = "reference"});
+            Arguments.Add(new Argument {Name = "csproj | directory"});
+            Arguments.Add(new Argument {Name = "reference"});
         }
     }
 }

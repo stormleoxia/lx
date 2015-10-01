@@ -34,6 +34,10 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Build" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -71,6 +75,7 @@
     <Compile Include="Paths\WinFilePath.cs" />
     <Compile Include="Paths\WinPath.cs" />
     <Compile Include="Paths\WinRootPath.cs" />
+    <Compile Include="ProgramResolver.cs" />
     <Compile Include="Program\Arguments.cs" />
     <Compile Include="Assemblies\ApiExtractor.cs" />
     <Compile Include="Assemblies\AssemblyApi.cs" />

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lx.Tools.Files.Grep</RootNamespace>
-    <AssemblyName>Lx.Tools.Files.Grep</AssemblyName>
+    <AssemblyName>lxgrep</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
